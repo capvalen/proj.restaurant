@@ -108,6 +108,7 @@ h2{margin-top: 0px; } .breadcrumb{margin-bottom: 10px; }
 .btn-indigo, .btn-indigo:hover{border-color: #3E50B4; color: #fff; background-color: #3E50B4;}.btn-indigo:active {background-color: #3748a2;} .btn-indigo:focus {color: #fff;}
 .btn-morita, .btn-morita:hover{border-color: #9B26AF; color: #fff; background-color: #9B26AF;}.btn-morita:active {background-color: #7c1e8c;} .btn-morita:focus {color: #fff;}
 .btn-rosaKit, .btn-rosaKit:hover{border-color: #e91e63; color: #fff; background-color: #e91e63;}.btn-rosaKit:active {background-color: #a31545;} .btn-rosaKit:focus {color: #fff;}
+.btn-rojoFresa, .btn-rojoFresa:hover{border-color: #e53935; color: #fff; background-color: #e53935;}.btn-rojoFresa:active {background-color: #e53935;} .btn-rojoFresa:focus {color: #fff;}
 
 .btn.active.focus, .btn.active:focus, .btn.focus, .btn:active.focus, .btn:active:focus, .btn:focus{outline: 0 none;}
 .btn-outline {background-color: transparent; color: inherit;transition: all .5s;}
@@ -121,6 +122,7 @@ h2{margin-top: 0px; } .breadcrumb{margin-bottom: 10px; }
 .btn-indigo.btn-outline{color:#3E50B4;}
 .btn-morita.btn-outline{color:#9B26AF;}
 .btn-rosaKit.btn-outline{color:#e91e63;}
+.btn-rojoFresa.btn-outline{color:#e53935;}
  
  
 
@@ -129,7 +131,7 @@ h2{margin-top: 0px; } .breadcrumb{margin-bottom: 10px; }
 .btn-primary.btn-outline:hover,.btn-success.btn-outline:hover,.btn-info.btn-outline:hover,.btn-warning.btn-outline:hover,.btn-danger.btn-outline:hover,
 /*.btn-negro.btn-outline:focus,*/.btn-negro.btn-outline:active,.btn-negro.btn-outline:hover,/*.btn-morado.btn-outline:focus,*/
 .btn-morado.btn-outline:active,.btn-morado.btn-outline:hover, .btn-indigo.btn-outline:active,.btn-indigo.btn-outline:hover,
-.btn-morita.btn-outline:active,.btn-morita.btn-outline:hover,.btn-rosaKit.btn-outline:active,.btn-rosaKit.btn-outline:hover
+.btn-morita.btn-outline:active,.btn-morita.btn-outline:hover,.btn-rosaKit.btn-outline:active,.btn-rojoFresa.btn-outline:hover,.btn-rojoFresa.btn-outline:active,.btn-rosaKit.btn-outline:hover
 {color: white;}
 .btn-negro.btn-outline:focus,.btn-negro.btn-outline:active,.btn-negro.btn-outline:hover{background-color: : black;}
 .nav .icofont{font-size: 24px;}.navbar-brand{font-size: 24px;}
