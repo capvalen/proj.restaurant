@@ -71,7 +71,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 						<a href="#!" id="aIngresoExtra"><i class="icofont icofont-ui-rate-add"></i> Ingreso extra</a>
 				</li>
 				<li>
-						<a href="#"><i class="icofont icofont-users"></i> Usuarios</a>
+						<a href="usuarios.php"><i class="icofont icofont-users"></i> Usuarios</a>
 				</li>
 				<li>
 						<a href="#"><i class="icofont icofont-ui-copy"></i> Reportes</a>

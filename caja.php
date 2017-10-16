@@ -78,7 +78,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 						<a href="#!" id="aIngresoExtra"><i class="icofont icofont-ui-rate-add"></i> Ingreso extra</a>
 				</li>
 				<li>
-						<a href="#"><i class="icofont icofont-users"></i> Usuarios</a>
+						<a href="usuarios.php"><i class="icofont icofont-users"></i> Usuarios</a>
 				</li>
 				<li>
 						<a href="#"><i class="icofont icofont-ui-copy"></i> Reportes</a>
@@ -136,7 +136,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 				<div class="col-lg-12 contenedorDeslizable">
 				<!-- Empieza a meter contenido principal dentro de estas etiquetas -->
 				 <h2 class="purple-text text-lighten-1" style=" display: inline-block;"><i class="icofont icofont-lens"></i> Cobro en caja - Casa de Barro <small class="deep-purple-text text-darken-4"><i class="icofont icofont-cube"></i> Libre</small> <small class="red-text text-darken-2"><i class="icofont icofont-cube"></i> Ocupado</small></h2> <button class="btn btn-success btn-lg btn-outline pull-right" id="btnObtenerEstadoMesas"><i class="icofont icofont-spoon-and-fork"></i> Actualizar estado de mesas</button> <button class="btn btn-success btn-lg btn-outline pull-right hidden" id="btnRegresarAMesas"><i class="icofont icofont-spoon-and-fork"></i> Regresar a mesas</button>
-				<div class="row divMesas ">
+				<div class="row divMesas "> <span class="hidden" id="spanTipoCliente"></span>
 					<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="1"><i class="icofont icofont-food-cart"></i> Mesa 1</button></div>
 					<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="2"><i class="icofont icofont-food-cart"></i> Mesa 2</button></div>
 					<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="3"><i class="icofont icofont-food-cart"></i> Mesa 3</button></div>
@@ -197,22 +197,19 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 				</div>
 				<div class="contanedorDivsProductos">
 
-					<div class="divUnSoloProducto row"><div class="col-xs-7"><button class="btn btn-danger btn-circle btn-NoLine btn-outline btnRemoverProducto"><i class="icofont icofont-close"></i></button> <h4 class="h4NombreProducto" id="">Suspiro a la limeña</h4> </div><div class="col-xs-3"><button class="btn btn-warning btn-circle btn-NoLine btnRestarProducto"><i class="icofont icofont-minus-circle"></i></button> <span class="cantidadProducto">1</span> <button class="btn btn-warning btn-circle btn-NoLine btnSumarProducto"><i class="icofont icofont-plus-circle"></i></button></div><div class="col-xs-2"><h5 class="h4precioProducto"><span class="valorUndProducto sr-only">6.10</span>S/. <span class="valorTotalProducto">6.10</span></h5></div></div>
+					<!-- <div class="divUnSoloProducto row"><div class="col-xs-7"><button class="btn btn-danger btn-circle btn-NoLine btn-outline btnRemoverProducto"><i class="icofont icofont-close"></i></button> <h4 class="h4NombreProducto" id="">Suspiro a la limeña</h4> </div><div class="col-xs-3"><button class="btn btn-warning btn-circle btn-NoLine btnRestarProducto"><i class="icofont icofont-minus-circle"></i></button> <span class="cantidadProducto">1</span> <button class="btn btn-warning btn-circle btn-NoLine btnSumarProducto"><i class="icofont icofont-plus-circle"></i></button></div><div class="col-xs-2"><h5 class="h4precioProducto"><span class="valorUndProducto sr-only">6.10</span>S/. <span class="valorTotalProducto">6.10</span></h5></div></div> -->
 				</div>
 			</div>
 			<div class="col-xs-3">
-				<h3 class="text-center">Mesa: <span>4</span></h3>
-				<h3 class="text-center">Total S/. <span>36.50</span></h3>
-					<div class="container">
-						<p>Entradas <span class="stockPlato">(4)</span></p>
-						<p>Especiales <span class="stockPlato">(2)</span></p>
-						<p>Gaseosas <span class="stockPlato">(1)</span></p>
-						<p>Postres <span class="stockPlato">(3)</span></p>
+				<h3 class="text-center">Mesa: <span id="idMesaSpan"></span></h3>
+				<h3 class="text-center">Total S/. <span id="idTotalSpan">36.50</span></h3>
+					<div class="container clContenedorCateg">
+						<?php include 'php/listarProductosCategoriaResumen.php'; ?>
 					</div>
-				<button class="btn btn-primary btn-lg btn-outline btn-block"><i class="icofont icofont-users"></i> Asignar cliente</button>
-				<button class="btn btn-success btn-lg btn-outline btn-block"><i class="icofont icofont-money-bag"></i> Cobrar</button>
+				<button class="btn btn-primary btn-lg btn-outline btn-block hidden"><i class="icofont icofont-users"></i> Asignar cliente</button>
+				<button class="btn btn-success btn-lg btn-outline btn-block" id="btnCobrarCliente"><i class="icofont icofont-money-bag"></i> Cobrar</button>
 				<button class="btn btn-warning btn-lg btn-outline btn-block" id="btnCajaAgregarProducto"><i class="icofont icofont-bbq"></i> Agregar producto</button>
-				<button class="btn btn-danger btn-lg btn-outline btn-block"><i class="icofont icofont-close-circled"></i> Cancelar pedido</button>
+				<button class="btn btn-danger btn-lg btn-outline btn-block" id="btnCancelarPedido"><i class="icofont icofont-close-circled"></i> Cancelar pedido</button>
 			</div>
 		</div>
 					<!-- Fin de meter contenido principal -->
@@ -224,30 +221,96 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 <!-- /#page-content-wrapper -->
 </div><!-- /#wrapper -->
 
-<!-- Modal para indicar que falta completar campos o datos con error -->
-	<div class="modal fade modal-mostrarDetalleInventario" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-	<div class="modal-dialog modal-lg" role="document">
-		<div class="modal-content">
-			<div class="modal-header-info">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title" id="myModalLabel"><i class="icofont icofont-help-robot"></i> Detalles del inventario: <span id="spanIdInventario"></span></h4>
-			</div>
-			<div class="modal-body">
-				<div class="row container"> <strong>
-					<div class="col-xs-4">Producto</div>
-					<div class="col-xs-1">Cantidad</div>
-					<div class="col-xs-2">Precio</div>
-					<div class="col-xs-2">Sub-Total</div></strong>
-				</div>
-				<div class="row container" id="detProductoInv">
-					
-				</div>
-				<div class="row container-fluid text-right" style="padding-right: 100px"><strong>Total valorizado:</strong> <span id="spanvalorInvent">S/. 3.00</span></div>
-			</div>
-			<div class="modal-footer"> <button class="btn btn-primary btn-outline" data-dismiss="modal"></i><i class="icofont icofont-alarm"></i> Aceptar</button></div>
+<!-- Modal para preguntar que tipo de cliente es -->
+<div class="modal fade modal-preguntarCliente" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+<div class="modal-dialog " role="document">
+	<div class="modal-content">
+		<div class="modal-header-info">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<h4 class="modal-title" id="myModalLabel"><i class="icofont icofont-help-robot"></i> Tipo de cliente: <span id="spanIdInventario"></span></h4>
 		</div>
+		<div class="modal-body">
+
+				<div class="container-fluid">
+					<div class="col-xs-6"><button class="btn  btn-primary btn-lg btn-block btn-outline" id="btnClienteSimple"><i class="icofont icofont-user-alt-2"></i> Cliente Simple</button></div>
+				<div class="col-xs-6"><button class="btn  btn-success btn-lg btn-block btn-outline" id="btnClienteEspecial"><i class="icofont icofont-business-man"></i> Cliente registrado</button></div>
+				</div>
+
+			<div class="row container" id="detProductoInv">
+				
+			</div>
+		</div>
+		<div class="modal-footer"> <button class="btn btn-danger btn-outline" data-dismiss="modal"><i class="icofont icofont-close"></i> Cancelar</button></div>
+	</div>
+</div>
+</div>
+
+<!-- Modal para finalizar el pedido como venta -->
+<div class="modal fade modal-finalizarPedidoAVenta" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+<div class="modal-dialog " role="document">
+	<div class="modal-content">
+		<div class="modal-header-success">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<h4 class="modal-title" id="myModalLabel"><i class="icofont icofont-help-robot"></i> Tipo de cliente: <span id="spanIdInventario"></span></h4>
+		</div>
+		<div class="modal-body">
+			<p class="text-center">La cuenta de la <strong>«mesa <span id="queMesaEsSpan"></span>»</strong> es de </p>
+			<div class="text-center"><h3 style="display: inline-block; margin-top: 0px; margin-bottom: 0px;">S/. </h3> <h3 id="h3CuentaFinal" style="display: inline-block;margin-top: 0px; margin-bottom: 0px;">88.00</h3></div>
+			<p class="text-center">¿Con cuánto está pagando el cliente?</p>
+			<div class="row ">
+				<div class=" col-xs-6  col-xs-offset-3"><input type="number" id="txtCuantoPagaCliente" class="form-control input-lg esMoneda text-center"></div>
+			</div>
+			<label class="text-danger text-center labelError hidden" for=""><i class="icofont icofont-animal-squirrel"></i> Lo siento! <span class=mensaje></span></label>
+		</div>
+		<div class="modal-footer"> <button class="btn btn-danger btn-outline" data-dismiss="modal"><i class="icofont icofont-close"></i> Cancelar</button>
+			<button class="btn btn-primary btn-outline" id="btbSalvarVenta"><i class="icofont icofont-save"></i> Guardar</button></div>
+	</div>
+</div>
+</div>
+
+<!-- Modal para indicar que falta completar campos o datos con error -->
+<div class="modal fade modal-mostrarDetalleInventario" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+<div class="modal-dialog modal-lg" role="document">
+	<div class="modal-content">
+		<div class="modal-header-info">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<h4 class="modal-title" id="myModalLabel"><i class="icofont icofont-help-robot"></i> Detalles del inventario: <span id="spanIdInventario"></span></h4>
+		</div>
+		<div class="modal-body">
+			<div class="row container"> <strong>
+				<div class="col-xs-4">Producto</div>
+				<div class="col-xs-1">Cantidad</div>
+				<div class="col-xs-2">Precio</div>
+				<div class="col-xs-2">Sub-Total</div></strong>
+			</div>
+			<div class="row container" id="detProductoInv">
+				
+			</div>
+			<div class="row container-fluid text-right" style="padding-right: 100px"><strong>Total valorizado:</strong> <span id="spanvalorInvent">S/. 3.00</span></div>
+		</div>
+		<div class="modal-footer"> <button class="btn btn-primary btn-outline" data-dismiss="modal"><i class="icofont icofont-alarm"></i> Aceptar</button></div>
+	</div>
+</div>
+</div>
+
+<!-- Modal para decir el vuelto -->
+<div class="modal fade modal-VueltoConExito" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+<div class="modal-dialog modal-sm" role="document">
+	<div class="modal-content">
+		<div class="modal-header-success">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<h4 class="modal-title" id="myModalLabel"><i class="icofont icofont-help-robot"></i> Dato guardado con éxito</h4>
+		</div>
+		<div class="modal-body">
+			<p><strong>Venta guardada</strong>. Cuenta S/. <span id="spanVueltoEx"></span></p>
+			<div class="text-center"><h3 style="display: inline-block; margin-top: 0px; margin-bottom: 0px;">S/. </h3> <h3 id="h3VueltoFinal" style="display: inline-block;margin-top: 0px; margin-bottom: 0px;">0</h3></div>
+		<div class="modal-footer">
+			<button class="btn btn-success btn-outline" data-dismiss="modal" ><i class="icofont icofont-social-meetme"></i> Aceptar</button>
 		</div>
 	</div>
+	</div>
+</div>
+</div>
 
 		
 <!-- Modal para indicar que falta completar campos o datos con error -->
@@ -285,6 +348,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 
 <script>
 $(document).ready(function(){
+datosUsuario();
 $('#btnObtenerEstadoMesas').click();
 $('.selectpicker').selectpicker('refresh');
 $('.mitooltip').tooltip();
@@ -316,6 +380,21 @@ $('.btnMesa').click(function () {
 		$('.DetalleMesa').removeClass('hidden');
 		$('#btnRegresarAMesas').removeClass('hidden');
 		$('#btnObtenerEstadoMesas').addClass('hidden');
+		var iddeMesa=$(this).attr('id');
+		$('#idMesaSpan').text(iddeMesa);
+		var sumaTotales=0, cantRes=0;
+		$('.contanedorDivsProductos').children().remove();
+		$.ajax({url:'php/listarPedidoMesaOcupada.php', type: 'POST', data: {mesa: iddeMesa}}).done(function (resp) {
+			//console.log(resp);
+			$.each(JSON.parse(resp), function (i, dato) {
+				$('.contanedorDivsProductos').append(`<div class="divUnSoloProducto row"><div class="col-xs-7"><button class="btn btn-danger btn-circle btn-NoLine btn-outline btnRemoverProducto" id="${dato.idProducto}"><i class="icofont icofont-close"></i></button> <h4 class="h4NombreProducto" id="${dato.idProducto}">${dato.prodDescripcion}</h4> </div><div class="col-xs-3"><button class="btn btn-warning btn-circle btn-NoLine btnRestarProducto"><i class="icofont icofont-minus-circle"></i></button> <span class="cantidadProducto">${dato.pedCantidad}</span> <button class="btn btn-warning btn-circle btn-NoLine btnSumarProducto"><i class="icofont icofont-plus-circle"></i></button></div><div class="col-xs-2"><h5 class="h4precioProducto"><span class="valorUndProducto sr-only">${dato.prodPrecio}</span>S/. <span class="valorTotalProducto">${parseFloat(dato.subTotal).toFixed(2)}</span></h5></div></div>`);
+				cantRes=parseInt($(`.${dato.tpNombreWeb}`).find('.platoResValor').text())+1;
+				$(`.${dato.tpNombreWeb}`).find('.platoResValor').text(cantRes);
+
+				sumaTotales+=parseFloat(dato.subTotal);
+				$('#idTotalSpan').text(parseFloat(sumaTotales).toFixed(2));
+			});
+		});
 	}else{
 		toastr.options={'positionClass': "toast-bottom-center"}
 		toastr.warning('Ésta mesa aún no tiene pedidos.');
@@ -326,10 +405,68 @@ $('#btnRegresarAMesas').click(function () {
 	$('.DetalleMesa').addClass('hidden');
 	$('#btnRegresarAMesas').addClass('hidden');
 	$('#btnObtenerEstadoMesas').removeClass('hidden');
+	$('.platoResValor').text(0);
 
 });
+$('#btnCancelarPedido').click(function () {
+	$.ajax({url:'php/cancelarPedido.php', type:'POST', data:{mesa:$('#idMesaSpan').text() , idUser: $.JsonUsuario.idUsuario}}).done(function (resp) {
+		//console.log(resp)
+		if(parseInt(resp)>0){
+			$('#btnRegresarAMesas').click();
+			$('#btnObtenerEstadoMesas').click();
+		}
+	})
+});
+$('body').on('click', '.btnRemoverProducto',function () {
+	var idEliminar=$(this).attr('id');
+	//var contenedor=$(this).parent().parent();
+	var cantDivs=$('.contanedorDivsProductos .divUnSoloProducto ').length;
+	if (cantDivs==1){
+		$('#btnCancelarPedido').click();
+	}
+	else{
+		$.ajax({url:'php/eliminarProductoPedido.php', type:"POST", data:{idProd:idEliminar , mesa:$('#idMesaSpan').text(), idUser:$.JsonUsuario.idUsuario }}).done(function (resp) { //console.log(resp)
+			if(parseInt(resp)>0){
+				$(`.contanedorDivsProductos`).find(`#${idEliminar}`).parent().parent().remove();
+			}
+			
+		});
+	}
+});
+$('#btnCobrarCliente').click(function () {
+	$('#h3CuentaFinal').text($('#idTotalSpan').text())
+	$('.modal-preguntarCliente').modal('show');
+});
+$('.modal-finalizarPedidoAVenta').on('shown.bs.modal', function() {
+	$('#txtCuantoPagaCliente').focus();
+});
+$('#btnClienteSimple').click(function(){
+	$('#spanTipoCliente').text(1);
+	$('.modal-preguntarCliente').modal('hide');
+	$('.modal-finalizarPedidoAVenta').modal('show');
 
+});
+$('#btbSalvarVenta').click(function () {
+	if($('#txtCuantoPagaCliente').val()< parseFloat($('#h3CuentaFinal').text()) || $('#txtCuantoPagaCliente').val()==''){
+		$('.modal-finalizarPedidoAVenta .labelError').removeClass('hidden').find('.mensaje').text('No se puede guardar un monto menor a la cuenta.');	}
+	else{
+		$.ajax({url:'php/insertarVentaFinal.php', type: 'POST', data: {mesa: $('#idMesaSpan').text(),cuantoCobra: $('#txtCuantoPagaCliente').val(),idUser: $.JsonUsuario.idUsuario, idCli : $('#spanTipoCliente').text(), montoTotal: $('#idTotalSpan').text() }}).done(function (resp) { //console.log(resp)
+			if(parseInt(resp)>0){
+				var vuelto= parseFloat($('#txtCuantoPagaCliente').val()-$('#idTotalSpan').text()).toFixed(2)
+				$('.modal-finalizarPedidoAVenta').modal('hide');
+				$('.modal-VueltoConExito').modal('show');
+				$('#h3VueltoFinal').text(vuelto);
+				$('#spanVueltoEx').text(parseFloat($('#idTotalSpan').text()));
+				$('#btnRegresarAMesas').click();
+				$('#btnObtenerEstadoMesas').click();
+			
 
+			}
+		});
+	}
+
+});
+// SELECT DATE_FORMAT(`cajaFechaRegistro`,'%d/%m/%Y') FROM `caja`
 </script>
 
 </body>

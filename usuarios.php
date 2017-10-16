@@ -1,10 +1,7 @@
 <?php
 session_start();
 if (@!$_SESSION['Atiende']){//sino existe enviar a index
-	header("Location:index.php");
-}else{
-	if($_SESSION['Power']==3){header("Location:pedidos.php");}
-	if($_SESSION['Power']==2){header("Location:caja.php");}
+	//header("Location:index.php");
 }
 ?>
 <!DOCTYPE html>
@@ -29,11 +26,13 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 		<link rel="stylesheet" href="css/cssBarraTop.css?version=1.0.1">
 		<link rel="stylesheet" href="css/icofont.css">
 		<link rel="stylesheet" href="css/animate.css">
+		<link rel="stylesheet" href="css/snack.css?version=1.0.4">
 
 		<link href="css/bootstrap-select.min.css" rel="stylesheet"> <!-- extraido de: https://silviomoreto.github.io/bootstrap-select/-->
 		<link rel="shortcut icon" href="images/peto.png" />
 		<link rel="stylesheet" href="css/awesome-bootstrap-checkbox.css"> <!-- extraido de: http://flatlogic.github.io/awesome-bootstrap-checkbox/demo/-->
 		<link rel="stylesheet" href="css/bootstrap-datepicker3.css"> <!-- extraído de: https://uxsolutions.github.io/bootstrap-datepicker/-->
+		<link rel="stylesheet" href="css/toastr.min.css?version=1.0.1"> <!-- extraído de: http://codeseven.github.io/toastr/demo.html-->
 
 </head>
 
@@ -52,7 +51,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 				<div class="logoEmpresa ocultar-mostrar-menu">
 					<img class="img-responsive" src="images/empresa.png" alt="">
 				</div>
-				<li class="active">
+				<li>
 						<a href="principal.php"><i class="icofont icofont-space-shuttle"></i> Inicio</a>
 				</li>
 				<li>
@@ -68,13 +67,16 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 						<a href="ventas.php"><i class="icofont icofont-cart"></i> Cuadrar caja</a>
 				</li>
 				<li>
+						<a href="#!" id="aCreditoNuevo"><i class="icofont icofont-truck-alt"></i> Crédito nuevo</a>
+				</li>
+				<li>
 						<a href="#!" id="aGastoExtra"><i class="icofont icofont-ui-rate-remove"></i> Gasto extra</a>
 				</li>
 				<li >
 						<a href="#!" id="aIngresoExtra"><i class="icofont icofont-ui-rate-add"></i> Ingreso extra</a>
 				</li>
-				<li>
-						<a href="usuarios.php"><i class="icofont icofont-users"></i> Usuarios</a>
+				<li class="active">
+						<a href="#"><i class="icofont icofont-users"></i> Usuarios</a>
 				</li>
 				<li>
 						<a href="#"><i class="icofont icofont-ui-copy"></i> Reportes</a>
@@ -134,8 +136,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 				 <h2 class="purple-text text-lighten-1"><i class="icofont icofont-options"></i> Panel de configuraciones generales</h2>
 
 					<ul class="nav nav-tabs">
-					<li class="active"><a href="#tabAgregarLabo" data-toggle="tab">Agregar laboratorio</a></li>
-					<li><a href="#tabCambiarPassUser" data-toggle="tab">Cambiar contraseña</a></li>
+					<li class="active"><a href="#tabAgregarLabo" data-toggle="tab">Listado de usuarios</a></li>
 					
 					</ul>
 					
@@ -144,20 +145,26 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 						<!--Clase para las tablas-->
 						<div class="tab-pane fade in active container-fluid" id="tabAgregarLabo">
 						<!--Inicio de pestaña 01-->
-							Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, eos vero cum tenetur minus eius enim eaque at saepe in nulla fugit molestiae libero nostrum inventore aperiam unde provident nesciunt.
+							<div class="row" style="padding-bottom: 15px">
+								<div class="col-xs-4">
+									<button class="btn btn-success btn-outline btn-lg" id="btnAddNewUser"><i class="icofont icofont-chef"></i> Agregar nuevo usuario</button>
+								</div>
+								<div class="col-xs-4"></div>
+								<div class="col-xs-4"></div>
+							</div>
+							<div class="row"><strong>
+								<div class="col-xs-2">Nivel</div>
+								<div class="col-xs-3">Usuario</div>
+								<div class="col-xs-2">Nick</div>
+								<div class="col-xs-1">@</div></strong>
+							</div>
+							<div id="divUsuariosListado">
+								
+							</div>
 
 						<!--Fin de pestaña 01-->
 						</div>
 
-						
-
-						<!--Panel para nueva compra-->
-						<div class="tab-pane fade container-fluid" id="tabCambiarPassUser">
-						<!--Inicio de pestaña 02-->
-						Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur, quis, facilis beatae recusandae optio molestias ipsam quibusdam aliquid rerum voluptatem incidunt in vero quo illo natus? Asperiores, ipsum placeat dolorum.
-						<!--Fin de pestaña 02-->
-						</div>
-						
 					</div>
 					<!-- Fin de meter contenido principal -->
 					</div>
@@ -168,30 +175,47 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 <!-- /#page-content-wrapper -->
 </div><!-- /#wrapper -->
 
-<!-- Modal para indicar que falta completar campos o datos con error -->
-	<div class="modal fade modal-mostrarDetalleInventario" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-	<div class="modal-dialog modal-lg" role="document">
-		<div class="modal-content">
-			<div class="modal-header-info">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title" id="myModalLabel"><i class="icofont icofont-help-robot"></i> Detalles del inventario: <span id="spanIdInventario"></span></h4>
-			</div>
-			<div class="modal-body">
-				<div class="row container"> <strong>
-					<div class="col-xs-4">Producto</div>
-					<div class="col-xs-1">Cantidad</div>
-					<div class="col-xs-2">Precio</div>
-					<div class="col-xs-2">Sub-Total</div></strong>
-				</div>
-				<div class="row container" id="detProductoInv">
-					
-				</div>
-				<div class="row container-fluid text-right" style="padding-right: 100px"><strong>Total valorizado:</strong> <span id="spanvalorInvent">S/. 3.00</span></div>
-			</div>
-			<div class="modal-footer"> <button class="btn btn-primary btn-outline" data-dismiss="modal"></i><i class="icofont icofont-alarm"></i> Aceptar</button></div>
+<!-- Modal para agregar producto nuevo a la BD -->
+<div class="modal fade modal-addUserBD" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+<div class="modal-dialog modal-sm" role="document">
+	<div class="modal-content">
+		<div class="modal-header-warning">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<h4 class="modal-title" id="myModalLabel"><i class="icofont icofont-help-robot"></i> Agregar nuevo usuario</h4>
 		</div>
+		<div class="modal-body">
+			<div class="container-fluid">
+			<div class="row">
+				<label for="">Apellidos:</label> <input type="text" class="form-control text-center mayuscula" id="txtModalApellidUser">
+				<label for="">Nombres:</label>
+				<input type="text" class="form-control text-center mayuscula" id="txtModalNombUser">
+				<label for="">D.N.I.:</label>
+				<input type="text" class="form-control text-center mayuscula" id="txtModalDniUser">
+				<label for="">Nick:</label>
+				<input type="text" class="form-control text-center" id="txtModalNickUser">
+				<label for="">Contraseña.:</label>
+				<input type="text" class="form-control text-center" id="txtModalPassUser">
+				<label for="">Nivel:</label>
+				<div  id="divSelectNivelListNew">
+					<select class="selectpicker mayuscula" title="Nivel de usuario..."  data-width="100%" data-live-search="true"">
+						<?php require 'php/listarNivelesOption.php'; ?>
+					</select>
+				</div>
+			</div>
+			<div class="" id="divCajaProductosExtrResultado" style="padding-top: 15px;">
+
+			</div>
+			</div>
+			<label class="text-danger labelError hidden" for=""><i class="icofont icofont-animal-squirrel"></i> Lo siento! <span class=mensaje></span></label>
+		</div>
+		
+		<div class="modal-footer">
+			<button class="btn btn-danger btn-outline" data-dismiss="modal" ><i class="icofont icofont-close"></i> Cerrar</button>
+			<button class="btn btn-success btn-outline" id="btnGuardarAddUser"><i class="icofont icofont-save"></i> Guardar</button>
 		</div>
 	</div>
+	</div>
+</div>
 
 		
 <!-- Modal para indicar que falta completar campos o datos con error -->
@@ -221,13 +245,13 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 <script src="js/bootstrap-select.js"></script>
 <script src="js/bootstrap-datepicker.min.js"></script>
 <script src="js/bootstrap-datepicker.es.min.js"></script>
+<script src="js/toastr.js"></script>
 
 <!-- Menu Toggle Script -->
 <script>
 $(document).ready(function(){
-	
+datosUsuario();
 $('.selectpicker').selectpicker('refresh');
-
 $('.mitooltip').tooltip();
 $('input').keypress(function (e) {
 	if (e.keyCode == 13)
@@ -238,9 +262,42 @@ $('input').keypress(function (e) {
 });
 
 
-
+$.ajax({url:'php/listarUsuarios.php', data: 'POST'}).done(function (resp) { //console.log(resp)
+	$.each(JSON.parse(resp), function (i, dato) {
+		$('#divUsuariosListado').append(`<div class="row">
+				<div class="col-xs-2 mayuscula"><button class="btn btn-danger btn-circle btn-NoLine btn-outline btnRemoverProducto" id="${dato.idProducto}"><i class="icofont icofont-close"></i></button>${i+1}. ${dato.Descripcion}</div>
+				<div class="col-xs-3"><span class="apellidos mayuscula">${dato.usuApellidos}</span> <span class="nombres mayuscula">${dato.usuNombres}</span></div>
+				<div class="col-xs-2">${dato.usuNick}</div>
+				<div class="col-xs-1"><button class="btn btn-success btn-outline btn-NoLine btnConfigUser" id="${dato.idUsuario}"><i class="icofont icofont-options"></i></button></div></div>`);
+	});
 });
-
+});//Fin de document ready
+$('#btnAddNewUser').click(function () {
+	$('.modal-addUserBD').modal('show');
+});
+$('#txtModalNombUser').focusout(function () {
+	var nombres=$('#txtModalNombUser').val();
+	var apellidos=$('#txtModalApellidUser').val();
+	var primEspac=apellidos.indexOf(" "); //console.log(primEspac)
+	if(primEspac==-1){primEspac=primEspac.length}
+	
+	$('#txtModalNickUser').val(nombres.substring(0,1) +apellidos.substring(0,primEspac))
+});
+$('#btnGuardarAddUser').click(function () {
+	var idNivel=$('#divSelectNivelListNew').find('li.selected a').attr('data-tokens');// console.log(idNivel)
+	if($('#txtModalApellidUser').val()==''){$('.modal-addUserBD .labelError').removeClass('hidden').find('.mensaje').text('Debe ingresar los apellidos.');}
+	else if($('#txtModalNombUser').val()==''){$('.modal-addUserBD .labelError').removeClass('hidden').find('.mensaje').text('Debe ingresar los nombres.');}
+	else if($('#txtModalDniUser').val()==''){$('.modal-addUserBD .labelError').removeClass('hidden').find('.mensaje').text('Debe ingresar un Dni.');}
+	else if($('#txtModalNickUser').val()==''){$('.modal-addUserBD .labelError').removeClass('hidden').find('.mensaje').text('Debe ingresar un nick para iniciar sesión.');}
+	else if($('#txtModalPassUser').val()==''){$('.modal-addUserBD .labelError').removeClass('hidden').find('.mensaje').text('Debe ingresar una contraseña.');}
+	else if(idNivel === null || idNivel === undefined  ){ $('.modal-addUserBD .labelError').removeClass('hidden').find('.mensaje').text('Debe selecionar un nivel.');}
+	else{
+		$('.modal-addUserBD .labelError').addClass('hidden');
+		$.ajax({url:'php/insertarUsuario.php', type:'POST', data:{nombres:$('#txtModalNombUser').val(), apellidos:$('#txtModalApellidUser').val(), nick: $('#txtModalNickUser').val(), pass: $('#txtModalPassUser').val(), dni: $('#txtModalDniUser').val(), poder: idNivel }}).done(function (resp) {
+			if(resp>0){window.location.href = 'usuarios.php';}
+		});
+	}
+});
 
 </script>
 

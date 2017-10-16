@@ -60,7 +60,7 @@ if (isset($_SESSION['usuario'])){
 			</div>
 			<div class="form-group text-center text-danger hidden" id="divError">Error en alguno de los datos, complételos todos cuidadosamente.</div>
 			
-			<div class="pull-right" ><small><?php include 'php/version.php' ?> | <?php echo date("Y"); ?> <a href="https://info-cat.com">®  Info-cat</a></small></div>
+			<div class="pull-right" ><small><?php include 'php/version.php' ?> | <?php echo date("Y"); ?> <a href="https://info-cat.com/casadebarro">®  Info-cat</a></small></div>
 			</div>
 		</div>
 	</div>
