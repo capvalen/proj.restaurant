@@ -11,7 +11,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 	<title>Pedidos - Infocat Snack</title>
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/estilosElementosv2.css?version=1.0.3">
-	<link rel="stylesheet" href="css/snack.css?version=1.0.1">
+	<link rel="stylesheet" href="css/snack.css?version=1.0.4">
 	<link rel="stylesheet" href="css/icofont.css">
 	<link rel="stylesheet" href="css/toastr.css?version=1.0.2"> <!-- extraído de: http://codeseven.github.io/toastr/demo.html-->
 
@@ -216,6 +216,16 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 $(document).ready(function () {
 	datosUsuario();
 });
+$.ajax({url:'php/retornarMesaEstado.php', type: 'POST'}).done(function (resp) {// console.log(resp)
+	$.each(JSON.parse(resp), function (i, dato) {
+		//$('#divMesas #'+dato.idMesa).addClass(dato.estadoMesa);
+		if(dato.estadoMesa=='mesaOcupado'){
+				$(`#${dato.idMesa}`).removeClass('mesaLibre').removeClass('btn-morado').addClass(`${dato.estadoMesa}`).addClass('btn-rojoFresa');
+			}else{
+				$(`#${dato.idMesa}`).removeClass('mesaOcupado').removeClass('btn-rojoFresa').addClass(`${dato.estadoMesa}`).addClass('btn-morado');
+			}
+	})
+});
 	$('#regMesaCliente').collapse();
 	$('.btnMesa').click(function () {
 		var idMesa=$(this).attr('id');
@@ -231,6 +241,21 @@ $(document).ready(function () {
 		$('#btnGuardarPedido').addClass('disabled');
 		$('.panelProductosColecc .panel-heading').addClass('collapsed').attr('aria-expanded', 'false');
 		$('.panelProductosColecc .panel-collapse').removeClass('in').attr('aria-expanded', 'false');
+		if($('#'+idMesa).hasClass('mesaOcupado') ){ //console.log('ocupado');
+			var sumaTotales=0, cantRes=0;
+			$('#regMesaCliente .panel-body').children().remove();
+			$.ajax({url:'php/listarPedidoMesaOcupada.php', type: 'POST', data: {mesa: idMesa}}).done(function (resp) {
+			//console.log(resp);
+			$.each(JSON.parse(resp), function (i, dato) {
+				$('#regMesaCliente .panel-body').append(`<div class="row divUnSoloProducto" id="${dato.idProducto}"><div class="col-xs-7"><button class="btn btn-success btn-circle btn-NoLine btn-outline" id="${dato.idProducto}"><i class="icofont icofont-check"></i></button> <h4 class="h4NombreProducto" id="${dato.idProducto}">${dato.prodDescripcion}</h4> </div><div class="col-xs-3"> <span class="cantidadProducto">${dato.pedCantidad}</span> <button class="btn btn-warning btn-circle btn-NoLine btnSumarProducto"><i class="icofont icofont-plus-circle"></i></button></div><div class="col-xs-2"><h5 class="h4precioProducto"><span class="valorUndProducto sr-only">${dato.prodPrecio}</span>S/. <span class="valorTotalProducto">${parseFloat(dato.subTotal).toFixed(2)}</span></h5></div></div>`);
+				cantRes=parseInt($(`.${dato.tpNombreWeb}`).find('.platoResValor').text())+1;
+				$(`.${dato.tpNombreWeb}`).find('.platoResValor').text(cantRes);
+
+				sumaTotales+=parseFloat(dato.subTotal);
+				$('#idTotalSpan').text(parseFloat(sumaTotales).toFixed(2));
+			});
+			});
+		}
 	});
 	function listarProductos() {
 		$('.panelProductosColecc .panel-body').children().remove();
@@ -327,6 +352,12 @@ $(document).ready(function () {
 	});
 	$('#btnGuardarPedido').click(function () { moment.locale('es');
 		var prodFueraStock=''; var iteraciones=0;
+		var cantDivsPedidosNuevos=$('#regMesaCliente .divUnSoloProducto').length;
+		var cantDivPedidosGuardados=$('#regMesaCliente .guardado').length;
+		var cantDivPedidosActualizados=$('#regMesaCliente .actualizar').length;
+		console.log('total '+cantDivsPedidosNuevos)
+		console.log('guardados '+cantDivPedidosGuardados)
+		console.log('actualizado '+cantDivPedidosActualizados)
 		//var datosPedido=[];
 		if(!$('#btnGuardarPedido').hasClass('disabled')){
 			$('#btnGuardarPedido').addClass('disabled');
@@ -351,35 +382,24 @@ $(document).ready(function () {
 							//datosPedido.push({idProd: idProducto,cantidad: cantPedido, producto: prodRowNombre} );
 							$.ajax({url:'php/insertarPedidoDetalle.php', type: 'POST', data:{idProd: idProducto, precio:precPro ,cantidad: cantPedido, producto: prodRowNombre, idPedido: resp }}).done(function (resp) {
 								console.log(resp);
-								
 								$.each(JSON.parse(resp), function (ii, dato2) {
 									if(dato2.respuesta=='Y'){
 										$(`#regMesaCliente #${dato2.idProducto}`).addClass('guardado').find('.btnRemoverProducto').html('<i class="icofont icofont-check"></i>').removeClass('btn-danger').addClass('btn-success').removeClass('btnRemoverProducto');
 										$(`#regMesaCliente #${dato2.idProducto}`).find('.btnRestarProducto').remove();
 										if($(dato).find('.h4NombreProducto').hasClass('divProdBebida')){
-											textoProductosBar+=' '+cantPedido+'   '+prodRowNombre+'\n';
+											textoProductosBar+=' '+$(dato).find('.cantidadProducto').text()+'   '+$(dato).find('.h4NombreProducto').text()+'\n';
 										}else{
-											textoProductosCocina+=' '+cantPedido+'   '+prodRowNombre+'\n';
+											textoProductosCocina+=' '+$(dato).find('.cantidadProducto').text()+'   '+$(dato).find('.h4NombreProducto').text()+'\n';
 										}
+										if(cantDivsPedidosNuevos-cantDivPedidosGuardados-cantDivPedidosActualizados-1==iteraciones){console.log(textoProductosBar)}else{iteraciones++;}
 									}else{
 										$('#spanOutStock').append('<p> <strong> '+dato2.stockActual+'</strong> de '+$(`#regMesaCliente #${dato2.idProducto}`).find('.h4NombreProducto').text()+'</p>');
 										$('.modal-fueraStock').modal('show');
-										//console.log(prodFueraStock)
 									}
-									//console.log(prodFueraStock);
-									
 								});
-								
-								
-								
 								listarProductos();
-
-								//console.log(prodFueraStock);
-								
 							});
-							
-					}
-					//console.log(prodFueraStock);
+					} // Fin de IF no guardado, No actualizado osea pedido nuevo
 
 					}).promise().done(function (resp) { //Promise sólo corre cuando acaba el each
 						
@@ -399,15 +419,9 @@ $(document).ready(function () {
 						// $('.modal-pedidoGuardado').modal('show');
 						// $('#divPedido').addClass('sr-only');
 						// $('#divMesas').removeClass('sr-only');
-
-						
-						
-						
 					});
 				}
 			}
-				
-				
 			}); // fin de ajax insertarPedidoCabecera
 		
 	} //fin de if de hasclass disabled

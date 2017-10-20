@@ -254,7 +254,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 			<h4 class="modal-title" id="myModalLabel"><i class="icofont icofont-help-robot"></i> Tipo de cliente: <span id="spanIdInventario"></span></h4>
 		</div>
 		<div class="modal-body">
-			<p class="text-center">La cuenta de la <strong>«mesa <span id="queMesaEsSpan"></span>»</strong> es de </p>
+			<p class="text-center">La cuenta de la <strong>«Mesa <span id="queMesaEsSpan"></span>»</strong> es de </p>
 			<div class="text-center"><h3 style="display: inline-block; margin-top: 0px; margin-bottom: 0px;">S/. </h3> <h3 id="h3CuentaFinal" style="display: inline-block;margin-top: 0px; margin-bottom: 0px;">88.00</h3></div>
 			<p class="text-center">¿Con cuánto está pagando el cliente?</p>
 			<div class="row ">
@@ -312,6 +312,23 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 </div>
 </div>
 
+<!-- Modal para buscar un producto -->
+<div class="modal fade modal-buscarProducto" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+<div class="modal-dialog  role="document">
+	<div class="modal-content">
+		<div class="modal-header-morado">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<h4 class="modal-title" id="myModalLabel"><i class="icofont icofont-help-robot"></i> Agregar producto</h4>
+		</div>
+		<div class="modal-body">
+			<!-- <label for="">Ingrese un término para filtrar</label>
+			<input type="text" class="form-control" id="txtParaFiltrarProducto"> -->
+			<?php include 'php/rellenoCategoriasCabeceras.php'; ?>
+	</div>
+	</div>
+</div>
+</div>
+
 		
 <!-- Modal para indicar que falta completar campos o datos con error -->
 	<div class="modal fade modal-faltaCompletar" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
@@ -349,6 +366,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 <script>
 $(document).ready(function(){
 datosUsuario();
+$.ticket = [];
 $('#btnObtenerEstadoMesas').click();
 $('.selectpicker').selectpicker('refresh');
 $('.mitooltip').tooltip();
@@ -357,7 +375,7 @@ $('input').keypress(function (e) {
 	{
 		$(this).parent().next().children().focus();
 		//$(this).parent().next().children().removeAttr('disabled'); //agregar atributo desabilitado
-	} 
+	}
 });
 
 });//Fin de document ready
@@ -434,6 +452,7 @@ $('body').on('click', '.btnRemoverProducto',function () {
 	}
 });
 $('#btnCobrarCliente').click(function () {
+	$('#queMesaEsSpan').text($('#idMesaSpan').text())
 	$('#h3CuentaFinal').text($('#idTotalSpan').text())
 	$('.modal-preguntarCliente').modal('show');
 });
@@ -450,15 +469,26 @@ $('#btbSalvarVenta').click(function () {
 	if($('#txtCuantoPagaCliente').val()< parseFloat($('#h3CuentaFinal').text()) || $('#txtCuantoPagaCliente').val()==''){
 		$('.modal-finalizarPedidoAVenta .labelError').removeClass('hidden').find('.mensaje').text('No se puede guardar un monto menor a la cuenta.');	}
 	else{
+		
 		$.ajax({url:'php/insertarVentaFinal.php', type: 'POST', data: {mesa: $('#idMesaSpan').text(),cuantoCobra: $('#txtCuantoPagaCliente').val(),idUser: $.JsonUsuario.idUsuario, idCli : $('#spanTipoCliente').text(), montoTotal: $('#idTotalSpan').text() }}).done(function (resp) { //console.log(resp)
 			if(parseInt(resp)>0){
-				var vuelto= parseFloat($('#txtCuantoPagaCliente').val()-$('#idTotalSpan').text()).toFixed(2)
+				var vuelto= parseFloat($('#txtCuantoPagaCliente').val()-$('#idTotalSpan').text()).toFixed(2);
+
+				$.each($('.divUnSoloProducto'), function (i, dato) {
+				$.ticket.push({'id': $(dato).find('.h4NombreProducto').attr('id'), 'nomProducto': $(dato).find('.cantidadProducto').text() +' Und. '+ $(dato).find('.h4NombreProducto').text() , 'cant': $(dato).find('.cantidadProducto').text(), 'sub': $(dato).find('.valorTotalProducto').text() });
+				});
+				var fecha=moment().format('DD/MM/YYYY H:mm a');
+				
+				$.ajax({url: 'printTicketCaja.php', type: 'POST', data: {hora: fecha, text: retornarCadenaImprimir() , usuario: $.JsonUsuario.usuNombres, cuentaTotal: $('#idTotalSpan').text(), paga: $('#txtCuantoPagaCliente').val(), cambio: vuelto} });
+
 				$('.modal-finalizarPedidoAVenta').modal('hide');
 				$('.modal-VueltoConExito').modal('show');
 				$('#h3VueltoFinal').text(vuelto);
-				$('#spanVueltoEx').text(parseFloat($('#idTotalSpan').text()));
+				$('#spanVueltoEx').text(parseFloat($('#idTotalSpan').text()).toFixed(2));
 				$('#btnRegresarAMesas').click();
 				$('#btnObtenerEstadoMesas').click();
+
+
 			
 
 			}
@@ -466,6 +496,73 @@ $('#btbSalvarVenta').click(function () {
 	}
 
 });
+
+function retornarCadenaImprimir(){
+var totalImprimir=40;
+var funProducto = '';
+var funPrecio = '';
+var lineaImpr='';
+var espacioslibres='';
+var lineaEntera ='';
+var cantlibres=0;
+	
+
+$.each($.ticket, function (i, elem) {
+	funProducto= elem.nomProducto;
+	funPrecio= 'S/. '+elem.sub;
+	lineaEntera = funProducto+funPrecio;
+	cantlibres=0; espacioslibres='';
+
+// console.log('tamaño total: '+ lineaEntera.length)
+// console.log('calculo de linea '+lineaEntera.length/totalImprimir)
+
+
+	if (lineaEntera.length/totalImprimir>1){
+		// console.log('dos lineas')
+		cantlibres=40-lineaEntera.length%40;
+		// console.log('espacios libres para ultima linea '+ cantlibres)
+
+	for (var i = cantlibres - 1; i >= 0; i--) {
+		espacioslibres+=' ';
+	};
+	lineaImpr+=funProducto+ espacioslibres+funPrecio+'\n';
+	// console.log(lineaImpr)
+	// console.log(lineaImpr.length)
+	}
+	else{//console.log('una linea');
+		cantlibres=parseInt(totalImprimir-lineaEntera.length);
+		//console.log('espacios libres en ultima linea '+ parseInt(totalImprimir-lineaEntera.length))
+
+		for (var i = cantlibres - 1; i >= 0; i--) {
+			espacioslibres+=' ';
+		};
+		lineaImpr+=funProducto+ espacioslibres+funPrecio+'\n';
+		//console.log(lineaImpr)
+		//console.log(lineaImpr.length)
+
+	}
+	});
+
+return lineaImpr;
+}
+$('.modal-buscarProducto').on('shown.bs.modal', function() { /*$('#txtParaFiltrarProducto').focus();*/
+
+});
+$('#btnCajaAgregarProducto').click(function () { 
+	listarProductos();
+	$('.modal-buscarProducto').modal('show'); });
+function listarProductos() {
+	$('.modal-buscarProducto .panel-body').children().remove();
+	$.ajax({url:'php/listarProductos.php', type:'POST'}).done(function (resp) {
+		$.each(JSON.parse(resp), function (i, dato) {
+			$(`#${dato.tpNombreWeb} .panel-body`).append(`
+					<div class="row divUnSoloProductodivUnSoloProducto" id="${dato.idProducto}"><div class="col-xs-7"><h4 class="h4NombreProducto mayuscula ${dato.tpDivBebidaCocina}" id="${dato.idProducto}">${dato.prodDescripcion}</h4> <span class="stockPlato">(<span class="stockFict">${dato.stockCantidad}</span>)</span></div><div class="col-xs-3"><h5 class="h4precioProducto">S/. <span class="valorProducto">${parseFloat(dato.prodPrecio).toFixed(2)}</span></h5></div><div class="col-xs-2"><button class="btn btn-warning btn-outline btn-block btnAgregarProducto"><i class="icofont icofont-check"></i></button></div></div>
+				`);
+		});
+		//console.log(resp);
+	});
+}
+
 // SELECT DATE_FORMAT(`cajaFechaRegistro`,'%d/%m/%Y') FROM `caja`
 </script>
 

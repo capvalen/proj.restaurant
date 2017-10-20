@@ -15,7 +15,7 @@ use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
  */
 
  
-    $connector = new WindowsPrintConnector("smb://127.0.0.1/BIXOLON_CAJA");
+    $connector_cocina = new WindowsPrintConnector("smb://127.0.0.1/BIXOLON_COCINA");
 try {
     
     // A FilePrintConnector will also work, but on non-Windows systems, writes
@@ -23,9 +23,9 @@ try {
     // $connector = new FilePrintConnector("LPT1");
 
     /* Print a "Hello world" receipt" */
-    $printer = new Printer($connector);
+    $printer = new Printer($connector_cocina);
     $printer -> text("            La Casa de Barro \n");
-    $printer -> text("       Pedido « Cocina ». Mesa # ".$_POST['numMesa']."\n");
+    $printer -> text("   Nota de Pedido « Cocina ». Mesa # ".$_POST['numMesa']."\n");
     $printer -> text("----------------------------------------");
     $printer -> text("   ".$_POST['hora']."\n\n");
     $printer -> text("Cant.  Producto\n");

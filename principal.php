@@ -102,11 +102,11 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 					<div id="navbar" class="navbar-collapse collapse ">
 							<ul class="nav navbar-nav">
 								<li class="hidden down"><a href="#" class="dropdown-toggle active" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">HR <span class="caret"></span></a>
-											<ul class="dropdown-menu">
-													<li><a href="#">Change Time Entry</a></li>
-													<li><a href="#">Report</a></li>
-											</ul>
-									</li>
+									<ul class="dropdown-menu">
+											<li><a href="#">Change Time Entry</a></li>
+											<li><a href="#">Report</a></li>
+									</ul>
+								</li>
 							</ul>
 							<ul class="nav navbar-nav pull-right">
 								 <li>
@@ -144,6 +144,10 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 						<!--Clase para las tablas-->
 						<div class="tab-pane fade in active container-fluid" id="tabAgregarLabo">
 						<!--Inicio de pestaña 01-->
+							<div class="col-xs-3 text-center"><h2><small>S/. </small><span id="h2Ventas"></span></h2><h3>Ventas</h3> </div>
+							<div class="col-xs-3 text-center"><h2><small>S/. </small>55.00</h2><h3>Ingresos</h3></div>
+							<div class="col-xs-3 text-center"><h2><small>S/. </small>55.00</h2><h3>Egresos</h3></div>
+							<div class="col-xs-3 text-center"><h2>84</h2><h3>Pedidos</h3></div>
 							Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, eos vero cum tenetur minus eius enim eaque at saepe in nulla fugit molestiae libero nostrum inventore aperiam unde provident nesciunt.
 
 						<!--Fin de pestaña 01-->
@@ -168,47 +172,6 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 <!-- /#page-content-wrapper -->
 </div><!-- /#wrapper -->
 
-<!-- Modal para indicar que falta completar campos o datos con error -->
-	<div class="modal fade modal-mostrarDetalleInventario" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-	<div class="modal-dialog modal-lg" role="document">
-		<div class="modal-content">
-			<div class="modal-header-info">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title" id="myModalLabel"><i class="icofont icofont-help-robot"></i> Detalles del inventario: <span id="spanIdInventario"></span></h4>
-			</div>
-			<div class="modal-body">
-				<div class="row container"> <strong>
-					<div class="col-xs-4">Producto</div>
-					<div class="col-xs-1">Cantidad</div>
-					<div class="col-xs-2">Precio</div>
-					<div class="col-xs-2">Sub-Total</div></strong>
-				</div>
-				<div class="row container" id="detProductoInv">
-					
-				</div>
-				<div class="row container-fluid text-right" style="padding-right: 100px"><strong>Total valorizado:</strong> <span id="spanvalorInvent">S/. 3.00</span></div>
-			</div>
-			<div class="modal-footer"> <button class="btn btn-primary btn-outline" data-dismiss="modal"></i><i class="icofont icofont-alarm"></i> Aceptar</button></div>
-		</div>
-		</div>
-	</div>
-
-		
-<!-- Modal para indicar que falta completar campos o datos con error -->
-	<div class="modal fade modal-faltaCompletar" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-	<div class="modal-dialog modal-sm" role="document">
-		<div class="modal-content">
-			<div class="modal-header-danger">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title" id="myModalLabel"><i class="icofont icofont-help-robot"></i> Campos incorrectos o faltantes</h4>
-			</div>
-			<div class="modal-body">
-				Ups, un error: <i class="icofont icofont-animal-squirrel"></i> <strong id="lblFalta"></strong>
-			</div>
-			<div class="modal-footer"> <button class="btn btn-danger btn-outline" data-dismiss="modal"><i class="icofont icofont-alarm"></i> Ok, revisaré</button></div>
-		</div>
-		</div>
-	</div>
 
 	
 <!-- jQuery -->
@@ -236,7 +199,16 @@ $('input').keypress(function (e) {
 		//$(this).parent().next().children().removeAttr('disabled'); //agregar atributo desabilitado
 	} 
 });
-
+$.ajax({url:'php/devolverVentaDelDia.php', type:'POST', data: {fecha: moment().format('DD/MM/YYYY')}}).done(function (resp) { console.log(resp)
+	if(resp!=-1){
+		if(resp==''){
+			$('#h2Ventas').text('0.00');
+		}else{
+			$('#h2Ventas').text(parseFloat(resp).toFixed(2));
+		}
+		
+	}
+});
 
 
 });
