@@ -81,7 +81,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 						<a href="usuarios.php"><i class="icofont icofont-users"></i> Usuarios</a>
 				</li>
 				<li>
-						<a href="#"><i class="icofont icofont-ui-copy"></i> Reportes</a>
+						<a href="reporte.php"><i class="icofont icofont-ui-copy"></i> Reportes</a>
 				</li>
 				<li>
 						<a href="#!" class="ocultar-mostrar-menu"><i class="icofont icofont-swoosh-left"></i> Ocultar menú</a>
@@ -407,7 +407,7 @@ $('.btnMesa').click(function () {
 		$.ajax({url:'php/listarPedidoMesaOcupada.php', type: 'POST', data: {mesa: iddeMesa}}).done(function (resp) {
 			//console.log(resp);
 			$.each(JSON.parse(resp), function (i, dato) {
-				$('.contanedorDivsProductos').append(`<div class="divUnSoloProducto row"><div class="col-xs-7"><button class="btn btn-danger btn-circle btn-NoLine btn-outline btnRemoverProducto" id="${dato.idProducto}"><i class="icofont icofont-close"></i></button> <h4 class="h4NombreProducto" id="${dato.idProducto}">${dato.prodDescripcion}</h4> </div><div class="col-xs-3"><button class="btn btn-warning btn-circle btn-NoLine btnRestarProducto"><i class="icofont icofont-minus-circle"></i></button> <span class="cantidadProducto">${dato.pedCantidad}</span> <button class="btn btn-warning btn-circle btn-NoLine btnSumarProducto"><i class="icofont icofont-plus-circle"></i></button></div><div class="col-xs-2"><h5 class="h4precioProducto"><span class="valorUndProducto sr-only">${dato.prodPrecio}</span>S/. <span class="valorTotalProducto">${parseFloat(dato.subTotal).toFixed(2)}</span></h5></div></div>`);
+				$('.contanedorDivsProductos').append(`<div class="divUnSoloProducto row"><div class="col-xs-7"><button class="btn btn-danger btn-circle btn-NoLine btn-outline btnRemoverProducto" id="${dato.idProducto}"><i class="icofont icofont-close"></i></button> <h4 class="h4NombreProducto mayuscula" id="${dato.idProducto}">${dato.prodDescripcion}</h4> </div><div class="col-xs-3"><button class="btn btn-warning btn-circle btn-NoLine btnRestarProducto"><i class="icofont icofont-minus-circle"></i></button> <span class="cantidadProducto">${dato.pedCantidad}</span> <button class="btn btn-warning btn-circle btn-NoLine btnSumarProducto"><i class="icofont icofont-plus-circle"></i></button></div><div class="col-xs-2"><h5 class="h4precioProducto"><span class="valorUndProducto sr-only">${dato.prodPrecio}</span>S/. <span class="valorTotalProducto">${parseFloat(dato.subTotal).toFixed(2)}</span></h5></div></div>`);
 				cantRes=parseInt($(`.${dato.tpNombreWeb}`).find('.platoResValor').text())+1;
 				$(`.${dato.tpNombreWeb}`).find('.platoResValor').text(cantRes);
 
@@ -426,6 +426,7 @@ $('#btnRegresarAMesas').click(function () {
 	$('#btnRegresarAMesas').addClass('hidden');
 	$('#btnObtenerEstadoMesas').removeClass('hidden');
 	$('.platoResValor').text(0);
+	$('#btnObtenerEstadoMesas').click();
 
 });
 $('#txtCuantoPagaCliente').keypress(function (e) {

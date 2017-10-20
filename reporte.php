@@ -29,6 +29,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 		<link rel="stylesheet" href="css/cssBarraTop.css?version=1.0.1">
 		<link rel="stylesheet" href="css/icofont.css">
 		<link rel="stylesheet" href="css/animate.css">
+		<link rel="stylesheet" href="css/snack.css?version=1.0.6">
 
 		<link href="css/bootstrap-select.min.css" rel="stylesheet"> <!-- extraido de: https://silviomoreto.github.io/bootstrap-select/-->
 		<link rel="shortcut icon" href="images/peto.png" />
@@ -52,7 +53,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 				<div class="logoEmpresa ocultar-mostrar-menu">
 					<img class="img-responsive" src="images/empresa.png" alt="">
 				</div>
-				<li class="active">
+				<li>
 						<a href="principal.php"><i class="icofont icofont-space-shuttle"></i> Inicio</a>
 				</li>
 				<li>
@@ -76,8 +77,8 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 				<li>
 						<a href="usuarios.php"><i class="icofont icofont-users"></i> Usuarios</a>
 				</li>
-				<li>
-						<a href="reporte.php"><i class="icofont icofont-ui-copy"></i> Reportes</a>
+				<li class="active">
+						<a href="#!"><i class="icofont icofont-ui-copy"></i> Reportes</a>
 				</li>
 				<li>
 						<a href="#!" class="ocultar-mostrar-menu"><i class="icofont icofont-swoosh-left"></i> Ocultar menú</a>
@@ -131,10 +132,10 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 			<div class="row">
 				<div class="col-lg-12 contenedorDeslizable">
 				<!-- Empieza a meter contenido principal dentro de estas etiquetas -->
-				 <h2 class="purple-text text-lighten-1"><i class="icofont icofont-options"></i> Panel de configuraciones generales</h2>
+				 <h2 class="purple-text text-lighten-1"><i class="icofont icofont-options"></i> Reportería</h2>
 
 					<ul class="nav nav-tabs">
-					<li class="active hidden"><a href="#tabAgregarLabo" data-toggle="tab">Agregar laboratorio</a></li>
+					<li class="active"><a href="#tabAgregarLabo" data-toggle="tab">Resumen de caja</a></li>
 					<li class="hidden"><a href="#tabCambiarPassUser" data-toggle="tab">Cambiar contraseña</a></li>
 					
 					</ul>
@@ -144,11 +145,39 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 						<!--Clase para las tablas-->
 						<div class="tab-pane fade in active container-fluid" id="tabAgregarLabo">
 						<!--Inicio de pestaña 01-->
-							<div class="col-xs-3 text-center"><h2><small>S/. </small><span id="h2Ventas"></span></h2><h3>Ventas</h3> </div>
-							<div class="col-xs-3 text-center"><h2><small>S/. </small><span id="h2Ingresos"></span></h2><h3>Ingresos</h3></div>
-							<div class="col-xs-3 text-center"><h2><small>S/. </small><span id="h2Egresos"></span></h2><h3>Egresos</h3></div>
-							<div class="col-xs-3 text-center"><h2><span id="h2Pedidos"></span></h2><h3>Pedidos</h3></div>
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, eos vero cum tenetur minus eius enim eaque at saepe in nulla fugit molestiae libero nostrum inventore aperiam unde provident nesciunt.</p>
+								<div class="row">
+									<div>
+										<p>Seleccione una fecha para filtrar por favor:</p>
+										<div class="form-inline">
+											<div class="form-group">
+												<div class="sandbox-container input-group">
+													<input  id="dtpFechaInicio"  type="text" class="form-control text-center" placeholder="Seleccione una fecha">
+													<div class="input-group-btn">
+														<button class="btn btn-morado btn-outline" id="btnBuscarVentas"><i class="icofont icofont-search-alt-1"></i></button>
+													</div>
+												
+											</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							<p>Fecha generada: <strong><span id="spanFechaLetra"></span></strong></p>
+							<div class="row">
+								<strong>
+									<div class="col-xs-3">Cliente</div>
+									<div class="col-xs-2">Tipo</div>
+									<div class="col-xs-1">Monto</div>
+									<div class="col-xs-2">Resp.</div>
+									<div class="col-xs-3">Fecha</div>
+								</strong>
+							</div>
+							<div class="" id="divRowResumenVentas"></div>
+							<div class="text-center hidden" id="divRowResumenSuma" style="padding-top: 15px;">
+								<p><strong>Total de Ventas: S/. <span id="spanVentasSuma"></span></strong></p>
+								<p><strong>Total de Ingresos: S/. <span id="spanIngresosSuma"></span></strong></p>
+								<p><strong>Total de Egresos: S/. <span id="spanEgresosSuma"></span></strong></p>
+							</div>
+							
 
 						<!--Fin de pestaña 01-->
 						</div>
@@ -200,52 +229,39 @@ $('input').keypress(function (e) {
 		//$(this).parent().next().children().removeAttr('disabled'); //agregar atributo desabilitado
 	} 
 });
-$.ajax({url:'php/devolverVentaDelDia.php', type:'POST', data: {fecha: moment().format('DD/MM/YYYY')}}).done(function (resp) { console.log(resp)
-	if(resp!=-1){
-		if(resp==''){
-			$('#h2Ventas').text('0.00');
-		}else{
-			$('#h2Ventas').text(parseFloat(resp).toFixed(2));
-		}
+$('.sandbox-container input').datepicker({language: "es", autoclose: true, todayBtn: "linked", todayHighlight: true});
+$('#dtpFechaInicio').val(moment().format('DD/MM/YYYY'));
+
+
+});//fin de document ready
+$('#btnBuscarVentas').click(function () {
+	moment.locale('es')
+	var letraFecha= moment($('#dtpFechaInicio').val(), 'DD/MM/YYYY').format('dddd, DD [de] MMMM [de] YYYY');
+	$('#spanFechaLetra').text(letraFecha);
+	$('#divRowResumenVentas').children().remove();
+	var sumaVentas=0, sumaIngresos=0, sumaEgresos=0;
+	$.ajax({url: 'php/solicitarVentasPorDia.php', type: 'POST', data: {fecha: $('#dtpFechaInicio').val()}}).done(function (resp) {
+		if(JSON.parse(resp).length==0){
+			$('#divRowResumenSuma').addClass('hidden');
+			$('#divRowResumenVentas').append('<p>No hay resultados para ésta fecha.</p>');
+		}else{$('#divRowResumenSuma').removeClass('hidden');}
+		$.each(JSON.parse(resp), function (i, dato) {
+			$('#divRowResumenVentas').append(`<div class="row"><div class="col-xs-3">${i+1}. ${dato.cliRazonSocial}</div>
+					<div class="col-xs-2">${dato.tpDescripcion}</div>
+					<div class="col-xs-1">${parseFloat(dato.cajaMontoTotal).toFixed(2)}</div>
+					<div class="col-xs-2">${dato.usuNombres}</div>
+					<div class="col-xs-3">${moment(dato.cajaFechaRegistro).format('DD/MM/YYYY h:mm a')}</div></div>`);
+			if(dato.idTipoProceso==5 ){sumaVentas+=parseFloat(dato.cajaMontoTotal);}
+			else if(dato.idTipoProceso==6){sumaIngresos+=parseFloat(dato.cajaMontoTotal);}
+			else if(dato.idTipoProceso==7){sumaEgresos-=parseFloat(dato.cajaMontoTotal);}
 		
-	}
-});
-$.ajax({url:'php/solicitarSumaIngresos.php', type:'POST'}).done(function (resp) { console.log(resp)
-	if(resp!=-1){
-		if(resp==''){
-			$('#h2Ingresos').text('0.00');
-		}else{
-			$('#h2Ingresos').text(parseFloat(resp).toFixed(2));
-		}
-		
-	}
-});
-
-$.ajax({url:'php/solicitarSumaEgresos.php', type:'POST'}).done(function (resp) { console.log(resp)
-	if(resp!=-1){
-		if(resp==''){
-			$('#h2Egresos').text('0.00');
-		}else{
-			$('#h2Egresos').text(parseFloat(resp).toFixed(2));
-		}
-		
-	}
-});
-
-$.ajax({url:'php/solicitarSumaMesasOcupadas.php', type:'POST'}).done(function (resp) { console.log(resp)
-	if(resp!=-1){
-		if(resp==''){
-			$('#h2Pedidos').text('0.00');
-		}else{
-			$('#h2Pedidos').text(resp);
-		}
-		
-	}
-});
-
+		$('#spanVentasSuma').text(parseFloat(sumaVentas).toFixed(2));
+		$('#spanIngresosSuma').text(parseFloat(sumaIngresos).toFixed(2));
+		$('#spanEgresosSuma').text(parseFloat(sumaEgresos).toFixed(2));
+		});
+	});
 
 });
-
 
 </script>
 

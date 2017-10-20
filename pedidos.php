@@ -215,8 +215,10 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 <script>
 $(document).ready(function () {
 	datosUsuario();
+	listarMesasEstado();
 });
-$.ajax({url:'php/retornarMesaEstado.php', type: 'POST'}).done(function (resp) {// console.log(resp)
+function listarMesasEstado() {
+	$.ajax({url:'php/retornarMesaEstado.php', type: 'POST'}).done(function (resp) {// console.log(resp)
 	$.each(JSON.parse(resp), function (i, dato) {
 		//$('#divMesas #'+dato.idMesa).addClass(dato.estadoMesa);
 		if(dato.estadoMesa=='mesaOcupado'){
@@ -225,7 +227,8 @@ $.ajax({url:'php/retornarMesaEstado.php', type: 'POST'}).done(function (resp) {/
 				$(`#${dato.idMesa}`).removeClass('mesaOcupado').removeClass('btn-rojoFresa').addClass(`${dato.estadoMesa}`).addClass('btn-morado');
 			}
 	})
-});
+	});
+}
 	$('#regMesaCliente').collapse();
 	$('.btnMesa').click(function () {
 		var idMesa=$(this).attr('id');
@@ -247,7 +250,7 @@ $.ajax({url:'php/retornarMesaEstado.php', type: 'POST'}).done(function (resp) {/
 			$.ajax({url:'php/listarPedidoMesaOcupada.php', type: 'POST', data: {mesa: idMesa}}).done(function (resp) {
 			//console.log(resp);
 			$.each(JSON.parse(resp), function (i, dato) {
-				$('#regMesaCliente .panel-body').append(`<div class="row divUnSoloProducto" id="${dato.idProducto}"><div class="col-xs-7"><button class="btn btn-success btn-circle btn-NoLine btn-outline" id="${dato.idProducto}"><i class="icofont icofont-check"></i></button> <h4 class="h4NombreProducto" id="${dato.idProducto}">${dato.prodDescripcion}</h4> </div><div class="col-xs-3"> <span class="cantidadProducto">${dato.pedCantidad}</span> <button class="btn btn-warning btn-circle btn-NoLine btnSumarProducto"><i class="icofont icofont-plus-circle"></i></button></div><div class="col-xs-2"><h5 class="h4precioProducto"><span class="valorUndProducto sr-only">${dato.prodPrecio}</span>S/. <span class="valorTotalProducto">${parseFloat(dato.subTotal).toFixed(2)}</span></h5></div></div>`);
+				$('#regMesaCliente .panel-body').append(`<div class="row divUnSoloProducto guardado" id="${dato.idProducto}"><div class="col-xs-7"><button class="btn btn-success btn-circle btn-NoLine btn-outline" id="${dato.idProducto}"><i class="icofont icofont-check"></i></button> <h4 class="h4NombreProducto mayuscula" id="${dato.idProducto}">${dato.prodDescripcion}</h4> </div><div class="col-xs-3"> <span class="cantidadProducto">${dato.pedCantidad}</span> <button class="btn btn-warning btn-circle btn-NoLine btnSumarProducto"><i class="icofont icofont-plus-circle"></i></button> <span class="cantAnteriorProd">${dato.pedCantidad}</span></div><div class="col-xs-2"><h5 class="h4precioProducto"><span class="valorUndProducto sr-only">${dato.prodPrecio}</span>S/. <span class="valorTotalProducto">${parseFloat(dato.subTotal).toFixed(2)}</span></h5></div></div>`);
 				cantRes=parseInt($(`.${dato.tpNombreWeb}`).find('.platoResValor').text())+1;
 				$(`.${dato.tpNombreWeb}`).find('.platoResValor').text(cantRes);
 
@@ -269,6 +272,7 @@ $.ajax({url:'php/retornarMesaEstado.php', type: 'POST'}).done(function (resp) {/
 		});
 	}
 	$('#btnCancelarPedido').click(function () {// console.log('cli')
+		listarMesasEstado();
 		$('#divPedido').addClass('sr-only');
 		$('#divMesas').removeClass('sr-only');
 	});
@@ -332,6 +336,17 @@ $.ajax({url:'php/retornarMesaEstado.php', type: 'POST'}).done(function (resp) {/
 				sumaPedido+=parseFloat($(dato).text());
 				$('#smallPreciototal').text(sumaPedido.toFixed(2));	
 			});
+			$('#btnGuardarPedido').removeClass('disabled');
+		}else if(maximoStock==1){
+			$('.divUnSoloProductoDisponible').find(`#${idProd}`).next().find('.stockFict').text(0);
+			contenedorSuma.find('.cantidadProducto').text(cantidadAdd);
+			contenedorSuma.find('.valorTotalProducto').text(totalAdd);
+			var sumaPedido=0;
+			$.each($('.valorTotalProducto'), function (i, dato) {
+				sumaPedido+=parseFloat($(dato).text());
+				$('#smallPreciototal').text(sumaPedido.toFixed(2));	
+			});
+			$('#btnGuardarPedido').removeClass('disabled');
 		}
 		
 	});
@@ -351,11 +366,12 @@ $.ajax({url:'php/retornarMesaEstado.php', type: 'POST'}).done(function (resp) {/
 		}
 	});
 	$('#btnGuardarPedido').click(function () { moment.locale('es');
-		var prodFueraStock=''; var iteraciones=0;
+		var prodFueraStock=''; var iteraciones=0, iteraciones2=0;
 		var cantDivsPedidosNuevos=$('#regMesaCliente .divUnSoloProducto').length;
 		var cantDivPedidosGuardados=$('#regMesaCliente .guardado').length;
 		var cantDivPedidosActualizados=$('#regMesaCliente .actualizar').length;
-		console.log('total '+cantDivsPedidosNuevos)
+
+		console.log('total nuevos '+cantDivsPedidosNuevos)
 		console.log('guardados '+cantDivPedidosGuardados)
 		console.log('actualizado '+cantDivPedidosActualizados)
 		//var datosPedido=[];
@@ -373,12 +389,11 @@ $.ajax({url:'php/retornarMesaEstado.php', type: 'POST'}).done(function (resp) {/
 
 					$.each(contenedoresProdPorGuardar, function (i, dato) {// console.log(!$(dato).hasClass('actualizar') ); console.log(!$(dato).hasClass('guardado'))
 						$('#spanOutStock').children().remove();
-						if(!$(dato).hasClass('actualizar') && !$(dato).hasClass('guardado')  ){
-							idProducto=$(dato).attr('id');
-							cantPedido=$(dato).find('.cantidadProducto').text();
-							precPro=$(dato).find('.valorUndProducto').text();
-							prodRowNombre=$(dato).find('.h4NombreProducto').text();
-							
+						idProducto=$(dato).attr('id');
+						cantPedido=$(dato).find('.cantidadProducto').text();
+						precPro=$(dato).find('.valorUndProducto').text();
+						prodRowNombre=$(dato).find('.h4NombreProducto').text();
+						if(!$(dato).hasClass('actualizar') && !$(dato).hasClass('guardado') ){
 							//datosPedido.push({idProd: idProducto,cantidad: cantPedido, producto: prodRowNombre} );
 							$.ajax({url:'php/insertarPedidoDetalle.php', type: 'POST', data:{idProd: idProducto, precio:precPro ,cantidad: cantPedido, producto: prodRowNombre, idPedido: resp }}).done(function (resp) {
 								console.log(resp);
@@ -391,7 +406,7 @@ $.ajax({url:'php/retornarMesaEstado.php', type: 'POST'}).done(function (resp) {/
 										}else{
 											textoProductosCocina+=' '+$(dato).find('.cantidadProducto').text()+'   '+$(dato).find('.h4NombreProducto').text()+'\n';
 										}
-										if(cantDivsPedidosNuevos-cantDivPedidosGuardados-cantDivPedidosActualizados-1==iteraciones){console.log(textoProductosBar)}else{iteraciones++;}
+										if(cantDivsPedidosNuevos-cantDivPedidosGuardados-cantDivPedidosActualizados-1==iteraciones){console.log(textoProductosBar); console.log(textoProductosCocina) impresionTickers(textoProductosBar, textoProductosCocina); }else{iteraciones++;}
 									}else{
 										$('#spanOutStock').append('<p> <strong> '+dato2.stockActual+'</strong> de '+$(`#regMesaCliente #${dato2.idProducto}`).find('.h4NombreProducto').text()+'</p>');
 										$('.modal-fueraStock').modal('show');
@@ -399,7 +414,28 @@ $.ajax({url:'php/retornarMesaEstado.php', type: 'POST'}).done(function (resp) {/
 								});
 								listarProductos();
 							});
-					} // Fin de IF no guardado, No actualizado osea pedido nuevo
+						} // Fin de IF no guardado, No actualizado osea pedido nuevo
+						else if($(dato).hasClass('actualizar')){
+							var differencia=$(dato).find('.cantidadProducto').text()-$(dato).find('.cantAnteriorProd').text();
+							console.log(differencia);
+							if(differencia>0){
+								$.ajax({url: 'php/actualizarProductoPedido.php', type: 'POST', data:{idProd:idProducto , mesa: $('#spanNumMesa').text() , cantidad:cantPedido,diferencia:differencia}}).done(function (resp) {
+									if(resp>0){
+
+										$(`#regMesaCliente #${dato.idProducto}`).addClass('guardado').find('.btnRemoverProducto').html('<i class="icofont icofont-check"></i>').removeClass('btn-danger').addClass('btn-success').removeClass('btnRemoverProducto');
+										$(`#regMesaCliente #${dato.idProducto}`).find('.btnRestarProducto').remove();
+										if($(dato).find('.h4NombreProducto').hasClass('divProdBebida')){
+												textoProductosBar+=' '+differencia+'   '+$(dato).find('.h4NombreProducto').text()+'\n';
+											}else{
+												textoProductosCocina+=' '+differencia+'   '+$(dato).find('.h4NombreProducto').text()+'\n';
+											}
+											if(cantDivPedidosActualizados-1==iteraciones2){console.log(textoProductosBar); console.log(textoProductosCocina); impresionTickers(textoProductosBar, textoProductosCocina);}else{iteraciones2++;}
+										$(dato).removeClass('actualizar').addClass('guardado');
+										$(dato).find('.cantAnteriorProd').text($(dato).find('.cantidadProducto').text());
+									}
+								});
+							}
+						}
 
 					}).promise().done(function (resp) { //Promise sólo corre cuando acaba el each
 						
@@ -433,6 +469,19 @@ $('#btnRefreshProducts').click(function () {
 $('#btnCerrarSesion').click(function () { console.log('ho')
 	window.location.href ='php/desconectar.php';
 });
+function impresionTickers(textoProductosBar, textoProductosCocina){
+	if(textoProductosBar.length>0){console.log('A Bar:\n'+textoProductosBar)
+		$.ajax({url:'printTicketBar.php', type:'POST', data: {hora:moment().format('DD [de] MMMM [de] YYYY h:mm a'),numMesa:$('#spanNumMesa').text(), texto:textoProductosBar}}).done(function (resp) {
+		console.log(resp)
+		});
+	}else{exito1=true;}
+	if(textoProductosCocina.length>0){console.log('A cocina:\n'+textoProductosCocina)
+		$.ajax({url:'printTicketCocina.php', type:'POST', data: {hora:moment().format('DD [de] MMMM [de] YYYY h:mm a'),numMesa:$('#spanNumMesa').text(), texto:textoProductosCocina}}).done(function (resp) {
+		console.log(resp)
+		});
+	}
+}
+
 </script>
 	
 	

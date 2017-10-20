@@ -10,6 +10,6 @@
 .btn-NoLine{border-color: transparent;}
 /*.divUnSoloProducto:hover{color:#7a39a2!important; background-color: #7a39a2!important}*/
 
-.divUnSoloProducto,#divProductosListado .row{padding-top: 5px;}
-.divUnSoloProducto:hover, #divProductosListado .row:hover{background-color: #f3f3f3;}
+.divUnSoloProducto,#divProductosListado .row, #divRowResumenVentas .row{padding-top: 5px;}
+.divUnSoloProducto:hover, #divProductosListado .row:hover, #divRowResumenVentas .row:hover{background-color: #f3f3f3; font-weight: 700; transition: all 0.5s; color:#673AB7;}
 

@@ -28,7 +28,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 		<link href="css/sidebarDeslizable.css?version=1.0.1" rel="stylesheet">
 		<link rel="stylesheet" href="css/cssBarraTop.css?version=1.0.1">
 		<link rel="stylesheet" href="css/icofont.css">
-		<link rel="stylesheet" href="css/snack.css?version=1.0.4">
+		<link rel="stylesheet" href="css/snack.css?version=1.0.6">
 		<link href="css/bootstrap-select.min.css" rel="stylesheet"> <!-- extraido de: https://silviomoreto.github.io/bootstrap-select/-->
 		<link rel="stylesheet" href="css/bootstrap-datepicker3.css"> <!-- extraído de: https://uxsolutions.github.io/bootstrap-datepicker/-->
 
@@ -74,7 +74,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 						<a href="usuarios.php"><i class="icofont icofont-users"></i> Usuarios</a>
 				</li>
 				<li>
-						<a href="#"><i class="icofont icofont-ui-copy"></i> Reportes</a>
+						<a href="reporte.php"><i class="icofont icofont-ui-copy"></i> Reportes</a>
 				</li>
 				<li>
 						<a href="#!" class="ocultar-mostrar-menu"><i class="icofont icofont-swoosh-left"></i> Ocultar menú</a>

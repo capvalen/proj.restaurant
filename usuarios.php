@@ -79,7 +79,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 						<a href="#"><i class="icofont icofont-users"></i> Usuarios</a>
 				</li>
 				<li>
-						<a href="#"><i class="icofont icofont-ui-copy"></i> Reportes</a>
+						<a href="reporte.php"><i class="icofont icofont-ui-copy"></i> Reportes</a>
 				</li>
 				<li>
 						<a href="#!" class="ocultar-mostrar-menu"><i class="icofont icofont-swoosh-left"></i> Ocultar menú</a>
@@ -175,61 +175,22 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 <!-- /#page-content-wrapper -->
 </div><!-- /#wrapper -->
 
-<!-- Modal para agregar producto nuevo a la BD -->
-<div class="modal fade modal-addUserBD" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-<div class="modal-dialog modal-sm" role="document">
-	<div class="modal-content">
-		<div class="modal-header-warning">
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			<h4 class="modal-title" id="myModalLabel"><i class="icofont icofont-help-robot"></i> Agregar nuevo usuario</h4>
-		</div>
-		<div class="modal-body">
-			<div class="container-fluid">
-			<div class="row">
-				<label for="">Apellidos:</label> <input type="text" class="form-control text-center mayuscula" id="txtModalApellidUser">
-				<label for="">Nombres:</label>
-				<input type="text" class="form-control text-center mayuscula" id="txtModalNombUser">
-				<label for="">D.N.I.:</label>
-				<input type="text" class="form-control text-center mayuscula" id="txtModalDniUser">
-				<label for="">Nick:</label>
-				<input type="text" class="form-control text-center" id="txtModalNickUser">
-				<label for="">Contraseña.:</label>
-				<input type="text" class="form-control text-center" id="txtModalPassUser">
-				<label for="">Nivel:</label>
-				<div  id="divSelectNivelListNew">
-					<select class="selectpicker mayuscula" title="Nivel de usuario..."  data-width="100%" data-live-search="true"">
-						<?php require 'php/listarNivelesOption.php'; ?>
-					</select>
-				</div>
-			</div>
-			<div class="" id="divCajaProductosExtrResultado" style="padding-top: 15px;">
-
-			</div>
-			</div>
-			<label class="text-danger labelError hidden" for=""><i class="icofont icofont-animal-squirrel"></i> Lo siento! <span class=mensaje></span></label>
-		</div>
-		
-		<div class="modal-footer">
-			<button class="btn btn-danger btn-outline" data-dismiss="modal" ><i class="icofont icofont-close"></i> Cerrar</button>
-			<button class="btn btn-success btn-outline" id="btnGuardarAddUser"><i class="icofont icofont-save"></i> Guardar</button>
-		</div>
-	</div>
-	</div>
-</div>
-
 		
 <!-- Modal para indicar que falta completar campos o datos con error -->
-	<div class="modal fade modal-faltaCompletar" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+	<div class="modal fade modal-borrarUsuario" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
 	<div class="modal-dialog modal-sm" role="document">
 		<div class="modal-content">
 			<div class="modal-header-danger">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title" id="myModalLabel"><i class="icofont icofont-help-robot"></i> Campos incorrectos o faltantes</h4>
+				<h4 class="modal-title" id="myModalLabel"><i class="icofont icofont-help-robot"></i> Eliminar usuario</h4>
 			</div>
 			<div class="modal-body">
-				Ups, un error: <i class="icofont icofont-animal-squirrel"></i> <strong id="lblFalta"></strong>
+				<p><span class="hidden" id="spanIdUser"></span>Deseas eliminar a «<span class="mayuscula" id="spanUser"></span>» de la funcion de «<span class="mayuscula" id="spanFuncion"></span>»</p>
 			</div>
-			<div class="modal-footer"> <button class="btn btn-danger btn-outline" data-dismiss="modal"><i class="icofont icofont-alarm"></i> Ok, revisaré</button></div>
+			<div class="modal-footer">
+				<button class="btn btn-default btn-outline" data-dismiss="modal"><i class="icofont icofont-close"></i> Cerrar</button>
+				<button class="btn btn-danger btn-outline" id="btnEliminarUser"><i class="icofont icofont-bin"></i> Sí, eliminar</button>
+			</div>
 		</div>
 		</div>
 	</div>
@@ -264,10 +225,10 @@ $('input').keypress(function (e) {
 });
 
 
-$.ajax({url:'php/listarUsuarios.php', data: 'POST'}).done(function (resp) { //console.log(resp)
+$.ajax({url:'php/listarUsuarios.php', data: 'POST'}).done(function (resp) { console.log(resp)
 	$.each(JSON.parse(resp), function (i, dato) {
 		$('#divUsuariosListado').append(`<div class="row">
-				<div class="col-xs-2 mayuscula"><button class="btn btn-danger btn-circle btn-NoLine btn-outline btnRemoverProducto" id="${dato.idProducto}"><i class="icofont icofont-close"></i></button>${i+1}. ${dato.Descripcion}</div>
+				<div class="col-xs-2 mayuscula"><button class="btn btn-danger btn-circle btn-NoLine btn-outline btnRemoverUsuario" id="${dato.idUsuario}"><i class="icofont icofont-close"></i></button>${i+1}. <span class="userFuncion">${dato.Descripcion}</span></div>
 				<div class="col-xs-3"><span class="apellidos mayuscula">${dato.usuApellidos}</span> <span class="nombres mayuscula">${dato.usuNombres}</span></div>
 				<div class="col-xs-2">${dato.usuNick}</div>
 				<div class="col-xs-1"><button class="btn btn-success btn-outline btn-NoLine btnConfigUser" id="${dato.idUsuario}"><i class="icofont icofont-options"></i></button></div></div>`);
@@ -300,7 +261,19 @@ $('#btnGuardarAddUser').click(function () {
 		});
 	}
 });
-
+$('#divUsuariosListado').on('click', '.btnRemoverUsuario', function () {
+	var idUser=$(this).attr('id');
+	var contenedor=$(this).parent().parent();
+	$('#spanIdUser').text(idUser);
+	$('#spanUser').text(contenedor.find('.apellidos').text() + ' ' +contenedor.find('.nombres').text() );
+	$('#spanFuncion').text(contenedor.find('.userFuncion').text() );
+	$('.modal-borrarUsuario').modal('show');
+});
+$('#btnEliminarUser').click(function () {
+	$.ajax({url: 'php/eliminarUsuario.php', type:'POST', data:{idUser:$('#spanIdUser').text()}}).done(function (resp) {
+		if(resp>0){window.location.href = 'usuarios.php';}
+	});
+});
 </script>
 
 </body>
