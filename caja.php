@@ -299,7 +299,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 	<div class="modal-content">
 		<div class="modal-header-success">
 			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			<h4 class="modal-title" id="myModalLabel"><i class="icofont icofont-help-robot"></i> Dato guardado con éxito</h4>
+			<h4 class="modal-title" id="myModalLabel"><i class="icofont icofont-help-robot"></i> Venta guardada con éxito</h4>
 		</div>
 		<div class="modal-body">
 			<p><strong>Venta guardada</strong>. Cuenta S/. <span id="spanVueltoEx"></span></p>
@@ -345,6 +345,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 		</div>
 		</div>
 	</div>
+<?php include 'php/llamandoModals.php'; ?>
 
 	
 <!-- jQuery -->
@@ -354,6 +355,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 <script src="js/bootstrap.min.js"></script>
 <script src="js/moment.js"></script>
 <script src="js/inicializacion.js"></script>
+<script src="js/accionesGlobales.js?version=1.1"></script>
 <script src="js/bootstrap-select.js"></script>
 <script src="js/bootstrap-datepicker.min.js"></script>
 <script src="js/bootstrap-datepicker.es.min.js"></script>
@@ -426,6 +428,9 @@ $('#btnRegresarAMesas').click(function () {
 	$('.platoResValor').text(0);
 
 });
+$('#txtCuantoPagaCliente').keypress(function (e) {
+	if (e.keyCode == 13) { 	$('#btbSalvarVenta').click(); }
+})
 $('#btnCancelarPedido').click(function () {
 	$.ajax({url:'php/cancelarPedido.php', type:'POST', data:{mesa:$('#idMesaSpan').text() , idUser: $.JsonUsuario.idUsuario}}).done(function (resp) {
 		//console.log(resp)
@@ -562,6 +567,43 @@ function listarProductos() {
 		//console.log(resp);
 	});
 }
+$('.DetalleMesa').on('click', '.btnSumarProducto', function () { 
+	var contenedor=$(this).parent().parent();
+	var idProd= contenedor.find('.h4NombreProducto').attr('id');
+	var preciov=parseFloat(contenedor.find('.valorUndProducto').text());
+	var idmesa=$('#idMesaSpan').text();
+
+	$.ajax({url:'php/agregarUnProductoAMesa.php', type: 'POST', data:{prod: idProd, mesa:idmesa, idUser: $.JsonUsuario.idUsuario, precio:preciov }}).done(function(resp){ //console.log(resp)
+		if(parseInt(resp)>0){
+			var cant=parseInt(contenedor.find('.cantidadProducto').text())+1;
+			contenedor.find('.cantidadProducto').text(cant);
+			contenedor.find('.valorTotalProducto').text(parseFloat(preciov*cant).toFixed(2));
+			var total=parseFloat(parseFloat($('#idTotalSpan').text())+preciov).toFixed(2);
+			$('#idTotalSpan').text(total);
+		}
+	});
+});
+$('.DetalleMesa').on('click', '.btnRestarProducto', function () { 
+	var contenedor=$(this).parent().parent();
+	var idProd= contenedor.find('.h4NombreProducto').attr('id');
+	var preciov=parseFloat(contenedor.find('.valorUndProducto').text());
+	var idmesa=$('#idMesaSpan').text();
+
+	if(contenedor.find('.cantidadProducto').text()>1){
+		$.ajax({url:'php/restarUnProductoAMesa.php', type: 'POST', data:{prod: idProd, mesa:idmesa, idUser: $.JsonUsuario.idUsuario, precio:preciov }}).done(function(resp){ //console.log(resp)
+			if(parseInt(resp)>0){
+				var cant=parseInt(contenedor.find('.cantidadProducto').text())-1;
+				contenedor.find('.cantidadProducto').text(cant);
+				contenedor.find('.valorTotalProducto').text(parseFloat(preciov*cant).toFixed(2));
+				var total=parseFloat(parseFloat($('#idTotalSpan').text())-preciov).toFixed(2);
+				$('#idTotalSpan').text(total);
+			}
+		});
+		
+	}
+
+	
+});
 
 // SELECT DATE_FORMAT(`cajaFechaRegistro`,'%d/%m/%Y') FROM `caja`
 </script>

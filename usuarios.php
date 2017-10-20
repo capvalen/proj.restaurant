@@ -233,6 +233,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 		</div>
 		</div>
 	</div>
+<?php include 'php/llamandoModals.php'; ?>
 
 	
 <!-- jQuery -->
@@ -242,6 +243,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 <script src="js/bootstrap.min.js"></script>
 <script src="js/moment.js"></script>
 <script src="js/inicializacion.js"></script>
+<script src="js/accionesGlobales.js?version=1.1"></script>
 <script src="js/bootstrap-select.js"></script>
 <script src="js/bootstrap-datepicker.min.js"></script>
 <script src="js/bootstrap-datepicker.es.min.js"></script>

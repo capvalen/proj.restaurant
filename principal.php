@@ -145,10 +145,10 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 						<div class="tab-pane fade in active container-fluid" id="tabAgregarLabo">
 						<!--Inicio de pestaña 01-->
 							<div class="col-xs-3 text-center"><h2><small>S/. </small><span id="h2Ventas"></span></h2><h3>Ventas</h3> </div>
-							<div class="col-xs-3 text-center"><h2><small>S/. </small>55.00</h2><h3>Ingresos</h3></div>
-							<div class="col-xs-3 text-center"><h2><small>S/. </small>55.00</h2><h3>Egresos</h3></div>
-							<div class="col-xs-3 text-center"><h2>84</h2><h3>Pedidos</h3></div>
-							Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, eos vero cum tenetur minus eius enim eaque at saepe in nulla fugit molestiae libero nostrum inventore aperiam unde provident nesciunt.
+							<div class="col-xs-3 text-center"><h2><small>S/. </small><span id="h2Ingresos"></span></h2><h3>Ingresos</h3></div>
+							<div class="col-xs-3 text-center"><h2><small>S/. </small><span id="h2Egresos"></span></h2><h3>Egresos</h3></div>
+							<div class="col-xs-3 text-center"><h2><span id="h2Pedidos"></span></h2><h3>Pedidos</h3></div>
+							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, eos vero cum tenetur minus eius enim eaque at saepe in nulla fugit molestiae libero nostrum inventore aperiam unde provident nesciunt.</p>
 
 						<!--Fin de pestaña 01-->
 						</div>
@@ -171,7 +171,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 </div>
 <!-- /#page-content-wrapper -->
 </div><!-- /#wrapper -->
-
+<?php include 'php/llamandoModals.php'; ?>
 
 	
 <!-- jQuery -->
@@ -181,6 +181,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 <script src="js/bootstrap.min.js"></script>
 <script src="js/moment.js"></script>
 <script src="js/inicializacion.js"></script>
+<script src="js/accionesGlobales.js?version=1.1"></script>
 <script src="js/bootstrap-select.js"></script>
 <script src="js/bootstrap-datepicker.min.js"></script>
 <script src="js/bootstrap-datepicker.es.min.js"></script>
@@ -188,7 +189,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 <!-- Menu Toggle Script -->
 <script>
 $(document).ready(function(){
-	
+datosUsuario();
 $('.selectpicker').selectpicker('refresh');
 
 $('.mitooltip').tooltip();
@@ -205,6 +206,38 @@ $.ajax({url:'php/devolverVentaDelDia.php', type:'POST', data: {fecha: moment().f
 			$('#h2Ventas').text('0.00');
 		}else{
 			$('#h2Ventas').text(parseFloat(resp).toFixed(2));
+		}
+		
+	}
+});
+$.ajax({url:'php/solicitarSumaIngresos.php', type:'POST'}).done(function (resp) { console.log(resp)
+	if(resp!=-1){
+		if(resp==''){
+			$('#h2Ingresos').text('0.00');
+		}else{
+			$('#h2Ingresos').text(parseFloat(resp).toFixed(2));
+		}
+		
+	}
+});
+
+$.ajax({url:'php/solicitarSumaEgresos.php', type:'POST'}).done(function (resp) { console.log(resp)
+	if(resp!=-1){
+		if(resp==''){
+			$('#h2Egresos').text('0.00');
+		}else{
+			$('#h2Egresos').text(parseFloat(resp).toFixed(2));
+		}
+		
+	}
+});
+
+$.ajax({url:'php/solicitarSumaMesasOcupadas.php', type:'POST'}).done(function (resp) { console.log(resp)
+	if(resp!=-1){
+		if(resp==''){
+			$('#h2Pedidos').text('0.00');
+		}else{
+			$('#h2Pedidos').text(resp);
 		}
 		
 	}
