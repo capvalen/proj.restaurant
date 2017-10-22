@@ -485,7 +485,7 @@ $('#btbSalvarVenta').click(function () {
 				});
 				var fecha=moment().format('DD/MM/YYYY H:mm a');
 				
-				$.ajax({url: 'printTicketCaja.php', type: 'POST', data: {hora: fecha, text: retornarCadenaImprimir() , usuario: $.JsonUsuario.usuNombres, cuentaTotal: $('#idTotalSpan').text(), paga: $('#txtCuantoPagaCliente').val(), cambio: vuelto} });
+				$.ajax({url: 'printTicketCaja.php', type: 'POST', data: {numMesa: $('#idMesaSpan').text(), hora: fecha, texto: retornarCadenaImprimir() , usuario: $.JsonUsuario.usuNombres, cuentaTotal: $('#idTotalSpan').text(), paga: $('#txtCuantoPagaCliente').val(), cambio: vuelto} });
 
 				$('.modal-finalizarPedidoAVenta').modal('hide');
 				$('.modal-VueltoConExito').modal('show');

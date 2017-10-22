@@ -30,6 +30,8 @@ try {
     $printer -> text("   ".$_POST['hora']."\n\n");
     $printer -> text("Cant.  Producto\n");
     $printer -> text("".$_POST['texto']." \n");
+    $printer -> text("----------------------------------------");
+    $printer -> text("     Total: S/. ".$_POST['cuentaTotal']." \n\n");
     $printer -> text("*  Usuario: ".$_POST['usuario']."  *\n");
     $printer -> cut();
 

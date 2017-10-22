@@ -406,7 +406,8 @@ function listarMesasEstado() {
 										}else{
 											textoProductosCocina+=' '+$(dato).find('.cantidadProducto').text()+'   '+$(dato).find('.h4NombreProducto').text()+'\n';
 										}
-										if(cantDivsPedidosNuevos-cantDivPedidosGuardados-cantDivPedidosActualizados-1==iteraciones){console.log(textoProductosBar); console.log(textoProductosCocina) impresionTickers(textoProductosBar, textoProductosCocina); }else{iteraciones++;}
+										if(cantDivsPedidosNuevos-cantDivPedidosGuardados-cantDivPedidosActualizados-1==iteraciones){console.log(textoProductosBar); console.log(textoProductosCocina); 
+											impresionTickers(textoProductosBar, textoProductosCocina); }else{iteraciones++;}
 									}else{
 										$('#spanOutStock').append('<p> <strong> '+dato2.stockActual+'</strong> de '+$(`#regMesaCliente #${dato2.idProducto}`).find('.h4NombreProducto').text()+'</p>');
 										$('.modal-fueraStock').modal('show');
@@ -471,12 +472,12 @@ $('#btnCerrarSesion').click(function () { console.log('ho')
 });
 function impresionTickers(textoProductosBar, textoProductosCocina){
 	if(textoProductosBar.length>0){console.log('A Bar:\n'+textoProductosBar)
-		$.ajax({url:'printTicketBar.php', type:'POST', data: {hora:moment().format('DD [de] MMMM [de] YYYY h:mm a'),numMesa:$('#spanNumMesa').text(), texto:textoProductosBar}}).done(function (resp) {
+		$.ajax({url:'printTicketBar.php', type:'POST', data: {hora:moment().format('DD [de] MMMM [de] YYYY h:mm a'),numMesa:$('#spanNumMesa').text(), texto:textoProductosBar, usuario: $.JsonUsuario.usuNombres}}).done(function (resp) {
 		console.log(resp)
 		});
 	}else{exito1=true;}
 	if(textoProductosCocina.length>0){console.log('A cocina:\n'+textoProductosCocina)
-		$.ajax({url:'printTicketCocina.php', type:'POST', data: {hora:moment().format('DD [de] MMMM [de] YYYY h:mm a'),numMesa:$('#spanNumMesa').text(), texto:textoProductosCocina}}).done(function (resp) {
+		$.ajax({url:'printTicketCocina.php', type:'POST', data: {hora:moment().format('DD [de] MMMM [de] YYYY h:mm a'),numMesa:$('#spanNumMesa').text(), texto:textoProductosCocina, usuario: $.JsonUsuario.usuNombres}}).done(function (resp) {
 		console.log(resp)
 		});
 	}

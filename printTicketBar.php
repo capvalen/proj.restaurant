@@ -29,8 +29,8 @@ try {
     $printer -> text("----------------------------------------");
     $printer -> text("   ".$_POST['hora']."\n\n");
     $printer -> text("Cant.  Producto\n");
-    $printer -> text("".$_POST['texto']." \n");
-    $printer -> text("*  Usuario: Infocat  *\n");
+    $printer -> text("".$_POST['texto']." \n\n");
+    $printer -> text("*  Usuario: ".$_POST['usuario']."  *\n");
     $printer -> cut();
 
     /* Close printer */

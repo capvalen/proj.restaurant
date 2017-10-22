@@ -175,7 +175,50 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 <!-- /#page-content-wrapper -->
 </div><!-- /#wrapper -->
 
+
+
+<!-- Modal para agregar producto nuevo a la BD -->
+<div class="modal fade modal-addUserBD" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+<div class="modal-dialog modal-sm" role="document">
+	<div class="modal-content">
+		<div class="modal-header-warning">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<h4 class="modal-title" id="myModalLabel"><i class="icofont icofont-help-robot"></i> Agregar nuevo usuario</h4>
+		</div>
+		<div class="modal-body">
+			<div class="container-fluid">
+			<div class="row">
+				<label for="">Apellidos:</label> <input type="text" class="form-control text-center mayuscula" id="txtModalApellidUser">
+				<label for="">Nombres:</label>
+				<input type="text" class="form-control text-center mayuscula" id="txtModalNombUser">
+				<label for="">D.N.I.:</label>
+				<input type="text" class="form-control text-center mayuscula" id="txtModalDniUser">
+				<label for="">Nick:</label>
+				<input type="text" class="form-control text-center" id="txtModalNickUser">
+				<label for="">Contraseña.:</label>
+				<input type="text" class="form-control text-center" id="txtModalPassUser">
+				<label for="">Nivel:</label>
+				<div  id="divSelectNivelListNew">
+					<select class="selectpicker mayuscula" title="Nivel de usuario..."  data-width="100%" data-live-search="true"">
+						<?php require 'php/listarNivelesOption.php'; ?>
+					</select>
+				</div>
+			</div>
+			<div class="" id="divCajaProductosExtrResultado" style="padding-top: 15px;">
+
+			</div>
+			</div>
+			<label class="text-danger labelError hidden" for=""><i class="icofont icofont-animal-squirrel"></i> Lo siento! <span class=mensaje></span></label>
+		</div>
 		
+		<div class="modal-footer">
+			<button class="btn btn-danger btn-outline" data-dismiss="modal" ><i class="icofont icofont-close"></i> Cerrar</button>
+			<button class="btn btn-success btn-outline" id="btnGuardarAddUser"><i class="icofont icofont-save"></i> Guardar</button>
+		</div>
+	</div>
+	</div>
+</div>
+
 <!-- Modal para indicar que falta completar campos o datos con error -->
 	<div class="modal fade modal-borrarUsuario" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
 	<div class="modal-dialog modal-sm" role="document">
