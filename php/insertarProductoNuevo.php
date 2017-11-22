@@ -3,7 +3,7 @@ header('Content-Type: text/html; charset=utf8');
 require("conectkarl.php");
 
 
-$sql= "call insertarProductoNuevo ('".$_POST['descripcion']."', ".$_POST['precio'].", ".$_POST['tipoProd']." );";
+$sql= "call insertarProductoNuevo ('".$_POST['descripcion']."', ".$_POST['precio'].", ".$_POST['tipoProd'].", ".$_POST['procedencia']."  );";
 //echo $sql;
 
 if ($llamadoSQL = $conection->query($sql)) { //Ejecución mas compleja con retorno de dato de sql del procedure.

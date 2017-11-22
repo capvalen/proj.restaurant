@@ -18,7 +18,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 		<meta name="description" content="">
 		<meta name="author" content="">
 
-		<title>Inicio: Infocat-Grifo</title>
+		<title>Inicio: Infocat Snack</title>
 
 		<!-- Bootstrap Core CSS -->
 		<link href="css/bootstrap.css" rel="stylesheet">
@@ -201,7 +201,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 				</div>
 			</div>
 			<div class="col-xs-3">
-				<h3 class="text-center">Mesa: <span id="idMesaSpan"></span></h3>
+				<h3 class="text-center">Mesa: <span id="idMesaSpan"></span></h3> <span class="hidden" id="idPedidoMesa"></span>
 				<h3 class="text-center">Total S/. <span id="idTotalSpan">36.50</span></h3>
 					<div class="container clContenedorCateg">
 						<?php include 'php/listarProductosCategoriaResumen.php'; ?>
@@ -225,37 +225,69 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 <div class="modal fade modal-preguntarCliente" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
 <div class="modal-dialog " role="document">
 	<div class="modal-content">
-		<div class="modal-header-info">
+		<div class="modal-header-wysteria">
 			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			<h4 class="modal-title" id="myModalLabel"><i class="icofont icofont-help-robot"></i> Tipo de cliente: <span id="spanIdInventario"></span></h4>
+			<h4 class="modal-title" id="myModalLabel"><i class="icofont icofont-help-robot"></i> Pago con efectivo: <span id="spanIdInventario"></span></h4>
 		</div>
 		<div class="modal-body">
-
 				<div class="container-fluid">
-					<div class="col-xs-6"><button class="btn  btn-primary btn-lg btn-block btn-outline" id="btnClienteSimple"><i class="icofont icofont-user-alt-2"></i> Cliente Simple</button></div>
-				<div class="col-xs-6"><button class="btn  btn-success btn-lg btn-block btn-outline" id="btnClienteEspecial"><i class="icofont icofont-business-man"></i> Cliente registrado</button></div>
+					<div class="col-xs-6"><button class="btn  btn-primary btn-lg btn-block btn-outline" id="btnClienteSimple"><i class="icofont icofont-money-bag"></i> Pago efectivo</button></div>
+				<div class="col-xs-6"><button class="btn  btn-success btn-lg btn-block btn-outline" id="btnClienteEspecial"><i class="icofont icofont-visa-alt"></i> Pago tarjeta</button></div>
 				</div>
-
-			<div class="row container" id="detProductoInv">
-				
-			</div>
 		</div>
 		<div class="modal-footer"> <button class="btn btn-danger btn-outline" data-dismiss="modal"><i class="icofont icofont-close"></i> Cancelar</button></div>
 	</div>
 </div>
 </div>
 
-<!-- Modal para finalizar el pedido como venta -->
+<!-- Modal para finalizar el pedido como venta con tarjeta -->
+<div class="modal fade modal-finalizarPedidoAVentaTarjeta" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+<div class="modal-dialog " role="document">
+	<div class="modal-content">
+		<div class="modal-header-success">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<h4 class="modal-title" id="myModalLabel"><i class="icofont icofont-help-robot"></i> Pago con tarjeta: <span id="spanIdInventario"></span></h4>
+		</div>
+		<div class="modal-body text-center">
+			<p>La cuenta de la <strong>«Mesa <span id="queMesaEsSpan2"></span>»</strong> es de </p>
+			<div><h3 style="display: inline-block; margin-top: 0px; margin-bottom: 0px;">S/. </h3> <h3 id="h3CuentaFinal2" style="display: inline-block;margin-top: 0px; margin-bottom: 0px;">0.00</h3></div>
+			<p class="">¿Con qué tarjeta está pagando el cliente?</p>
+			<div class="row ">
+				<div  id="divSelectTarjeta">
+					<select class="selectpicker mayuscula" title="Producto..."  data-width="50%" data-live-search="true">
+						<?php require 'php/listarTarjetasPagoOpt.php'; ?>
+					</select>
+				</div>
+			</div>
+			
+			
+			<div class="row ">
+				<p>Ingrese el monto de la tarjeta:</p>
+				<div class=" col-xs-6  col-xs-offset-3"><input type="number" id="txtCuantPagaClienteTarjet" class="form-control input-lg esMoneda text-center"></div>
+			</div>
+			<div class="row ">
+				<p>Monto restante en efectivo:</p>
+				<div class=" col-xs-6  col-xs-offset-3"><input type="number" id="txtCuantPagaClienteEfect" disabled class="form-control input-lg esMoneda text-center"></div>
+			</div>
+			<label class="text-danger text-center labelError hidden" for=""><i class="icofont icofont-animal-squirrel"></i> Lo siento! <span class=mensaje></span></label>
+		</div>
+		<div class="modal-footer"> <button class="btn btn-danger btn-outline" data-dismiss="modal"><i class="icofont icofont-close"></i> Cancelar</button>
+			<button class="btn btn-primary btn-outline" id="btbSalvarVentaTarjeta"><i class="icofont icofont-save"></i> Guardar</button></div>
+	</div>
+</div>
+</div>
+
+<!-- Modal para finalizar el pedido como venta con efectivo -->
 <div class="modal fade modal-finalizarPedidoAVenta" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
 <div class="modal-dialog " role="document">
 	<div class="modal-content">
 		<div class="modal-header-success">
 			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			<h4 class="modal-title" id="myModalLabel"><i class="icofont icofont-help-robot"></i> Tipo de cliente: <span id="spanIdInventario"></span></h4>
+			<h4 class="modal-title" id="myModalLabel"><i class="icofont icofont-help-robot"></i> Pago con efectivo: <span id="spanIdInventario"></span></h4>
 		</div>
 		<div class="modal-body">
 			<p class="text-center">La cuenta de la <strong>«Mesa <span id="queMesaEsSpan"></span>»</strong> es de </p>
-			<div class="text-center"><h3 style="display: inline-block; margin-top: 0px; margin-bottom: 0px;">S/. </h3> <h3 id="h3CuentaFinal" style="display: inline-block;margin-top: 0px; margin-bottom: 0px;">88.00</h3></div>
+			<div class="text-center"><h3 style="display: inline-block; margin-top: 0px; margin-bottom: 0px;">S/. </h3> <h3 id="h3CuentaFinal" style="display: inline-block;margin-top: 0px; margin-bottom: 0px;">0.00</h3></div>
 			<p class="text-center">¿Con cuánto está pagando el cliente?</p>
 			<div class="row ">
 				<div class=" col-xs-6  col-xs-offset-3"><input type="number" id="txtCuantoPagaCliente" class="form-control input-lg esMoneda text-center"></div>
@@ -314,7 +346,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 
 <!-- Modal para buscar un producto -->
 <div class="modal fade modal-buscarProducto" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-<div class="modal-dialog  role="document">
+<div class="modal-dialog"  role="document">
 	<div class="modal-content">
 		<div class="modal-header-morado">
 			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -405,8 +437,8 @@ $('.btnMesa').click(function () {
 		var sumaTotales=0, cantRes=0;
 		$('.contanedorDivsProductos').children().remove();
 		$.ajax({url:'php/listarPedidoMesaOcupada.php', type: 'POST', data: {mesa: iddeMesa}}).done(function (resp) {
-			//console.log(resp);
 			$.each(JSON.parse(resp), function (i, dato) {
+				$('#idPedidoMesa').text(dato.idPedido);
 				$('.contanedorDivsProductos').append(`<div class="divUnSoloProducto row"><div class="col-xs-7"><button class="btn btn-danger btn-circle btn-NoLine btn-outline btnRemoverProducto" id="${dato.idProducto}"><i class="icofont icofont-close"></i></button> <h4 class="h4NombreProducto mayuscula" id="${dato.idProducto}">${dato.prodDescripcion}</h4> </div><div class="col-xs-3"><button class="btn btn-warning btn-circle btn-NoLine btnRestarProducto"><i class="icofont icofont-minus-circle"></i></button> <span class="cantidadProducto">${dato.pedCantidad}</span> <button class="btn btn-warning btn-circle btn-NoLine btnSumarProducto"><i class="icofont icofont-plus-circle"></i></button></div><div class="col-xs-2"><h5 class="h4precioProducto"><span class="valorUndProducto sr-only">${dato.prodPrecio}</span>S/. <span class="valorTotalProducto">${parseFloat(dato.subTotal).toFixed(2)}</span></h5></div></div>`);
 				cantRes=parseInt($(`.${dato.tpNombreWeb}`).find('.platoResValor').text())+1;
 				$(`.${dato.tpNombreWeb}`).find('.platoResValor').text(cantRes);
@@ -457,19 +489,56 @@ $('body').on('click', '.btnRemoverProducto',function () {
 		});
 	}
 });
+
 $('#btnCobrarCliente').click(function () {
 	$('#queMesaEsSpan').text($('#idMesaSpan').text())
 	$('#h3CuentaFinal').text($('#idTotalSpan').text())
 	$('.modal-preguntarCliente').modal('show');
+	$('#txtCuantoPagaCliente').val('0.00');
 });
 $('.modal-finalizarPedidoAVenta').on('shown.bs.modal', function() {
 	$('#txtCuantoPagaCliente').focus();
+});
+$('#btnClienteEspecial').click(function(){
+	$('#queMesaEsSpan').text($('#idMesaSpan').text())
+	$('#h3CuentaFinal2').text($('#idTotalSpan').text())
+	$('#spanTipoCliente').text(2);
+	$('.modal-preguntarCliente').modal('hide');
+	$('.modal-finalizarPedidoAVentaTarjeta').modal('show');
+
 });
 $('#btnClienteSimple').click(function(){
 	$('#spanTipoCliente').text(1);
 	$('.modal-preguntarCliente').modal('hide');
 	$('.modal-finalizarPedidoAVenta').modal('show');
 
+});
+$('#btbSalvarVentaTarjeta').click(function () {
+	var idMod=$('#divSelectTarjeta').find('li.selected a').attr('data-tokens');
+	if( $('#txtCuantPagaClienteTarjet').val()==''){
+		$('.modal-finalizarPedidoAVentaTarjeta .labelError').removeClass('hidden').find('.mensaje').text('No se puede guardar montos vacíos.');	}
+	else if(idMod==null){ $('.modal-finalizarPedidoAVentaTarjeta .labelError').removeClass('hidden').find('.mensaje').text('Debe selecionar una tarjeta.');}
+	else{
+		$.ajax({url:'php/insertarVentaFinalTarjeta.php', type: 'POST', data: {mesa: $('#idMesaSpan').text(), idUser: $.JsonUsuario.idUsuario, idCli : $('#spanTipoCliente').text(), montoTotal: $('#idTotalSpan').text(), idModo: idMod,  pagaTarj: $('#txtCuantPagaClienteTarjet').val(), pagaEfe: $('#txtCuantPagaClienteEfect').val() }}).done(function (resp) { //console.log(resp)
+			if(parseInt(resp)>0){
+				var vuelto= parseFloat($('#txtCuantPagaClienteTarjet').val()-$('#idTotalSpan').text()).toFixed(2);
+
+				$.each($('.divUnSoloProducto'), function (i, dato) {
+				$.ticket.push({'id': $(dato).find('.h4NombreProducto').attr('id'), 'nomProducto': $(dato).find('.cantidadProducto').text() +' Und. '+ $(dato).find('.h4NombreProducto').text() , 'cant': $(dato).find('.cantidadProducto').text(), 'sub': $(dato).find('.valorTotalProducto').text() });
+				});
+				var fecha=moment().format('DD/MM/YYYY H:mm a');
+				
+				$.ajax({url: 'printTicketCaja.php', type: 'POST', data: {numMesa: $('#idMesaSpan').text(), hora: fecha, texto: retornarCadenaImprimir() , usuario: $.JsonUsuario.usuNombres, cuentaTotal: $('#idTotalSpan').text(), paga: $('#txtCuantPagaClienteTarjet').val(), cambio: '0.00'} });
+
+				$('.modal-finalizarPedidoAVentaTarjeta').modal('hide');
+				$('.modal-VueltoConExito').modal('show');
+				$('#h3VueltoFinal').text('0.00');
+				$('#spanVueltoEx').text(parseFloat($('#idTotalSpan').text()).toFixed(2));
+				$('#btnRegresarAMesas').click();
+				$('#btnObtenerEstadoMesas').click();
+			}
+		});
+	}
 });
 $('#btbSalvarVenta').click(function () {
 	if($('#txtCuantoPagaCliente').val()< parseFloat($('#h3CuentaFinal').text()) || $('#txtCuantoPagaCliente').val()==''){
@@ -493,14 +562,9 @@ $('#btbSalvarVenta').click(function () {
 				$('#spanVueltoEx').text(parseFloat($('#idTotalSpan').text()).toFixed(2));
 				$('#btnRegresarAMesas').click();
 				$('#btnObtenerEstadoMesas').click();
-
-
-			
-
 			}
 		});
 	}
-
 });
 
 function retornarCadenaImprimir(){
@@ -574,8 +638,9 @@ $('.DetalleMesa').on('click', '.btnSumarProducto', function () {
 	var preciov=parseFloat(contenedor.find('.valorUndProducto').text());
 	var idmesa=$('#idMesaSpan').text();
 
-	$.ajax({url:'php/agregarUnProductoAMesa.php', type: 'POST', data:{prod: idProd, mesa:idmesa, idUser: $.JsonUsuario.idUsuario, precio:preciov }}).done(function(resp){ //console.log(resp)
-		if(parseInt(resp)>0){
+	$.ajax({url:'php/sumarUnProductoAMesa.php', type: 'POST', data:{idProd: idProd, mesa:idmesa, idUser: $.JsonUsuario.idUsuario, cantidad:1 }}).done(function(resp){// console.log(resp)
+		var response=JSON.parse(resp)[0];
+		if(response.respuesta=='Y'){
 			var cant=parseInt(contenedor.find('.cantidadProducto').text())+1;
 			contenedor.find('.cantidadProducto').text(cant);
 			contenedor.find('.valorTotalProducto').text(parseFloat(preciov*cant).toFixed(2));
@@ -599,13 +664,36 @@ $('.DetalleMesa').on('click', '.btnRestarProducto', function () {
 				var total=parseFloat(parseFloat($('#idTotalSpan').text())-preciov).toFixed(2);
 				$('#idTotalSpan').text(total);
 			}
-		});
-		
+		});	
 	}
-
-	
 });
-
+$('#txtCuantPagaClienteTarjet').keyup(function (e) {
+	var cantT=parseFloat($('#h3CuentaFinal2').text());
+	var pagT=parseFloat($('#txtCuantPagaClienteTarjet').val());
+	//resF= cantT-pagT; console.log(resF)
+	if(resF>=0){$('#txtCuantPagaClienteEfect').val(resF.toFixed(2))}
+		else{$('#txtCuantPagaClienteEfect').val('0.00')}
+});
+$('.modal-buscarProducto').on('click', '.btnAgregarProducto', function () {
+	var contenedor=$(this).parent().parent();
+	var idProd=contenedor.attr('id');
+	var preccio=parseFloat(contenedor.find('.valorProducto').text());
+	if($('.contanedorDivsProductos').find('#'+idProd).html()==null){
+		$('.contanedorDivsProductos').append(`<div class="divUnSoloProducto row"><div class="col-xs-7"><button class="btn btn-danger btn-circle btn-NoLine btn-outline btnRemoverProducto" id="${idProd}"><i class="icofont icofont-close"></i></button> <h4 class="h4NombreProducto mayuscula" id="${idProd}">${contenedor.find('.h4NombreProducto').text()}</h4> </div><div class="col-xs-3"><button class="btn btn-warning btn-circle btn-NoLine btnRestarProducto"><i class="icofont icofont-minus-circle"></i></button> <span class="cantidadProducto">1</span> <button class="btn btn-warning btn-circle btn-NoLine btnSumarProducto"><i class="icofont icofont-plus-circle"></i></button></div><div class="col-xs-2"><h5 class="h4precioProducto"><span class="valorUndProducto sr-only">${preccio}</span>S/. <span class="valorTotalProducto">${preccio}</span></h5></div></div>`);
+		$.ajax({url: 'php/insertarPedidoDetalle.php', type:'POST', data:{idProd:idProd ,  precio:preccio, cantidad:1,  idPedido: $('#idPedidoMesa').text() }}).done(function (resp) { console.log(resp)
+				var response=JSON.parse(resp)[0];
+				if(response.respuesta=='Y'){
+					
+					var cant=1;
+					var total=parseFloat(parseFloat($('#idTotalSpan').text())+preccio).toFixed(2);
+					$('#idTotalSpan').text(total);
+			}
+		});
+	}else{
+		$('.contanedorDivsProductos').find('#'+idProd).parent().parent().find('.btnSumarProducto').click();
+	}
+	$('.modal-buscarProducto').modal('hide');
+});
 // SELECT DATE_FORMAT(`cajaFechaRegistro`,'%d/%m/%Y') FROM `caja`
 </script>
 

@@ -2,8 +2,8 @@
 header('Content-Type: text/html; charset=utf8');
 require("conectkarl.php");
 
-
-$sql= "call actualizarStockPrecioProducto (".$_POST['idProd'].",".$_POST['precio'].", ".$_POST['categoria'].", ".$_POST['idUser'].", ".$_POST['cantidad']." );";
+//echo "call insertarVentaFinal (".$_POST['mesa'].", ".$_POST['cuantoCobra'].", ".$_POST['idUser'].", ".$_POST['idCli'].", ".$_POST['montoTotal']." );";
+$sql= "call insertarVentaFinalTarjeta (".$_POST['mesa'].", ".$_POST['idUser'].", ".$_POST['idCli'].", ".$_POST['montoTotal'].", ".$_POST['idModo'].", ".$_POST['pagaTarj'].", ".$_POST['pagaEfe']." );";
 //echo $sql;
 
 if ($llamadoSQL = $conection->query($sql)) { //Ejecución mas compleja con retorno de dato de sql del procedure.

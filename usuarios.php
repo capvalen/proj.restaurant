@@ -1,7 +1,10 @@
 <?php
 session_start();
 if (@!$_SESSION['Atiende']){//sino existe enviar a index
-	//header("Location:index.php");
+	header("Location:index.php");
+}else{
+	if($_SESSION['Power']==3){header("Location:pedidos.php");}
+	if($_SESSION['Power']==2){header("Location:caja.php");}
 }
 ?>
 <!DOCTYPE html>
@@ -15,7 +18,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 		<meta name="description" content="">
 		<meta name="author" content="">
 
-		<title>Inicio: Infocat-Grifo</title>
+		<title>Inicio: Infocat Snack</title>
 
 		<!-- Bootstrap Core CSS -->
 		<link href="css/bootstrap.css" rel="stylesheet">

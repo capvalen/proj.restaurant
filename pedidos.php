@@ -18,8 +18,9 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 </head>
 <body>
 <style>
-	.divUnSoloProductoDisponible{padding-top: 5px; padding-bottom: 5px;}
-	.divUnSoloProducto:hover{background-color: transparent!important;}
+	.divUnSoloProducto, .divUnSoloProductoDisponible{padding-top: 5px; padding-bottom: 5px; margin-right: 0px; margin-left: 0px;}
+	.divUnSoloProducto:hover,.divUnSoloProductoDisponible:hover{background-color: #f3f3f3; transition: all 0.4s ease-in-out;}
+	/*.divUnSoloProducto:hover{background-color: transparent!important;}*/
 	.divPrincipal{margin-top:0px!important;}
 </style>
 
@@ -27,7 +28,12 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 	
 
 	<div class="row" id="divMesas">
-		<div class="text-center" ><h1 style="color: #442e9e; display: inline-block;"><i class="icofont icofont-fast-food"></i> Pedidos en Casa de Barro <small class="mayuscula">- <?php echo $_SESSION['Atiende']; ?></small></h1> <button style="margin-top: 20px; margin-right: 10px;" class="btn btn-success btn-outline pull-right" id="btnCerrarSesion"><i class="icofont icofont-external-link"></i> Cerrar sesión</button></div>
+		<div class="container-fluid  text-center" ><h2 style="color: #442e9e; display: inline-block;"><i class="icofont icofont-fast-food"></i> Pedidos en Casa de Barro <small class="mayuscula">- <?php echo $_SESSION['Atiende']; ?></small></h2>
+		</div>
+		<div class=" container-fluid ">
+			<button style="margin-top: 20px; margin-right: 10px;" class="btn btn-success btn-outline pull-left" id="btnActualizarMesas2"><i class="icofont icofont-refresh"></i> Actualizar mesas</button>
+			<button style="margin-top: 20px; margin-right: 10px;" class="btn btn-danger btn-outline pull-right" id="btnCerrarSesion"><i class="icofont icofont-external-link"></i> Cerrar sesión</button>
+		</div>
 		<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="1"><i class="icofont icofont-food-cart"></i> Mesa 1</button></div>
 		<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="2"><i class="icofont icofont-food-cart"></i> Mesa 2</button></div>
 		<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="3"><i class="icofont icofont-food-cart"></i> Mesa 3</button></div>
@@ -159,7 +165,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 		</div>
 	</div>
 	<hr>
-		<p>Version: 1.0 Compilado: 2017.09.21. Desarrollado por: <a href="https://www.facebook.com/capvalen">Carlos Pariona Valencia</a>. Empresa: <a href="https://www.facebook.com/infocat.soluciones/"> Infocat Soluciones SAC</a></p>
+		<p><?php include 'php/version.php' ?>. Desarrollado por: <a href="https://www.facebook.com/infocat.soluciones/"> Infocat Soluciones SAC</a> para <strong>Casa de barro</strong></p>
 
 
 </div>
@@ -229,106 +235,123 @@ function listarMesasEstado() {
 	})
 	});
 }
-	$('#regMesaCliente').collapse();
-	$('.btnMesa').click(function () {
-		var idMesa=$(this).attr('id');
-		$('#spanNumMesa').text(idMesa);
-		$('#btnCancelarPedido').html('<i class="icofont icofont-close-circled"></i> Cancelar pedido');
-		listarProductos();
+$('#btnActualizarMesas2').click(function () {
+	listarMesasEstado();
+});
+$('#regMesaCliente').collapse();
+$('.btnMesa').click(function () {
+	var idMesa=$(this).attr('id');
+	$('#spanNumMesa').text(idMesa);
+	$('#btnCancelarPedido').html('<i class="icofont icofont-close-circled"></i> Cancelar pedido');
+	listarProductos();
 
-		$('#smallPreciototal').text('0.00')
+	$('#smallPreciototal').text('0.00')
+	$('#regMesaCliente .panel-body').children().remove();
+	$('#regMesaCliente .panel-body').append(`<p id="noProducto">Aún no hay productos en cola</p>`);
+	$('#divMesas').addClass('sr-only');
+	$('#divPedido').removeClass('sr-only');
+	$('#btnGuardarPedido').addClass('disabled');
+	$('.panelProductosColecc .panel-heading').addClass('collapsed').attr('aria-expanded', 'false');
+	$('.panelProductosColecc .panel-collapse').removeClass('in').attr('aria-expanded', 'false');
+	if($('#'+idMesa).hasClass('mesaOcupado') ){ //console.log('ocupado');
+		var sumaTotales=0, cantRes=0;
 		$('#regMesaCliente .panel-body').children().remove();
-		$('#regMesaCliente .panel-body').append(`<p id="noProducto">Aún no hay productos en cola</p>`);
-		$('#divMesas').addClass('sr-only');
-		$('#divPedido').removeClass('sr-only');
-		$('#btnGuardarPedido').addClass('disabled');
-		$('.panelProductosColecc .panel-heading').addClass('collapsed').attr('aria-expanded', 'false');
-		$('.panelProductosColecc .panel-collapse').removeClass('in').attr('aria-expanded', 'false');
-		if($('#'+idMesa).hasClass('mesaOcupado') ){ //console.log('ocupado');
-			var sumaTotales=0, cantRes=0;
-			$('#regMesaCliente .panel-body').children().remove();
-			$.ajax({url:'php/listarPedidoMesaOcupada.php', type: 'POST', data: {mesa: idMesa}}).done(function (resp) {
-			//console.log(resp);
-			$.each(JSON.parse(resp), function (i, dato) {
-				$('#regMesaCliente .panel-body').append(`<div class="row divUnSoloProducto guardado" id="${dato.idProducto}"><div class="col-xs-7"><button class="btn btn-success btn-circle btn-NoLine btn-outline" id="${dato.idProducto}"><i class="icofont icofont-check"></i></button> <h4 class="h4NombreProducto mayuscula" id="${dato.idProducto}">${dato.prodDescripcion}</h4> </div><div class="col-xs-3"> <span class="cantidadProducto">${dato.pedCantidad}</span> <button class="btn btn-warning btn-circle btn-NoLine btnSumarProducto"><i class="icofont icofont-plus-circle"></i></button> <span class="cantAnteriorProd">${dato.pedCantidad}</span></div><div class="col-xs-2"><h5 class="h4precioProducto"><span class="valorUndProducto sr-only">${dato.prodPrecio}</span>S/. <span class="valorTotalProducto">${parseFloat(dato.subTotal).toFixed(2)}</span></h5></div></div>`);
-				cantRes=parseInt($(`.${dato.tpNombreWeb}`).find('.platoResValor').text())+1;
-				$(`.${dato.tpNombreWeb}`).find('.platoResValor').text(cantRes);
+		$.ajax({url:'php/listarPedidoMesaOcupada.php', type: 'POST', data: {mesa: idMesa}}).done(function (resp) {
+		//console.log(resp);
+		$.each(JSON.parse(resp), function (i, dato) {
+			$('#regMesaCliente .panel-body').append(`<div class="row divUnSoloProducto guardado" id="${dato.idProducto}"><div class="col-xs-7"><button class="btn btn-success btn-circle btn-NoLine btn-outline" id="${dato.idProducto}"><i class="icofont icofont-check"></i></button> <h4 class="h4NombreProducto mayuscula" id="${dato.idProducto}">${dato.prodDescripcion}</h4> </div><div class="col-xs-3"> <span class="cantidadProducto">${dato.pedCantidad}</span> <button class="btn btn-warning btn-circle btn-NoLine btnSumarProducto"><i class="icofont icofont-plus-circle"></i></button> <span class="cantAnteriorProd hidden">${dato.pedCantidad}</span></div><div class="col-xs-2"><h5 class="h4precioProducto"><span class="valorUndProducto sr-only">${dato.prodPrecio}</span>S/. <span class="valorTotalProducto">${parseFloat(dato.subTotal).toFixed(2)}</span></h5></div></div>`);
+			cantRes=parseInt($(`.${dato.tpNombreWeb}`).find('.platoResValor').text())+1;
+			$(`.${dato.tpNombreWeb}`).find('.platoResValor').text(cantRes);
 
-				sumaTotales+=parseFloat(dato.subTotal);
-				$('#idTotalSpan').text(parseFloat(sumaTotales).toFixed(2));
-			});
-			});
-		}
-	});
-	function listarProductos() {
-		$('.panelProductosColecc .panel-body').children().remove();
-		$.ajax({url:'php/listarProductos.php', type:'POST'}).done(function (resp) {
-			$.each(JSON.parse(resp), function (i, dato) {
-				$(`#${dato.tpNombreWeb} .panel-body`).append(`
-						<div class="row divUnSoloProductoDisponible"><div class="col-xs-7"><h4 class="h4NombreProducto mayuscula ${dato.tpDivBebidaCocina}" id="${dato.idProducto}">${dato.prodDescripcion}</h4> <span class="stockPlato">(<span class="stockFict">${dato.stockCantidad}</span>)</span></div><div class="col-xs-3"><h5 class="h4precioProducto">S/. <span class="valorProducto">${parseFloat(dato.prodPrecio).toFixed(2)}</span></h5></div><div class="col-xs-2"><button class="btn btn-warning btn-outline btn-block btnAgregarProducto"><i class="icofont icofont-check"></i></button></div></div>
-					`);
-			});
-			//console.log(resp);
+			sumaTotales+=parseFloat(dato.subTotal);
+			$('#idTotalSpan').text(parseFloat(sumaTotales).toFixed(2));
+		});
 		});
 	}
-	$('#btnCancelarPedido').click(function () {// console.log('cli')
-		listarMesasEstado();
-		$('#divPedido').addClass('sr-only');
-		$('#divMesas').removeClass('sr-only');
+});
+function listarProductos() {
+	$('.panelProductosColecc .panel-body').children().remove();
+	$.ajax({url:'php/listarProductos.php', type:'POST'}).done(function (resp) {
+		$.each(JSON.parse(resp), function (i, dato) {
+			$(`#${dato.tpNombreWeb} .panel-body`).append(`
+					<div class="row divUnSoloProductoDisponible"><div class="col-xs-7"><h4 class="h4NombreProducto mayuscula ${dato.tpDivBebidaCocina}" id="${dato.idProducto}">${dato.prodDescripcion}</h4> <span class="stockPlato">(<span class="stockFict">${dato.stockCantidad}</span>)</span></div><div class="col-xs-3"><h5 class="h4precioProducto">S/. <span class="valorProducto">${parseFloat(dato.prodPrecio).toFixed(2)}</span></h5></div><div class="col-xs-2"><button class="btn btn-warning btn-outline btn-block btnAgregarProducto"><i class="icofont icofont-check"></i></button></div></div>
+				`);
+		});
+		//console.log(resp);
 	});
-	$('body').on('click', '.h4NombreProducto', function () { $(this).parent().parent().find('.btnAgregarProducto').click(); });
-	$('body').on('click', '.h4precioProducto', function () { $(this).parent().parent().find('.btnAgregarProducto').click(); });
-	$('body').on('click', '.btnAgregarProducto',function () {		
-		var contenedor=$(this).parent().parent();
-		var elementoProducto='';
-		$('#btnGuardarPedido').removeClass('disabled');
-		if($(`#regMesaCliente #${contenedor.find('.h4NombreProducto').attr('id')}`).length >0){//console.log('existe productos');
-			$(`#regMesaCliente #${contenedor.find('.h4NombreProducto').attr('id')}`).find('.btnSumarProducto').click();
-			var cant=$(`#regMesaCliente #${contenedor.find('.h4NombreProducto').attr('id')}`).find('.cantidadProducto').text();
+}
+$('#btnCancelarPedido').click(function () {// console.log('cli')
+	listarMesasEstado();
+	$('#divPedido').addClass('sr-only');
+	$('#divMesas').removeClass('sr-only');
+});
+$('body').on('click', '.h4NombreProducto', function () { $(this).parent().parent().find('.btnAgregarProducto').click(); });
+$('body').on('click', '.h4precioProducto', function () { $(this).parent().parent().find('.btnAgregarProducto').click(); });
+$('body').on('click', '.btnAgregarProducto',function () {		
+	var contenedor=$(this).parent().parent();
+	var elementoProducto='';
+	$('#btnGuardarPedido').removeClass('disabled');
+	if($(`#regMesaCliente #${contenedor.find('.h4NombreProducto').attr('id')}`).length >0){//console.log('existe productos');
+		$(`#regMesaCliente #${contenedor.find('.h4NombreProducto').attr('id')}`).find('.btnSumarProducto').click();
+		var cant=$(`#regMesaCliente #${contenedor.find('.h4NombreProducto').attr('id')}`).find('.cantidadProducto').text();
+
+		toastr.options={'positionClass': "toast-bottom-left"}
+		toastr.info('LLevas: '+cant+' ' +contenedor.find('.h4NombreProducto').text());
+	}else{
+		if(contenedor.find('.stockFict').text()!=="0"){
+			$('#noProducto').remove();
+			if(contenedor.find('.h4NombreProducto').hasClass('divProdBebida')){elementoProducto='divProdBebida'}else{elementoProducto='divCocina'}
+			$('#regMesaCliente .panel-body').append(`<div class="row divUnSoloProducto"  id="${contenedor.find('.h4NombreProducto').attr('id')}"><div class="col-xs-7"><button class="btn btn-danger btn-circle btn-NoLine btn-outline btnRemoverProducto"><i class="icofont icofont-close"></i></button> <h4 class="h4NombreProducto ${elementoProducto} mayuscula" >${contenedor.find('.h4NombreProducto').text()}</h4> </div><div class="col-xs-3"><button class="btn btn-warning btn-circle btn-NoLine btnRestarProducto"><i class="icofont icofont-minus-circle"></i></button> <span class="cantidadProducto">1</span> <button class="btn btn-warning btn-circle btn-NoLine btnSumarProducto"><i class="icofont icofont-plus-circle"></i></button> <span class="cantAnteriorProd hidden"></span> </div><div class="col-xs-2"><h5 class="h4precioProducto"><span class="valorUndProducto sr-only">${contenedor.find('.valorProducto').text()}</span>S/. <span class="valorTotalProducto">${contenedor.find('.valorProducto').text()}</span></h5></div></div>`);
+			var precio=parseFloat($('#smallPreciototal').text())+parseFloat(contenedor.find('.valorProducto').text());
+			$('#smallPreciototal').text(parseFloat(precio).toFixed(2));
+
+			contenedor.find('.stockFict').text(parseInt(contenedor.find('.stockFict').text()-1));
 
 			toastr.options={'positionClass': "toast-bottom-left"}
-			toastr.info('LLevas: '+cant+' ' +contenedor.find('.h4NombreProducto').text());
+			toastr.success('Nuevo: 1 ' +contenedor.find('.h4NombreProducto').text());
+			//console.log($('#smallPreciototal').text())
 		}else{
-			if(contenedor.find('.stockFict').text()!=="0"){
-				$('#noProducto').remove();
-				if(contenedor.find('.h4NombreProducto').hasClass('divProdBebida')){elementoProducto='divProdBebida'}else{elementoProducto='divCocina'}
-				$('#regMesaCliente .panel-body').append(`<div class="row divUnSoloProducto"  id="${contenedor.find('.h4NombreProducto').attr('id')}"><div class="col-xs-7"><button class="btn btn-danger btn-circle btn-NoLine btn-outline btnRemoverProducto"><i class="icofont icofont-close"></i></button> <h4 class="h4NombreProducto ${elementoProducto} mayuscula" >${contenedor.find('.h4NombreProducto').text()}</h4> </div><div class="col-xs-3"><button class="btn btn-warning btn-circle btn-NoLine btnRestarProducto"><i class="icofont icofont-minus-circle"></i></button> <span class="cantidadProducto">1</span> <button class="btn btn-warning btn-circle btn-NoLine btnSumarProducto"><i class="icofont icofont-plus-circle"></i></button> <span class="cantAnteriorProd"></span> </div><div class="col-xs-2"><h5 class="h4precioProducto"><span class="valorUndProducto sr-only">${contenedor.find('.valorProducto').text()}</span>S/. <span class="valorTotalProducto">${contenedor.find('.valorProducto').text()}</span></h5></div></div>`);
-				var precio=parseFloat($('#smallPreciototal').text())+parseFloat(contenedor.find('.valorProducto').text());
-				$('#smallPreciototal').text(parseFloat(precio).toFixed(2));
-
-				toastr.options={'positionClass': "toast-bottom-left"}
-				toastr.success('Nuevo: 1 ' +contenedor.find('.h4NombreProducto').text());
-				//console.log($('#smallPreciototal').text())
-			}else{
-				toastr.options={'positionClass': "toast-bottom-left"}
-				toastr.error('Agotado: '+contenedor.find('.h4NombreProducto').text() );
-			}
+			toastr.options={'positionClass': "toast-bottom-left"}
+			toastr.error('Agotado: '+contenedor.find('.h4NombreProducto').text() );
 		}
-		
-	});
-	$('body').on('click','.btnRemoverProducto',function () {
-		var contenedor=$(this).parent().parent();
-		var precio=parseFloat($('#smallPreciototal').text())-parseFloat(contenedor.find('.valorTotalProducto').text());
-		$('#smallPreciototal').text(parseFloat(precio).toFixed(2));
-		$(this).parent().parent().remove();
-		if( $('#regMesaCliente .divUnSoloProducto').length==0 ){ $('#regMesaCliente .panel-body').append(`<p id="noProducto">No hay productos en cola</p>`);
-			$('#btnGuardarPedido').addClass('disabled');}
-	});
-	$('body').on('click', '.btnSumarProducto', function () {
-		var contenedorSuma=$(this).parent().parent();
-		if(contenedorSuma.hasClass('guardado')){
-			contenedorSuma.find('.cantAnteriorProd').text(contenedorSuma.find('.cantidadProducto').text());
-			contenedorSuma.removeClass('guardado').addClass('actualizar');
-		}
-		
-		var cantidadAdd=parseFloat(contenedorSuma.find('.cantidadProducto').text())+1;
-		var precioAdd=parseFloat(contenedorSuma.find('.valorUndProducto').text());
-		var totalAdd=parseFloat(precioAdd*cantidadAdd).toFixed(2);
-		var idProd=contenedorSuma.attr('id');
-		var maximoStock=parseInt($('.divUnSoloProductoDisponible').find(`#${idProd}`).next().find('.stockFict').text());
-		//console.log(idProd)
-		//console.log('max stock: '+ $('.divUnSoloProductoDisponible').find(`#${idProd}`).next().find('.stockFict').text());
-		if(parseInt(contenedorSuma.find('.cantidadProducto').text())<maximoStock){
+	}
+	
+});
+$('body').on('click','.btnRemoverProducto',function () {
+	var contenedor=$(this).parent().parent();
+	var precio=parseFloat($('#smallPreciototal').text())-parseFloat(contenedor.find('.valorTotalProducto').text());
+	$('#smallPreciototal').text(parseFloat(precio).toFixed(2));
+	$(this).parent().parent().remove();
+	if( $('#regMesaCliente .divUnSoloProducto').length==0 ){ $('#regMesaCliente .panel-body').append(`<p id="noProducto">No hay productos en cola</p>`);
+		$('#btnGuardarPedido').addClass('disabled');}
+});
+$('body').on('click', '.btnSumarProducto', function () {
+	var contenedorSuma=$(this).parent().parent();
+	if(contenedorSuma.hasClass('guardado')){
+		contenedorSuma.find('.cantAnteriorProd').text(contenedorSuma.find('.cantidadProducto').text());
+		contenedorSuma.removeClass('guardado').addClass('actualizar');
+	}
+	
+	var cantidadAdd=parseFloat(contenedorSuma.find('.cantidadProducto').text())+1;
+	var precioAdd=parseFloat(contenedorSuma.find('.valorUndProducto').text());
+	var totalAdd=parseFloat(precioAdd*cantidadAdd).toFixed(2);
+	var idProd=contenedorSuma.attr('id');
+	var maximoStock=parseInt($('.divUnSoloProductoDisponible').find(`#${idProd}`).next().find('.stockFict').text());
+	//console.log(idProd)
+	//console.log('max stock: '+ $('.divUnSoloProductoDisponible').find(`#${idProd}`).next().find('.stockFict').text());
+	
+	/*if(parseInt(contenedorSuma.find('.cantidadProducto').text())<maximoStock){
+		contenedorSuma.find('.cantidadProducto').text(cantidadAdd);
+		contenedorSuma.find('.valorTotalProducto').text(totalAdd);
+		var sumaPedido=0;
+		$.each($('.valorTotalProducto'), function (i, dato) {
+			sumaPedido+=parseFloat($(dato).text());
+			$('#smallPreciototal').text(sumaPedido.toFixed(2));	
+		});
+		$('#btnGuardarPedido').removeClass('disabled');
+	}
+	else{*/
+		if(maximoStock>0){
 			contenedorSuma.find('.cantidadProducto').text(cantidadAdd);
 			contenedorSuma.find('.valorTotalProducto').text(totalAdd);
 			var sumaPedido=0;
@@ -336,134 +359,165 @@ function listarMesasEstado() {
 				sumaPedido+=parseFloat($(dato).text());
 				$('#smallPreciototal').text(sumaPedido.toFixed(2));	
 			});
+			$('.divUnSoloProductoDisponible').find(`#${idProd}`).next().find('.stockFict').text(maximoStock-1);
 			$('#btnGuardarPedido').removeClass('disabled');
-		}else if(maximoStock==1){
-			$('.divUnSoloProductoDisponible').find(`#${idProd}`).next().find('.stockFict').text(0);
-			contenedorSuma.find('.cantidadProducto').text(cantidadAdd);
-			contenedorSuma.find('.valorTotalProducto').text(totalAdd);
-			var sumaPedido=0;
-			$.each($('.valorTotalProducto'), function (i, dato) {
-				sumaPedido+=parseFloat($(dato).text());
-				$('#smallPreciototal').text(sumaPedido.toFixed(2));	
-			});
-			$('#btnGuardarPedido').removeClass('disabled');
+
 		}
-		
-	});
-	$('body').on('click', '.btnRestarProducto', function () {
-		var contenedorResta=$(this).parent().parent();
-		var cantidadAdd=parseFloat(contenedorResta.find('.cantidadProducto').text())-1;
-		if(cantidadAdd>=1){
-			var precioLess=parseFloat(contenedorResta.find('.valorUndProducto').text());
-			var totalAdd=parseFloat(precioLess*cantidadAdd).toFixed(2);
-			contenedorResta.find('.cantidadProducto').text(cantidadAdd);
-			contenedorResta.find('.valorTotalProducto').text(totalAdd);
-			var restaPedido=0;
-			$.each($('.valorTotalProducto'), function (i, dato) {
-				restaPedido+=parseFloat($(dato).text());
-				$('#smallPreciototal').text(restaPedido.toFixed(2));
-			});
-		}
-	});
-	$('#btnGuardarPedido').click(function () { moment.locale('es');
-		var prodFueraStock=''; var iteraciones=0, iteraciones2=0;
-		var cantDivsPedidosNuevos=$('#regMesaCliente .divUnSoloProducto').length;
-		var cantDivPedidosGuardados=$('#regMesaCliente .guardado').length;
-		var cantDivPedidosActualizados=$('#regMesaCliente .actualizar').length;
+	/*}*/
+	/* Ya no el código porque arriba se valida que siempre el max stock sea mayor a lo que se pulsaf
+	else if(maximoStock===1 && $('#regMesaCliente #'+idProd).find('.cantidadProducto').text()===1 ){
+		$('.divUnSoloProductoDisponible').find(`#${idProd}`).next().find('.stockFict').text(0);
+		contenedorSuma.find('.cantidadProducto').text(cantidadAdd);
+		contenedorSuma.find('.valorTotalProducto').text(totalAdd);
+		var sumaPedido=0;
+		$.each($('.valorTotalProducto'), function (i, dato) {
+			sumaPedido+=parseFloat($(dato).text());
+			$('#smallPreciototal').text(sumaPedido.toFixed(2));	
+		});
+		$('#btnGuardarPedido').removeClass('disabled');
+	}*/
+	
+});
+$('body').on('click', '.btnRestarProducto', function () {
+	var contenedorResta=$(this).parent().parent();
+	var cantidadAdd=parseFloat(contenedorResta.find('.cantidadProducto').text())-1;
+	if(cantidadAdd>=1){
+		var precioLess=parseFloat(contenedorResta.find('.valorUndProducto').text());
+		var totalAdd=parseFloat(precioLess*cantidadAdd).toFixed(2);
+		contenedorResta.find('.cantidadProducto').text(cantidadAdd);
+		contenedorResta.find('.valorTotalProducto').text(totalAdd);
+		var restaPedido=0;
+		$.each($('.valorTotalProducto'), function (i, dato) {
+			restaPedido+=parseFloat($(dato).text());
+			$('#smallPreciototal').text(restaPedido.toFixed(2));
+		});
+	}
+});
+$('#btnGuardarPedido').click(function () { moment.locale('es');
+	var prodFueraStock=''; var iteraciones=0, iteraciones2=0;
+	var cantDivsPedidosNuevos=$('#regMesaCliente .divUnSoloProducto').length;
+	var cantDivPedidosGuardados=$('#regMesaCliente .guardado').length;
+	var cantDivPedidosActualizados=$('#regMesaCliente .actualizar').length;
 
-		console.log('total nuevos '+cantDivsPedidosNuevos)
-		console.log('guardados '+cantDivPedidosGuardados)
-		console.log('actualizado '+cantDivPedidosActualizados)
-		//var datosPedido=[];
-		if(!$('#btnGuardarPedido').hasClass('disabled')){
-			$('#btnGuardarPedido').addClass('disabled');
-			$.ajax({url:'php/insertarPedidoCabecera.php', type:'POST', data:{mesa: $('#spanNumMesa').text(), idUser: $.JsonUsuario.idUsuario}}).done(function (resp) {
-				//console.log(resp)
-			if(parseInt(resp)>0){
-				$('#spanIdPedidoAct').text(resp);
-				$('#btnCancelarPedido').html('<i class="icofont icofont-check"></i> Salir');$('#btnGuardarPedido').removeClass('disabled');
-				var textoProductosBar=''; var textoProductosCocina=''; var cantPedido='', prodRowNombre='';
+	console.log('total nuevos '+cantDivsPedidosNuevos)
+	console.log('guardados '+cantDivPedidosGuardados)
+	console.log('actualizado '+cantDivPedidosActualizados)
+	//var datosPedido=[];
+	if(!$('#btnGuardarPedido').hasClass('disabled')){
+		$('#btnGuardarPedido').addClass('disabled'); 
+		$.ajax({url:'php/insertarPedidoCabecera.php', type:'POST', data:{mesa: $('#spanNumMesa').text(), idUser: $.JsonUsuario.idUsuario}}).done(function (resp) {
+			//console.log(resp)
+		if(parseInt(resp)>0){
+			$('#spanIdPedidoAct').text(resp);
+			$('#btnCancelarPedido').html('<i class="icofont icofont-check"></i> Volver a mesas');$('#btnGuardarPedido').removeClass('disabled');
+			var textoProductosBar=''; var textoProductosCocina=''; var cantPedido='', prodRowNombre='';
 
-				if( $('#regMesaCliente .divUnSoloProducto').length>0 ){
-					var contenedoresProdPorGuardar=$('#regMesaCliente .divUnSoloProducto');
+			if( $('#regMesaCliente .divUnSoloProducto').length>0 ){
+				var contenedoresProdPorGuardar=$('#regMesaCliente .divUnSoloProducto');
 
-					$.each(contenedoresProdPorGuardar, function (i, dato) {// console.log(!$(dato).hasClass('actualizar') ); console.log(!$(dato).hasClass('guardado'))
-						$('#spanOutStock').children().remove();
-						idProducto=$(dato).attr('id');
-						cantPedido=$(dato).find('.cantidadProducto').text();
-						precPro=$(dato).find('.valorUndProducto').text();
-						prodRowNombre=$(dato).find('.h4NombreProducto').text();
-						if(!$(dato).hasClass('actualizar') && !$(dato).hasClass('guardado') ){
-							//datosPedido.push({idProd: idProducto,cantidad: cantPedido, producto: prodRowNombre} );
-							$.ajax({url:'php/insertarPedidoDetalle.php', type: 'POST', data:{idProd: idProducto, precio:precPro ,cantidad: cantPedido, producto: prodRowNombre, idPedido: resp }}).done(function (resp) {
-								console.log(resp);
-								$.each(JSON.parse(resp), function (ii, dato2) {
-									if(dato2.respuesta=='Y'){
-										$(`#regMesaCliente #${dato2.idProducto}`).addClass('guardado').find('.btnRemoverProducto').html('<i class="icofont icofont-check"></i>').removeClass('btn-danger').addClass('btn-success').removeClass('btnRemoverProducto');
-										$(`#regMesaCliente #${dato2.idProducto}`).find('.btnRestarProducto').remove();
-										if($(dato).find('.h4NombreProducto').hasClass('divProdBebida')){
-											textoProductosBar+=' '+$(dato).find('.cantidadProducto').text()+'   '+$(dato).find('.h4NombreProducto').text()+'\n';
-										}else{
-											textoProductosCocina+=' '+$(dato).find('.cantidadProducto').text()+'   '+$(dato).find('.h4NombreProducto').text()+'\n';
-										}
-										if(cantDivsPedidosNuevos-cantDivPedidosGuardados-cantDivPedidosActualizados-1==iteraciones){console.log(textoProductosBar); console.log(textoProductosCocina); 
-											impresionTickers(textoProductosBar, textoProductosCocina); }else{iteraciones++;}
+				$.each(contenedoresProdPorGuardar, function (i, dato) {// console.log(!$(dato).hasClass('actualizar') ); console.log(!$(dato).hasClass('guardado'))
+					$('#spanOutStock').children().remove();
+					idProducto=$(dato).attr('id');
+					cantPedido=$(dato).find('.cantidadProducto').text();
+					precPro=$(dato).find('.valorUndProducto').text();
+					prodRowNombre=$(dato).find('.h4NombreProducto').text();
+					if(!$(dato).hasClass('actualizar') && !$(dato).hasClass('guardado') ){
+						//datosPedido.push({idProd: idProducto,cantidad: cantPedido, producto: prodRowNombre} );
+						$.ajax({url:'php/insertarPedidoDetalle.php', type: 'POST', data:{idProd: idProducto, precio:precPro ,cantidad: cantPedido, producto: prodRowNombre, idPedido: resp }}).done(function (resp) {
+							//console.log(resp);
+							$.each(JSON.parse(resp), function (ii, dato2) {
+								if(dato2.respuesta=='Y'){
+									$(`#regMesaCliente #${dato2.idProducto}`).addClass('guardado').find('.btnRemoverProducto').html('<i class="icofont icofont-check"></i>').removeClass('btn-danger').addClass('btn-success').removeClass('btnRemoverProducto');
+									$(`#regMesaCliente #${dato2.idProducto}`).find('.btnRestarProducto').remove();
+									if($(dato).find('.h4NombreProducto').hasClass('divProdBebida')){
+										textoProductosBar+=' '+$(dato).find('.cantidadProducto').text()+'   '+$(dato).find('.h4NombreProducto').text()+'\n';
 									}else{
-										$('#spanOutStock').append('<p> <strong> '+dato2.stockActual+'</strong> de '+$(`#regMesaCliente #${dato2.idProducto}`).find('.h4NombreProducto').text()+'</p>');
-										$('.modal-fueraStock').modal('show');
+										textoProductosCocina+=' '+$(dato).find('.cantidadProducto').text()+'   '+$(dato).find('.h4NombreProducto').text()+'\n';
 									}
-								});
-								listarProductos();
+									if(cantDivsPedidosNuevos-cantDivPedidosGuardados-cantDivPedidosActualizados-1==iteraciones){console.log(textoProductosBar); console.log(textoProductosCocina); 
+										impresionTickers(textoProductosBar, textoProductosCocina); }else{iteraciones++;}
+								}else{
+									var contenedorRestaurar=$('#regMesaCliente #'+idProducto);
+									if(contenedorRestaurar.find('.cantAnteriorProd').text()==''){contenedorRestaurar.find('.btnRemoverProducto').click();}
+									else{
+										
+									}
+									// console.log(contenedorRestaurar.find('.cantidadProducto').text(contenedorRestaurar.find('')))
+									$('#spanOutStock').append('<p> <strong> '+dato2.stockActual+'</strong> de '+$(`#regMesaCliente #${dato2.idProducto}`).find('.h4NombreProducto').text()+'</p>');
+									$('.modal-fueraStock').modal('show');
+								}
 							});
-						} // Fin de IF no guardado, No actualizado osea pedido nuevo
-						else if($(dato).hasClass('actualizar')){
-							var differencia=$(dato).find('.cantidadProducto').text()-$(dato).find('.cantAnteriorProd').text();
-							console.log(differencia);
-							if(differencia>0){
-								$.ajax({url: 'php/actualizarProductoPedido.php', type: 'POST', data:{idProd:idProducto , mesa: $('#spanNumMesa').text() , cantidad:cantPedido,diferencia:differencia}}).done(function (resp) {
-									if(resp>0){
+							listarProductos();
+						});
+					} // Fin de IF no guardado, No actualizado osea pedido nuevo
+					else if($(dato).hasClass('actualizar')){
+						var differencia=$(dato).find('.cantidadProducto').text()-$(dato).find('.cantAnteriorProd').text();
+						//console.log(differencia);
+						if(differencia>0){
+							$.ajax({url: 'php/sumarUnProductoAMesa.php', type: 'POST', data:{idProd:idProducto , mesa: $('#spanNumMesa').text(), idUser: $.JsonUsuario.idUsuario, cantidad:differencia}}).done(function (resp) {
+								var response=JSON.parse(resp)[0];
+								if(response.respuesta=='Y'){
+									$(`#regMesaCliente #${dato.idProducto}`).addClass('guardado').find('.btnRemoverProducto').html('<i class="icofont icofont-check"></i>').removeClass('btn-danger').addClass('btn-success').removeClass('btnRemoverProducto');
+									$(`#regMesaCliente #${dato.idProducto}`).find('.btnRestarProducto').remove();
+									if($(dato).find('.h4NombreProducto').hasClass('divProdBebida')){
+											textoProductosBar+=' '+differencia+'   '+$(dato).find('.h4NombreProducto').text()+'\n';
+										}else{
+											textoProductosCocina+=' '+differencia+'   '+$(dato).find('.h4NombreProducto').text()+'\n';
+										}
+										if(cantDivPedidosActualizados-1==iteraciones2){console.log(textoProductosBar); console.log(textoProductosCocina); impresionTickers(textoProductosBar, textoProductosCocina);}else{iteraciones2++;}
+									$(dato).removeClass('actualizar').addClass('guardado');
+									$(dato).find('.cantAnteriorProd').text($(dato).find('.cantidadProducto').text());
 
-										$(`#regMesaCliente #${dato.idProducto}`).addClass('guardado').find('.btnRemoverProducto').html('<i class="icofont icofont-check"></i>').removeClass('btn-danger').addClass('btn-success').removeClass('btnRemoverProducto');
-										$(`#regMesaCliente #${dato.idProducto}`).find('.btnRestarProducto').remove();
-										if($(dato).find('.h4NombreProducto').hasClass('divProdBebida')){
-												textoProductosBar+=' '+differencia+'   '+$(dato).find('.h4NombreProducto').text()+'\n';
-											}else{
-												textoProductosCocina+=' '+differencia+'   '+$(dato).find('.h4NombreProducto').text()+'\n';
-											}
-											if(cantDivPedidosActualizados-1==iteraciones2){console.log(textoProductosBar); console.log(textoProductosCocina); impresionTickers(textoProductosBar, textoProductosCocina);}else{iteraciones2++;}
-										$(dato).removeClass('actualizar').addClass('guardado');
-										$(dato).find('.cantAnteriorProd').text($(dato).find('.cantidadProducto').text());
-									}
-								});
-							}
+								}
+								else{
+									var contenedorRestaurar=$('#regMesaCliente #'+idProducto);
+									var cantAnt=parseFloat(contenedorRestaurar.find('.cantAnteriorProd').text());
+									var precAnt=parseFloat(contenedorRestaurar.find('.valorUndProducto').text());
+									var sumaAnt=cantAnt*precAnt;
+									var subTotalAnt=parseFloat($('#smallPreciototal').text())-sumaAnt;
+
+									contenedorRestaurar.find('.cantidadProducto').text(cantAnt);
+									contenedorRestaurar.find('.valorTotalProducto').text(sumaAnt.toFixed(2));
+									$('#smallPreciototal').text(subTotalAnt.toFixed(2));
+
+									$('#spanOutStock').append('<p> <strong> '+response.stockActual+'</strong> de '+$(`#regMesaCliente #${response.idProducto}`).find('.h4NombreProducto').text()+'</p>');
+									$('.modal-fueraStock').modal('show');
+								}
+								listarProductos();
+								/*if(resp>0){
+
+									
+								}*/
+							});
 						}
+					}
 
-					}).promise().done(function (resp) { //Promise sólo corre cuando acaba el each
-						
-						//console.log(prodFueraStock)
-						
-						// if(textoProductosBar.length>0){console.log('A Bar:\n'+textoProductosBar)
-						// 	$.ajax({url:'printTicketBar.php', type:'POST', data: {hora:moment().format('DD [de] MMMM [de] YYYY h:mm a'),numMesa:$('#spanNumMesa').text(), texto:textoProductosBar}}).done(function (resp) {
-						// 	console.log(resp)
-						// 	});
-						// }
-						// if(textoProductosCocina.length>0){console.log('A cocina:\n'+textoProductosCocina)
-						// 	$.ajax({url:'printTicketCocina.php', type:'POST', data: {hora:moment().format('DD [de] MMMM [de] YYYY h:mm a'),numMesa:$('#spanNumMesa').text(), texto:textoProductosCocina}}).done(function (resp) {
-						// 	console.log(resp)
-						// 	});
-						// }
-						
-						// $('.modal-pedidoGuardado').modal('show');
-						// $('#divPedido').addClass('sr-only');
-						// $('#divMesas').removeClass('sr-only');
-					});
-				}
+				}).promise().done(function (resp) { //Promise sólo corre cuando acaba el each
+					
+					//console.log(prodFueraStock)
+					
+					// if(textoProductosBar.length>0){console.log('A Bar:\n'+textoProductosBar)
+					// 	$.ajax({url:'printTicketBar.php', type:'POST', data: {hora:moment().format('DD [de] MMMM [de] YYYY h:mm a'),numMesa:$('#spanNumMesa').text(), texto:textoProductosBar}}).done(function (resp) {
+					// 	console.log(resp)
+					// 	});
+					// }
+					// if(textoProductosCocina.length>0){console.log('A cocina:\n'+textoProductosCocina)
+					// 	$.ajax({url:'printTicketCocina.php', type:'POST', data: {hora:moment().format('DD [de] MMMM [de] YYYY h:mm a'),numMesa:$('#spanNumMesa').text(), texto:textoProductosCocina}}).done(function (resp) {
+					// 	console.log(resp)
+					// 	});
+					// }
+					
+					// $('.modal-pedidoGuardado').modal('show');
+					// $('#divPedido').addClass('sr-only');
+					// $('#divMesas').removeClass('sr-only');
+				});
 			}
-			}); // fin de ajax insertarPedidoCabecera
-		
-	} //fin de if de hasclass disabled
-		
-	});
+		}
+		}); // fin de ajax insertarPedidoCabecera
+	
+} //fin de if de hasclass disabled
+	
+});
 $('#btnRefreshProducts').click(function () {
 	listarProductos();
 });

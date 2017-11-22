@@ -4,7 +4,6 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 	header("Location:index.php");
 }else{
 	if($_SESSION['Power']==3){header("Location:pedidos.php");}
-	if($_SESSION['Power']==2){header("Location:caja.php");}
 }
 ?>
 <!DOCTYPE html>
@@ -24,20 +23,24 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 		<link href="css/bootstrap.css" rel="stylesheet">
 
 		<!-- Custom CSS -->
-		<link href="css/estilosElementosv2.css?version=1.0.1" rel="stylesheet">
+		<link href="css/estilosElementosv2.css?version=1.0.2" rel="stylesheet">
 		<link href="css/sidebarDeslizable.css?version=1.0.1" rel="stylesheet">
 		<link rel="stylesheet" href="css/cssBarraTop.css?version=1.0.1">
 		<link rel="stylesheet" href="css/icofont.css">
 		<link rel="stylesheet" href="css/animate.css">
+		<link rel="stylesheet" href="css/snack.css?version=1.0.4">
 
 		<link href="css/bootstrap-select.min.css" rel="stylesheet"> <!-- extraido de: https://silviomoreto.github.io/bootstrap-select/-->
+		<link rel="stylesheet" href="css/icofont.css"> <!-- iconos extraidos de: http://icofont.com/-->
 		<link rel="shortcut icon" href="images/peto.png" />
 		<link rel="stylesheet" href="css/awesome-bootstrap-checkbox.css"> <!-- extraido de: http://flatlogic.github.io/awesome-bootstrap-checkbox/demo/-->
 		<link rel="stylesheet" href="css/bootstrap-datepicker3.css"> <!-- extraído de: https://uxsolutions.github.io/bootstrap-datepicker/-->
+		<link rel="stylesheet" href="css/toastr.min.css?version=1.0.1"> <!-- extraído de: http://codeseven.github.io/toastr/demo.html-->
 
 </head>
 
 <body>
+
 
 <div id="wrapper">
 
@@ -52,7 +55,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 				<div class="logoEmpresa ocultar-mostrar-menu">
 					<img class="img-responsive" src="images/empresa.png" alt="">
 				</div>
-				<li class="active">
+				<li>
 						<a href="principal.php"><i class="icofont icofont-space-shuttle"></i> Inicio</a>
 				</li>
 				<li>
@@ -64,7 +67,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 				<li>
 						<a href="caja.php"><i class="icofont icofont-cart"></i> Cobrar</a>
 				</li>
-				<li>
+				<li class="active">
 						<a href="ventas.php"><i class="icofont icofont-cart"></i> Cuadrar caja</a>
 				</li>
 				<li>
@@ -102,11 +105,11 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 					<div id="navbar" class="navbar-collapse collapse ">
 							<ul class="nav navbar-nav">
 								<li class="hidden down"><a href="#" class="dropdown-toggle active" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">HR <span class="caret"></span></a>
-									<ul class="dropdown-menu">
-											<li><a href="#">Change Time Entry</a></li>
-											<li><a href="#">Report</a></li>
-									</ul>
-								</li>
+											<ul class="dropdown-menu">
+													<li><a href="#">Change Time Entry</a></li>
+													<li><a href="#">Report</a></li>
+											</ul>
+									</li>
 							</ul>
 							<ul class="nav navbar-nav pull-right">
 								 <li>
@@ -131,46 +134,48 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 			<div class="row">
 				<div class="col-lg-12 contenedorDeslizable">
 				<!-- Empieza a meter contenido principal dentro de estas etiquetas -->
-				 <h2 class="purple-text text-lighten-1"><i class="icofont icofont-options"></i> Resumen de Hoy <small id="smallHoy"></small></h2>
+				<h2 class="purple-text text-lighten-1" style=" display: inline-block;"><i class="icofont icofont-lens"></i> Cuadre de caja - Casa de Barro </h2>
 
-					<ul class="nav nav-tabs">
-					<li class="active hidden"><a href="#tabAgregarLabo" data-toggle="tab">Agregar laboratorio</a></li>
-					<li class="hidden"><a href="#tabCambiarPassUser" data-toggle="tab">Cambiar contraseña</a></li>
-					
-					</ul>
-					
-					<div class="tab-content">
-					<!--Panel para buscar productos-->
-						<!--Clase para las tablas-->
-						<div class="tab-pane fade in active container-fluid" id="tabAgregarLabo">
-						<!--Inicio de pestaña 01-->
-							<div class="col-xs-3 text-center"><h2><small>S/. </small><span id="h2Ventas"></span></h2><h3>Ventas</h3> </div>
-							<div class="col-xs-3 text-center"><h2><small>S/. </small><span id="h2Ingresos"></span></h2><h3>Ingresos</h3></div>
-							<div class="col-xs-3 text-center"><h2><small>S/. </small><span id="h2Egresos"></span></h2><h3>Egresos</h3></div>
-							<div class="col-xs-3 text-center"><h2><span id="h2Pedidos"></span></h2><h3>Pedidos pendientes</h3></div>
-							
-
-						<!--Fin de pestaña 01-->
+				<div class="container-fluid ">
+					<div class="row">
+						<div class="col-xs-4"><h4>Ventas finalizadas</h4>
+							<div class="dineroXMesas"><?php include 'php/cuadreCajaPorMesaP.php'; ?></div>
 						</div>
-
-						
-
-						<!--Panel para nueva compra-->
-						<div class="tab-pane fade container-fluid" id="tabCambiarPassUser">
-						<!--Inicio de pestaña 02-->
-						Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur, quis, facilis beatae recusandae optio molestias ipsam quibusdam aliquid rerum voluptatem incidunt in vero quo illo natus? Asperiores, ipsum placeat dolorum.
-						<!--Fin de pestaña 02-->
-						</div>
-						
+						<div class="col-xs-4"><h4>Ingresos</h4>
+							<div class="dineroXMesas"><?php include 'php/cuadrarCajaIngresosP.php'; ?></div></div>
+						<div class="col-xs-4"><h4>Egresos</h4>
+							<div class="dineroXMesas"><?php include 'php/cuadrarCajaEgresosP.php'; ?></div></div></div>
 					</div>
+					
+				</div>
+
+				
 					<!-- Fin de meter contenido principal -->
-					</div>
+				</div>
 					
 				</div>
 		</div>
 </div>
 <!-- /#page-content-wrapper -->
 </div><!-- /#wrapper -->
+
+
+
+<!-- Modal para indicar que falta completar campos o datos con error -->
+	<div class="modal fade modal-faltaCompletar" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+	<div class="modal-dialog modal-sm" role="document">
+		<div class="modal-content">
+			<div class="modal-header-danger">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="myModalLabel"><i class="icofont icofont-help-robot"></i> Campos incorrectos o faltantes</h4>
+			</div>
+			<div class="modal-body">
+				Ups, un error: <i class="icofont icofont-animal-squirrel"></i> <strong id="lblFalta"></strong>
+			</div>
+			<div class="modal-footer"> <button class="btn btn-danger btn-outline" data-dismiss="modal"><i class="icofont icofont-alarm"></i> Ok, revisaré</button></div>
+		</div>
+		</div>
+	</div>
 <?php include 'php/llamandoModals.php'; ?>
 
 	
@@ -186,69 +191,30 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 <script src="js/bootstrap-datepicker.min.js"></script>
 <script src="js/bootstrap-datepicker.es.min.js"></script>
 
-<!-- Menu Toggle Script -->
+<style>
+	
+</style>
+
 <script>
 $(document).ready(function(){
 datosUsuario();
-$('.selectpicker').selectpicker('refresh');
 
+
+$('.selectpicker').selectpicker('refresh');
 $('.mitooltip').tooltip();
 $('input').keypress(function (e) {
 	if (e.keyCode == 13)
 	{
 		$(this).parent().next().children().focus();
 		//$(this).parent().next().children().removeAttr('disabled'); //agregar atributo desabilitado
-	} 
-});
-moment.locale('es');
-$('#smallHoy').text(moment().format('dddd, DD/MM/YYYY'))
-$.ajax({url:'php/devolverVentaDelDia.php', type:'POST', data: {fecha: moment().format('DD/MM/YYYY')}}).done(function (resp) { console.log(resp)
-	if(resp!=-1){
-		if(resp==''){
-			$('#h2Ventas').text('0.00');
-		}else{
-			$('#h2Ventas').text(parseFloat(resp).toFixed(2));
-		}
-		
-	}
-});
-$.ajax({url:'php/solicitarSumaIngresos.php', type:'POST'}).done(function (resp) { console.log(resp)
-	if(resp!=-1){
-		if(resp==''){
-			$('#h2Ingresos').text('0.00');
-		}else{
-			$('#h2Ingresos').text(parseFloat(resp).toFixed(2));
-		}
-		
 	}
 });
 
-$.ajax({url:'php/solicitarSumaEgresos.php', type:'POST'}).done(function (resp) { console.log(resp)
-	if(resp!=-1){
-		if(resp==''){
-			$('#h2Egresos').text('0.00');
-		}else{
-			$('#h2Egresos').text(parseFloat(resp).toFixed(2));
-		}
-		
-	}
-});
-
-$.ajax({url:'php/solicitarSumaMesasOcupadas.php', type:'POST'}).done(function (resp) { console.log(resp)
-	if(resp!=-1){
-		if(resp==''){
-			$('#h2Pedidos').text('0.00');
-		}else{
-			$('#h2Pedidos').text(resp);
-		}
-		
-	}
-});
+});//Fin de document ready
 
 
-});
 
-
+// SELECT DATE_FORMAT(`cajaFechaRegistro`,'%d/%m/%Y') FROM `caja`
 </script>
 
 </body>

@@ -18,7 +18,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 		<meta name="description" content="">
 		<meta name="author" content="">
 
-		<title>Inicio: Infocat Snack</title>
+		<title>Inicio: Infocat-Grifo</title>
 
 		<!-- Bootstrap Core CSS -->
 		<link href="css/bootstrap.css" rel="stylesheet">
@@ -204,13 +204,6 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 						<?php require 'php/listarProductosCategoriaOption.php'; ?>
 					</select>
 				</div>
-				<label for="">Procedencia:</label>
-				<div  id="divSelectProcedenciaListNew">
-					<select class="selectpicker mayuscula" title="Procedencia..."  data-width="100%" data-live-search="true"">
-						<option class="optProducto mayuscula" data-tokens="1">Cocina</option>
-						<option class="optProducto mayuscula" data-tokens="2">Bar</option>
-					</select>
-				</div>
 			</div>
 			<div class="" id="divCajaProductosExtrResultado" style="padding-top: 15px;">
 
@@ -243,7 +236,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 			<div class="row">
 				<label for="">Categoría:</label>
 				<div  id="divSelectProductoListado">
-					<select class="selectpicker mayuscula" title="Producto..."  data-width="100%" data-live-search="true">
+					<select class="selectpicker mayuscula" title="Producto..."  data-width="100%" data-live-search="true"">
 						<?php require 'php/listarProductosCategoriaOption.php'; ?>
 					</select>
 				</div>
@@ -378,17 +371,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 
 <script>
 $(document).ready(function(){
-datosUsuario();
-$('.selectpicker').selectpicker('refresh');
-
-$('.mitooltip').tooltip();
-$('input').keypress(function (e) {
-	if (e.keyCode == 13)
-	{
-		$(this).parent().next().children().focus();
-		//$(this).parent().next().children().removeAttr('disabled'); //agregar atributo desabilitado
-	} 
-});
+var _0x9959=["\x72\x65\x66\x72\x65\x73\x68","\x73\x65\x6C\x65\x63\x74\x70\x69\x63\x6B\x65\x72","\x2E\x73\x65\x6C\x65\x63\x74\x70\x69\x63\x6B\x65\x72","\x74\x6F\x6F\x6C\x74\x69\x70","\x2E\x6D\x69\x74\x6F\x6F\x6C\x74\x69\x70","\x6B\x65\x79\x43\x6F\x64\x65","\x66\x6F\x63\x75\x73","\x63\x68\x69\x6C\x64\x72\x65\x6E","\x6E\x65\x78\x74","\x70\x61\x72\x65\x6E\x74","\x6B\x65\x79\x70\x72\x65\x73\x73","\x69\x6E\x70\x75\x74"];datosUsuario();$(_0x9959[2])[_0x9959[1]](_0x9959[0]);$(_0x9959[4])[_0x9959[3]]();$(_0x9959[11])[_0x9959[10]](function(_0xf88fx1){if(_0xf88fx1[_0x9959[5]]== 13){$(this)[_0x9959[9]]()[_0x9959[8]]()[_0x9959[7]]()[_0x9959[6]]()}})
 
 $.ajax({url:'php/listarProductos.php', data: 'POST'}).done(function (resp) { //console.log(resp)
 	$.each(JSON.parse(resp), function (i, dato) { //console.log(dato)
@@ -403,84 +386,7 @@ $.ajax({url:'php/listarProductos.php', data: 'POST'}).done(function (resp) { //c
 });
 }); //Fin de document ready
 
-$('body').on('click', '.btnConfigProducto', function () {
-	var contenedor= $(this).parent().parent();
-	$('#spanModalIdProdConf').text($(this).attr('id'));
-	$('#spanModalPrecioConf').text(contenedor.find('.divNombrProd').text());
-	$('#txtModalPrecioConf').val(contenedor.find('.divPrecPro').text());
-	$('#txtModalStockConf').val(0);
-	$('#spanStockAct').text(contenedor.find('.divStockPro').text());
-	$('#stockAnterior').val(contenedor.find('.divStockPro').text());
-	$('#divSelectProductoListado .selectpicker').selectpicker('val',contenedor.find('.spanCategoria').text()).selectpicker('refresh');
-	$('.modal-configurarProducto').modal('show');
-});
-$('#btnGuardarCambioConfig').click(function () {
-	if($('#txtModalPrecioConf').val()<0 || $('#txtModalStockConf').val()<0 ){
-		$('.modal-configurarProducto .labelError').removeClass('hidden').find('.mensaje').text('No se pueden guardar valores negativos');
-	}else{
-		$('.modal-configurarProducto .labelError').addClass('hidden');
-		var idCategoria=$('#divSelectProductoListado').find('li.selected a').attr('data-tokens');
-		//console.log(idCategoria);
-		var diferencia= $('#txtModalStockConf').val();/*-$('#stockAnterior').val();*/
-		//console.log(diferencia)
-		$.ajax({url:'php/actualizarStockPrecioProducto.php', type: 'POST', data:{idProd: $('#spanModalIdProdConf').text(), precio: $('#txtModalPrecioConf').val() , categoria: idCategoria, idUser: $.JsonUsuario.idUsuario, cantidad: diferencia }}).done(function (resp) {
-			console.log(resp)
-			if(resp>0){location.reload();}
-		});
-	}
-});
-$('body').on('click','.btnRemoverCategoria',function () {
-	var contenedor= $(this).parent().parent();
-	var idElim=$(this).attr('id');
-	$('#remoCatNombre').text(contenedor.find('.spanCategoria').text());
-	$('#remoCatdId').text(idElim);
-	$('.modal-removerCategoria').modal('show');
-});
-$('body').on('click','.btnRemoverProducto',function () {
-	var contenedor= $(this).parent().parent();
-	var idElim=$(this).attr('id');
-	$('#remoProdNombre').text(contenedor.find('.divNombrProd').text());
-	$('#remoProdId').text(idElim);
-	$('.modal-removerProducto').modal('show');
-});
-$('#btnEliminarCatModal').click(function () {
-	$.ajax({url: 'php/eliminarCategoriaBD.php', type: 'POST', data: {idCat:$('#remoCatdId').text(), idUser: $.JsonUsuario.idUsuario, pass: $('#txtPassRemover2').val()  }}).done(function (resp) { //console.log(resp);
-		if(resp=='Y'){location.reload();}
-		else{$('.modal-removerProducto .labelError').removeClass('hidden').find('.mensaje').text('Su contraseña no es la correcta.');}
-	});
-});
-$('#btnEliminarProdModal').click(function () {
-	$.ajax({url: 'php/eliminarProductoBD.php', type: 'POST', data: {idProd:$('#remoProdId').text(), idUser: $.JsonUsuario.idUsuario, pass: $('#txtPassRemover').val()  }}).done(function (resp) { //console.log(resp);
-		if(resp=='Y'){window.location.href = 'productos.php';}
-		else{$('.modal-removerProducto .labelError').removeClass('hidden').find('.mensaje').text('Su contraseña no es la correcta.');}
-	});
-});
-$('#btnAddNewProduct').click(function () {
-	$('.modal-addProductoBD').modal('show');
-});
-$('#btnGuardarAddConfig').click(function () {
-	var idCategoria=$('#divSelectProductoListNew').find('li.selected a').attr('data-tokens');
-	var idProcedencia=$('#divSelectProcedenciaListNew').find('li.selected a').attr('data-tokens');
-	if($('#txtModalProdNomAdd').val()==''){ $('.modal-addProductoBD .labelError').removeClass('hidden').find('.mensaje').text('Debe ingresar un nombre.');}
-	else if($('#txtModalPrecioadd').val()<0){ $('.modal-addProductoBD .labelError').removeClass('hidden').find('.mensaje').text('Un precio no puede ser negativo.');}
-	else if(idCategoria==null){ $('.modal-addProductoBD .labelError').removeClass('hidden').find('.mensaje').text('Debe selecionar una categoría.');}
-	else if(idProcedencia==null){ $('.modal-addProductoBD .labelError').removeClass('hidden').find('.mensaje').text('Debe selecionar una procedencia.');}
-	else{
-		$('.modal-addProductoBD .labelError').addClass('hidden');
-		$.ajax({url:'php/insertarProductoNuevo.php', type: 'POST', data:{descripcion: $('#txtModalProdNomAdd').val(), precio: $('#txtModalPrecioadd').val(), tipoProd: idCategoria, procedencia: idProcedencia }}).done(function (resp) {
-			if(resp>0){location.reload();}
-		});
-	}
-});
-$('#btnNewCategoria').click(function () {
-	$('.modal-nuevaCategoria').modal('show');
-});
-$('#btnGuardarNuevCategor').click(function () {
-	var nomWeb= $('#txtCateDetalle').val().split(' ').join('');
-	$.ajax({url: 'php/insertarCategoria.php', type: 'POST', data:{ nombreCateg:$('#txtCateDetalle').val(), nombreWeb:nomWeb } }).done(function (resp) {
-		location.reload();
-	});
-});
+var _0xb7bf=["\x63\x6C\x69\x63\x6B","\x2E\x62\x74\x6E\x43\x6F\x6E\x66\x69\x67\x50\x72\x6F\x64\x75\x63\x74\x6F","\x70\x61\x72\x65\x6E\x74","\x69\x64","\x61\x74\x74\x72","\x74\x65\x78\x74","\x23\x73\x70\x61\x6E\x4D\x6F\x64\x61\x6C\x49\x64\x50\x72\x6F\x64\x43\x6F\x6E\x66","\x2E\x64\x69\x76\x4E\x6F\x6D\x62\x72\x50\x72\x6F\x64","\x66\x69\x6E\x64","\x23\x73\x70\x61\x6E\x4D\x6F\x64\x61\x6C\x50\x72\x65\x63\x69\x6F\x43\x6F\x6E\x66","\x2E\x64\x69\x76\x50\x72\x65\x63\x50\x72\x6F","\x76\x61\x6C","\x23\x74\x78\x74\x4D\x6F\x64\x61\x6C\x50\x72\x65\x63\x69\x6F\x43\x6F\x6E\x66","\x23\x74\x78\x74\x4D\x6F\x64\x61\x6C\x53\x74\x6F\x63\x6B\x43\x6F\x6E\x66","\x2E\x64\x69\x76\x53\x74\x6F\x63\x6B\x50\x72\x6F","\x23\x73\x70\x61\x6E\x53\x74\x6F\x63\x6B\x41\x63\x74","\x23\x73\x74\x6F\x63\x6B\x41\x6E\x74\x65\x72\x69\x6F\x72","\x72\x65\x66\x72\x65\x73\x68","\x73\x65\x6C\x65\x63\x74\x70\x69\x63\x6B\x65\x72","\x2E\x73\x70\x61\x6E\x43\x61\x74\x65\x67\x6F\x72\x69\x61","\x23\x64\x69\x76\x53\x65\x6C\x65\x63\x74\x50\x72\x6F\x64\x75\x63\x74\x6F\x4C\x69\x73\x74\x61\x64\x6F\x20\x2E\x73\x65\x6C\x65\x63\x74\x70\x69\x63\x6B\x65\x72","\x73\x68\x6F\x77","\x6D\x6F\x64\x61\x6C","\x2E\x6D\x6F\x64\x61\x6C\x2D\x63\x6F\x6E\x66\x69\x67\x75\x72\x61\x72\x50\x72\x6F\x64\x75\x63\x74\x6F","\x6F\x6E","\x62\x6F\x64\x79","\x4E\x6F\x20\x73\x65\x20\x70\x75\x65\x64\x65\x6E\x20\x67\x75\x61\x72\x64\x61\x72\x20\x76\x61\x6C\x6F\x72\x65\x73\x20\x6E\x65\x67\x61\x74\x69\x76\x6F\x73","\x2E\x6D\x65\x6E\x73\x61\x6A\x65","\x68\x69\x64\x64\x65\x6E","\x72\x65\x6D\x6F\x76\x65\x43\x6C\x61\x73\x73","\x2E\x6D\x6F\x64\x61\x6C\x2D\x63\x6F\x6E\x66\x69\x67\x75\x72\x61\x72\x50\x72\x6F\x64\x75\x63\x74\x6F\x20\x2E\x6C\x61\x62\x65\x6C\x45\x72\x72\x6F\x72","\x61\x64\x64\x43\x6C\x61\x73\x73","\x64\x61\x74\x61\x2D\x74\x6F\x6B\x65\x6E\x73","\x6C\x69\x2E\x73\x65\x6C\x65\x63\x74\x65\x64\x20\x61","\x23\x64\x69\x76\x53\x65\x6C\x65\x63\x74\x50\x72\x6F\x64\x75\x63\x74\x6F\x4C\x69\x73\x74\x61\x64\x6F","\x6C\x6F\x67","\x72\x65\x6C\x6F\x61\x64","\x64\x6F\x6E\x65","\x70\x68\x70\x2F\x61\x63\x74\x75\x61\x6C\x69\x7A\x61\x72\x53\x74\x6F\x63\x6B\x50\x72\x65\x63\x69\x6F\x50\x72\x6F\x64\x75\x63\x74\x6F\x2E\x70\x68\x70","\x50\x4F\x53\x54","\x69\x64\x55\x73\x75\x61\x72\x69\x6F","\x4A\x73\x6F\x6E\x55\x73\x75\x61\x72\x69\x6F","\x61\x6A\x61\x78","\x23\x62\x74\x6E\x47\x75\x61\x72\x64\x61\x72\x43\x61\x6D\x62\x69\x6F\x43\x6F\x6E\x66\x69\x67","\x2E\x62\x74\x6E\x52\x65\x6D\x6F\x76\x65\x72\x43\x61\x74\x65\x67\x6F\x72\x69\x61","\x23\x72\x65\x6D\x6F\x43\x61\x74\x4E\x6F\x6D\x62\x72\x65","\x23\x72\x65\x6D\x6F\x43\x61\x74\x64\x49\x64","\x2E\x6D\x6F\x64\x61\x6C\x2D\x72\x65\x6D\x6F\x76\x65\x72\x43\x61\x74\x65\x67\x6F\x72\x69\x61","\x2E\x62\x74\x6E\x52\x65\x6D\x6F\x76\x65\x72\x50\x72\x6F\x64\x75\x63\x74\x6F","\x23\x72\x65\x6D\x6F\x50\x72\x6F\x64\x4E\x6F\x6D\x62\x72\x65","\x23\x72\x65\x6D\x6F\x50\x72\x6F\x64\x49\x64","\x2E\x6D\x6F\x64\x61\x6C\x2D\x72\x65\x6D\x6F\x76\x65\x72\x50\x72\x6F\x64\x75\x63\x74\x6F","\x59","\x53\x75\x20\x63\x6F\x6E\x74\x72\x61\x73\x65\xF1\x61\x20\x6E\x6F\x20\x65\x73\x20\x6C\x61\x20\x63\x6F\x72\x72\x65\x63\x74\x61\x2E","\x2E\x6D\x6F\x64\x61\x6C\x2D\x72\x65\x6D\x6F\x76\x65\x72\x50\x72\x6F\x64\x75\x63\x74\x6F\x20\x2E\x6C\x61\x62\x65\x6C\x45\x72\x72\x6F\x72","\x70\x68\x70\x2F\x65\x6C\x69\x6D\x69\x6E\x61\x72\x43\x61\x74\x65\x67\x6F\x72\x69\x61\x42\x44\x2E\x70\x68\x70","\x23\x74\x78\x74\x50\x61\x73\x73\x52\x65\x6D\x6F\x76\x65\x72\x32","\x23\x62\x74\x6E\x45\x6C\x69\x6D\x69\x6E\x61\x72\x43\x61\x74\x4D\x6F\x64\x61\x6C","\x68\x72\x65\x66","\x6C\x6F\x63\x61\x74\x69\x6F\x6E","\x70\x72\x6F\x64\x75\x63\x74\x6F\x73\x2E\x70\x68\x70","\x70\x68\x70\x2F\x65\x6C\x69\x6D\x69\x6E\x61\x72\x50\x72\x6F\x64\x75\x63\x74\x6F\x42\x44\x2E\x70\x68\x70","\x23\x74\x78\x74\x50\x61\x73\x73\x52\x65\x6D\x6F\x76\x65\x72","\x23\x62\x74\x6E\x45\x6C\x69\x6D\x69\x6E\x61\x72\x50\x72\x6F\x64\x4D\x6F\x64\x61\x6C","\x2E\x6D\x6F\x64\x61\x6C\x2D\x61\x64\x64\x50\x72\x6F\x64\x75\x63\x74\x6F\x42\x44","\x23\x62\x74\x6E\x41\x64\x64\x4E\x65\x77\x50\x72\x6F\x64\x75\x63\x74","\x23\x64\x69\x76\x53\x65\x6C\x65\x63\x74\x50\x72\x6F\x64\x75\x63\x74\x6F\x4C\x69\x73\x74\x4E\x65\x77","\x23\x74\x78\x74\x4D\x6F\x64\x61\x6C\x50\x72\x6F\x64\x4E\x6F\x6D\x41\x64\x64","","\x44\x65\x62\x65\x20\x69\x6E\x67\x72\x65\x73\x61\x72\x20\x75\x6E\x20\x6E\x6F\x6D\x62\x72\x65\x2E","\x2E\x6D\x6F\x64\x61\x6C\x2D\x61\x64\x64\x50\x72\x6F\x64\x75\x63\x74\x6F\x42\x44\x20\x2E\x6C\x61\x62\x65\x6C\x45\x72\x72\x6F\x72","\x23\x74\x78\x74\x4D\x6F\x64\x61\x6C\x50\x72\x65\x63\x69\x6F\x61\x64\x64","\x55\x6E\x20\x70\x72\x65\x63\x69\x6F\x20\x6E\x6F\x20\x70\x75\x65\x64\x65\x20\x73\x65\x72\x20\x6E\x65\x67\x61\x74\x69\x76\x6F\x2E","\x44\x65\x62\x65\x20\x73\x65\x6C\x65\x63\x69\x6F\x6E\x61\x72\x20\x75\x6E\x61\x20\x63\x61\x74\x65\x67\x6F\x72\xED\x61\x2E","\x70\x68\x70\x2F\x69\x6E\x73\x65\x72\x74\x61\x72\x50\x72\x6F\x64\x75\x63\x74\x6F\x4E\x75\x65\x76\x6F\x2E\x70\x68\x70","\x23\x62\x74\x6E\x47\x75\x61\x72\x64\x61\x72\x41\x64\x64\x43\x6F\x6E\x66\x69\x67","\x2E\x6D\x6F\x64\x61\x6C\x2D\x6E\x75\x65\x76\x61\x43\x61\x74\x65\x67\x6F\x72\x69\x61","\x23\x62\x74\x6E\x4E\x65\x77\x43\x61\x74\x65\x67\x6F\x72\x69\x61","\x6A\x6F\x69\x6E","\x20","\x73\x70\x6C\x69\x74","\x23\x74\x78\x74\x43\x61\x74\x65\x44\x65\x74\x61\x6C\x6C\x65","\x70\x68\x70\x2F\x69\x6E\x73\x65\x72\x74\x61\x72\x43\x61\x74\x65\x67\x6F\x72\x69\x61\x2E\x70\x68\x70","\x23\x62\x74\x6E\x47\x75\x61\x72\x64\x61\x72\x4E\x75\x65\x76\x43\x61\x74\x65\x67\x6F\x72"];$(_0xb7bf[25])[_0xb7bf[24]](_0xb7bf[0],_0xb7bf[1],function(){var _0xebf6x1=$(this)[_0xb7bf[2]]()[_0xb7bf[2]]();$(_0xb7bf[6])[_0xb7bf[5]]($(this)[_0xb7bf[4]](_0xb7bf[3]));$(_0xb7bf[9])[_0xb7bf[5]](_0xebf6x1[_0xb7bf[8]](_0xb7bf[7])[_0xb7bf[5]]());$(_0xb7bf[12])[_0xb7bf[11]](_0xebf6x1[_0xb7bf[8]](_0xb7bf[10])[_0xb7bf[5]]());$(_0xb7bf[13])[_0xb7bf[11]](0);$(_0xb7bf[15])[_0xb7bf[5]](_0xebf6x1[_0xb7bf[8]](_0xb7bf[14])[_0xb7bf[5]]());$(_0xb7bf[16])[_0xb7bf[11]](_0xebf6x1[_0xb7bf[8]](_0xb7bf[14])[_0xb7bf[5]]());$(_0xb7bf[20])[_0xb7bf[18]](_0xb7bf[11],_0xebf6x1[_0xb7bf[8]](_0xb7bf[19])[_0xb7bf[5]]())[_0xb7bf[18]](_0xb7bf[17]);$(_0xb7bf[23])[_0xb7bf[22]](_0xb7bf[21])});$(_0xb7bf[43])[_0xb7bf[0]](function(){if($(_0xb7bf[12])[_0xb7bf[11]]()< 0|| $(_0xb7bf[13])[_0xb7bf[11]]()< 0){$(_0xb7bf[30])[_0xb7bf[29]](_0xb7bf[28])[_0xb7bf[8]](_0xb7bf[27])[_0xb7bf[5]](_0xb7bf[26])}else {$(_0xb7bf[30])[_0xb7bf[31]](_0xb7bf[28]);var _0xebf6x2=$(_0xb7bf[34])[_0xb7bf[8]](_0xb7bf[33])[_0xb7bf[4]](_0xb7bf[32]);console[_0xb7bf[35]](_0xebf6x2);var _0xebf6x3=$(_0xb7bf[13])[_0xb7bf[11]]();$[_0xb7bf[42]]({url:_0xb7bf[38],type:_0xb7bf[39],data:{idProd:$(_0xb7bf[6])[_0xb7bf[5]](),precio:$(_0xb7bf[12])[_0xb7bf[11]](),categoria:_0xebf6x2,idUser:$[_0xb7bf[41]][_0xb7bf[40]],cantidad:_0xebf6x3}})[_0xb7bf[37]](function(_0xebf6x4){console[_0xb7bf[35]](_0xebf6x4);if(_0xebf6x4> 0){location[_0xb7bf[36]]()}})}});$(_0xb7bf[25])[_0xb7bf[24]](_0xb7bf[0],_0xb7bf[44],function(){var _0xebf6x1=$(this)[_0xb7bf[2]]()[_0xb7bf[2]]();var _0xebf6x5=$(this)[_0xb7bf[4]](_0xb7bf[3]);$(_0xb7bf[45])[_0xb7bf[5]](_0xebf6x1[_0xb7bf[8]](_0xb7bf[19])[_0xb7bf[5]]());$(_0xb7bf[46])[_0xb7bf[5]](_0xebf6x5);$(_0xb7bf[47])[_0xb7bf[22]](_0xb7bf[21])});$(_0xb7bf[25])[_0xb7bf[24]](_0xb7bf[0],_0xb7bf[48],function(){var _0xebf6x1=$(this)[_0xb7bf[2]]()[_0xb7bf[2]]();var _0xebf6x5=$(this)[_0xb7bf[4]](_0xb7bf[3]);$(_0xb7bf[49])[_0xb7bf[5]](_0xebf6x1[_0xb7bf[8]](_0xb7bf[7])[_0xb7bf[5]]());$(_0xb7bf[50])[_0xb7bf[5]](_0xebf6x5);$(_0xb7bf[51])[_0xb7bf[22]](_0xb7bf[21])});$(_0xb7bf[57])[_0xb7bf[0]](function(){$[_0xb7bf[42]]({url:_0xb7bf[55],type:_0xb7bf[39],data:{idCat:$(_0xb7bf[46])[_0xb7bf[5]](),idUser:$[_0xb7bf[41]][_0xb7bf[40]],pass:$(_0xb7bf[56])[_0xb7bf[11]]()}})[_0xb7bf[37]](function(_0xebf6x4){if(_0xebf6x4== _0xb7bf[52]){location[_0xb7bf[36]]()}else {$(_0xb7bf[54])[_0xb7bf[29]](_0xb7bf[28])[_0xb7bf[8]](_0xb7bf[27])[_0xb7bf[5]](_0xb7bf[53])}})});$(_0xb7bf[63])[_0xb7bf[0]](function(){$[_0xb7bf[42]]({url:_0xb7bf[61],type:_0xb7bf[39],data:{idProd:$(_0xb7bf[50])[_0xb7bf[5]](),idUser:$[_0xb7bf[41]][_0xb7bf[40]],pass:$(_0xb7bf[62])[_0xb7bf[11]]()}})[_0xb7bf[37]](function(_0xebf6x4){if(_0xebf6x4== _0xb7bf[52]){window[_0xb7bf[59]][_0xb7bf[58]]= _0xb7bf[60]}else {$(_0xb7bf[54])[_0xb7bf[29]](_0xb7bf[28])[_0xb7bf[8]](_0xb7bf[27])[_0xb7bf[5]](_0xb7bf[53])}})});$(_0xb7bf[65])[_0xb7bf[0]](function(){$(_0xb7bf[64])[_0xb7bf[22]](_0xb7bf[21])});$(_0xb7bf[75])[_0xb7bf[0]](function(){var _0xebf6x2=$(_0xb7bf[66])[_0xb7bf[8]](_0xb7bf[33])[_0xb7bf[4]](_0xb7bf[32]);if($(_0xb7bf[67])[_0xb7bf[11]]()== _0xb7bf[68]){$(_0xb7bf[70])[_0xb7bf[29]](_0xb7bf[28])[_0xb7bf[8]](_0xb7bf[27])[_0xb7bf[5]](_0xb7bf[69])}else {if($(_0xb7bf[71])[_0xb7bf[11]]()< 0){$(_0xb7bf[70])[_0xb7bf[29]](_0xb7bf[28])[_0xb7bf[8]](_0xb7bf[27])[_0xb7bf[5]](_0xb7bf[72])}else {if(_0xebf6x2== null){$(_0xb7bf[70])[_0xb7bf[29]](_0xb7bf[28])[_0xb7bf[8]](_0xb7bf[27])[_0xb7bf[5]](_0xb7bf[73])}else {$(_0xb7bf[70])[_0xb7bf[31]](_0xb7bf[28]);$[_0xb7bf[42]]({url:_0xb7bf[74],type:_0xb7bf[39],data:{descripcion:$(_0xb7bf[67])[_0xb7bf[11]](),precio:$(_0xb7bf[71])[_0xb7bf[11]](),tipoProd:_0xebf6x2}})[_0xb7bf[37]](function(_0xebf6x4){if(_0xebf6x4> 0){location[_0xb7bf[36]]()}})}}}});$(_0xb7bf[77])[_0xb7bf[0]](function(){$(_0xb7bf[76])[_0xb7bf[22]](_0xb7bf[21])});$(_0xb7bf[83])[_0xb7bf[0]](function(){var _0xebf6x6=$(_0xb7bf[81])[_0xb7bf[11]]()[_0xb7bf[80]](_0xb7bf[79])[_0xb7bf[78]](_0xb7bf[68]);$[_0xb7bf[42]]({url:_0xb7bf[82],type:_0xb7bf[39],data:{nombreCateg:$(_0xb7bf[81])[_0xb7bf[11]](),nombreWeb:_0xebf6x6}})[_0xb7bf[37]](function(_0xebf6x4){console[_0xb7bf[35]](_0xebf6x4)})})
 
 $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {	
 var target = $(e.target).attr("href");
@@ -496,7 +402,6 @@ if(target=='#tabCambiarPassUser'){
 });
 }
 });
-
 
 </script>
 </body>

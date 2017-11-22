@@ -11,7 +11,7 @@
 			<div class="container-fluid">
 			<div class="row">
 				<label for="">Razón del gasto</label>
-				<input type="text" class="form-control mayuscula" id="txtRazonGasto" >
+				<input type="text" class="form-control mayuscula" id="txtRazonGasto" autocomplete="off" >
 			</div>
 			<div class="row">
 				<label for="">Monto que se gastó (S/.)</label>
@@ -41,7 +41,7 @@
 			<div class="container-fluid">
 			<div class="row">
 				<label for="">Razón del monto ingresado</label>
-				<input type="text" class="form-control mayuscula" id="txtRazonIngreso" >
+				<input type="text" class="form-control mayuscula" id="txtRazonIngreso" autocomplete="off" >
 			</div>
 			<div class="row">
 				<label for="">Monto que entra a caja (S/.)</label>

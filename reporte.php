@@ -18,7 +18,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 		<meta name="description" content="">
 		<meta name="author" content="">
 
-		<title>Inicio: Infocat-Grifo</title>
+		<title>Inicio: Infocat Snack</title>
 
 		<!-- Bootstrap Core CSS -->
 		<link href="css/bootstrap.css" rel="stylesheet">
@@ -126,6 +126,10 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 			</nav>
 	</div>
 </div>
+
+<style>
+.tab-pane .row:hover{background-color: transparent!important;}
+</style>
 <!-- Page Content -->
 <div id="page-content-wrapper">
 	<div class="container-fluid">				 
@@ -135,7 +139,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 				 <h2 class="purple-text text-lighten-1"><i class="icofont icofont-options"></i> Reportería</h2>
 
 					<ul class="nav nav-tabs">
-					<li class="active"><a href="#tabAgregarLabo" data-toggle="tab">Resumen de caja</a></li>
+					<li class="active"><a href="#tabAgregarLabo" data-toggle="tab">Resumen de ventas en caja</a></li>
 					<li class="hidden"><a href="#tabCambiarPassUser" data-toggle="tab">Cambiar contraseña</a></li>
 					
 					</ul>
@@ -145,23 +149,101 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 						<!--Clase para las tablas-->
 						<div class="tab-pane fade in active container-fluid" id="tabAgregarLabo">
 						<!--Inicio de pestaña 01-->
-								<div class="row">
-									<div>
-										<p>Seleccione una fecha para filtrar por favor:</p>
-										<div class="form-inline">
-											<div class="form-group">
-												<div class="sandbox-container input-group">
-													<input  id="dtpFechaInicio"  type="text" class="form-control text-center" placeholder="Seleccione una fecha">
-													<div class="input-group-btn">
-														<button class="btn btn-morado btn-outline" id="btnBuscarVentas"><i class="icofont icofont-search-alt-1"></i></button>
-													</div>
-												
-											</div>
-											</div>
-										</div>
+							<div class="row">
+								<p>Seleccione dos fechas para filtrar por favor:</p>
+								
+								<div class="col-xs-6">
+									<div class="sandbox-container">
+									<div class="input-daterange input-group" id="datepicker">
+									<input type="text" class="input-sm form-control" id="inputFechaInicio" name="start" />
+									<span class="input-group-addon">hasta</span>
+									<input type="text" class="input-sm form-control" id="inputFechaFin" name="end" />
+									</div>
 									</div>
 								</div>
-							<p>Fecha generada: <strong><span id="spanFechaLetra"></span></strong></p>
+								<div class="col-xs-2 hidden">
+									<button class="btn btn-success btn-outline" id="btnFiltarFechas"><i class="icofont icofont-search-alt-1"></i> Filtrar</button>
+								</div>
+								
+							</div><br>
+							<div class="row">
+								<ul class="nav nav-tabs">
+									<li><a href="#tabVerPorUsuario" data-toggle="tab">Por usuario</a></li>
+									<li><a href="#tabVerPorMesa" data-toggle="tab">Por mesas</a></li>
+									<li><a href="#tabVerPorProducto" data-toggle="tab">Por productos</a></li>
+									<li><a href="#tabVerPorBebida" data-toggle="tab">Por bebidas</a></li>
+									<li><a href="#tabVerPorDetalle" data-toggle="tab">Detallado</a></li>
+								</ul>
+								<div class="tab-content">
+									<div class="tab-pane fade container-fluid" id="tabVerPorUsuario">
+										<table class="table table-hover">
+											<thead>
+											<tr>
+												<th>Usuario</th>
+												<th>Nivel</th>
+												<th>SubTotal</th>
+											</tr>
+											</thead>
+											<tbody>
+											</tbody>
+										</table>
+									</div>
+								
+									<div class="tab-pane fade container-fluid" id="tabVerPorMesa">
+										<table class="table table-hover">
+											<thead>
+											<tr>
+												<th>N° Mesa</th>
+												<th>SubTotal</th>
+											</tr>
+											</thead>
+											<tbody>
+											</tbody>
+										</table>
+									</div>
+									<div class="tab-pane fade container-fluid" id="tabVerPorProducto">
+										<table class="table table-hover">
+											<thead>
+											<tr>
+												<th>Cantidad</th>
+												<th>Producto</th>
+												<th>SubTotal</th>
+											</tr>
+											</thead>
+											<tbody>
+											</tbody>
+										</table>
+									</div>
+									<div class="tab-pane fade container-fluid" id="tabVerPorBebida">
+										<table class="table table-hover">
+											<thead>
+											<tr>
+												<th>Cantidad</th>
+												<th>Categoría</th>
+												<th>Bebida</th>
+												<th>SubTotal</th>
+											</tr>
+											</thead>
+											<tbody>
+											</tbody>
+										</table>
+									</div>
+									<div class="tab-pane fade container-fluid" id="tabVerPorDetalle">
+										<table class="table table-hover">
+											<thead>
+											<tr>
+												<th>Detalle</th>
+												<th>Pedido</th>
+												<th>Total</th>
+											</tr>
+											</thead>
+											<tbody>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+							<!-- <p>Fecha generada: <strong><span id="spanFechaLetra"></span></strong></p>
 							<div class="row">
 								<strong>
 									<div class="col-xs-3">Cliente</div>
@@ -176,7 +258,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 								<p><strong>Total de Ventas: S/. <span id="spanVentasSuma"></span></strong></p>
 								<p><strong>Total de Ingresos: S/. <span id="spanIngresosSuma"></span></strong></p>
 								<p><strong>Total de Egresos: S/. <span id="spanEgresosSuma"></span></strong></p>
-							</div>
+							</div> -->
 							
 
 						<!--Fin de pestaña 01-->
@@ -201,7 +283,6 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 <!-- /#page-content-wrapper -->
 </div><!-- /#wrapper -->
 <?php include 'php/llamandoModals.php'; ?>
-
 	
 <!-- jQuery -->
 <script src="js/jquery-2.2.4.min.js"></script>
@@ -229,9 +310,8 @@ $('input').keypress(function (e) {
 		//$(this).parent().next().children().removeAttr('disabled'); //agregar atributo desabilitado
 	} 
 });
-$('.sandbox-container input').datepicker({language: "es", autoclose: true, todayBtn: "linked", todayHighlight: true});
-$('#dtpFechaInicio').val(moment().format('DD/MM/YYYY'));
-
+$('.sandbox-container input').datepicker({language: "es", autoclose: true, clearBtn: true, todayBtn: "linked", todayHighlight: true});
+$('.sandbox-container .input-daterange').datepicker({language: "es", autoclose: true,  clearBtn: true, todayBtn: "linked", todayHighlight: true});
 
 });//fin de document ready
 $('#btnBuscarVentas').click(function () {
@@ -262,6 +342,179 @@ $('#btnBuscarVentas').click(function () {
 	});
 
 });
+$('#btnFiltarFechas').click(function () {
+	
+
+	if(iniciofecha!=''){
+		// if(iniciofecha==finFecha){
+		// }
+	}
+	
+});
+$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {	
+var target = $(e.target).attr("href");
+//console.log(target);
+if(target=='#tabVerPorUsuario'){ cajaPorUser(); }
+if(target=='#tabVerPorMesa'){ cajaPorMesa(); }
+if(target=='#tabVerPorProducto'){ cajaPorProducto(); }
+if(target=='#tabVerPorBebida'){ cajaPorBebidas(); }
+if(target=='#tabVerPorDetalle'){ cajaPorDetalle(); }
+});
+
+function cajaPorUser() {
+	var sumConjunto=0;
+	var iniciofecha = $('#inputFechaInicio').val();
+	var finFecha= $('#inputFechaFin').val();
+	$('#tabVerPorUsuario tbody').children().remove();
+	$.ajax({url:'php/reporteCajaPorUsuario.php', type: 'POST', data: {fechaIni:iniciofecha, fechaFin:finFecha}}).done(function (resp) {
+		//console.log(resp)
+		var maxElem=JSON.parse(resp).length;
+		if(maxElem>0){
+			$.each(JSON.parse(resp), function (i, elem) {
+			sumConjunto+=parseFloat(elem.dineroIngeso);
+			$('#tabVerPorUsuario tbody').append(`<tr>
+					<td class="mayuscula">${elem.Nombres}</td>
+					<td>${elem.Descripcion}</td>
+					<td>${parseFloat(elem.dineroIngeso).toFixed(2)}</td>
+				  </tr>`);
+			if(maxElem-1==i){
+				$('#tabVerPorUsuario tbody').append(`<tr>
+					<td colspan="3"> <strong class="pull-right" style="padding-right: 100px;">Suma Total: S/. ${sumConjunto.toFixed(2)}</strong></td>
+					</tr>`); }
+			});
+		}else{
+			$('#tabVerPorUsuario tbody').append(`<tr><td class="">No se encontraron datos para ésta fecha</td></tr>`);
+		}
+	});
+}
+function cajaPorMesa() {
+	var sumConjunto=0;
+	var iniciofecha = $('#inputFechaInicio').val();
+	var finFecha= $('#inputFechaFin').val();
+	$('#tabVerPorMesa tbody').children().remove();
+	$.ajax({url:'php/reporteCajaPorMesa.php', type: 'POST', data: {fechaIni:iniciofecha, fechaFin:finFecha}}).done(function (resp) {
+		var maxElem=JSON.parse(resp).length;  
+		if(maxElem>0){
+			$.each(JSON.parse(resp), function (i, elem) {
+			sumConjunto+=parseFloat(elem.dineroIngeso);
+			$('#tabVerPorMesa tbody').append(`<tr>
+					<td class="mayuscula">Mesa ${elem.idMesa}</td>
+					<td>${parseFloat(elem.dineroIngeso).toFixed(2)}</td>
+				  </tr>`);
+			if(maxElem-1==i){
+				$('#tabVerPorMesa tbody').append(`<tr>
+					<td colspan="3"> <strong class="pull-right" style="padding-right: 100px;">Suma Total: S/. ${sumConjunto.toFixed(2)}</strong></td>
+					</tr>`); }
+			});
+		}else{
+			$('#tabVerPorMesa tbody').append(`<tr><td class="">No se encontraron datos para ésta fecha</td></tr>`);
+		}
+	});
+}
+function cajaPorProducto() {
+	var sumConjunto=0;
+	var iniciofecha = $('#inputFechaInicio').val();
+	var finFecha= $('#inputFechaFin').val();
+	$('#tabVerPorProducto tbody').children().remove();
+	$.ajax({url:'php/reporteCajaPorProducto.php', type: 'POST', data: {fechaIni:iniciofecha, fechaFin:finFecha}}).done(function (resp) {
+		var maxElem=JSON.parse(resp).length;
+		if(maxElem>0){
+			$.each(JSON.parse(resp), function (i, elem) {
+			sumConjunto+=parseFloat(elem.dineroIngeso);
+			$('#tabVerPorProducto tbody').append(`<tr>
+					<td>${elem.Qproduct}</td>
+					<td class="mayuscula">${elem.prodDescripcion}</td>
+					<td>${parseFloat(elem.dineroIngeso).toFixed(2)}</td>
+				  </tr>`);
+			if(maxElem-1==i){
+				$('#tabVerPorProducto tbody').append(`<tr>
+					<td colspan="3"> <strong class="pull-right" style="padding-right: 100px;">Suma Total: S/. ${sumConjunto.toFixed(2)}</strong></td>
+					</tr>`); }
+			});
+		}else{
+			$('#tabVerPorProducto tbody').append(`<tr><td class="">No se encontraron datos para ésta fecha</td></tr>`);
+		}
+	});
+}
+function cajaPorBebidas() {
+	var sumConjunto=0;
+	var iniciofecha = $('#inputFechaInicio').val();
+	var finFecha= $('#inputFechaFin').val();
+	$('#tabVerPorBebida tbody').children().remove();
+	$.ajax({url:'php/reporteCajaPorBebidas.php', type: 'POST', data: {fechaIni:iniciofecha, fechaFin:finFecha}}).done(function (resp) {
+		var maxElem=JSON.parse(resp).length;
+		if(maxElem>0){
+			$.each(JSON.parse(resp), function (i, elem) {
+			sumConjunto+=parseFloat(elem.dineroIngeso);
+			$('#tabVerPorBebida tbody').append(`<tr>
+					<td>${elem.Qproduct}</td>
+					<td class="mayuscula">${elem.tipDescripcion}</td>
+					<td class="mayuscula">${elem.prodDescripcion}</td>
+					<td>${parseFloat(elem.dineroIngeso).toFixed(2)}</td>
+				  </tr>`);
+			if(maxElem-1==i){
+				$('#tabVerPorBebida tbody').append(`<tr>
+					<td colspan="4"> <strong class="pull-right" style="padding-right: 100px;">Suma Total: S/. ${sumConjunto.toFixed(2)}</strong></td>
+					</tr>`); }
+			});
+		}else{
+			$('#tabVerPorBebida tbody').append(`<tr><td class="">No se encontraron datos para ésta fecha</td></tr>`);
+		}
+	});
+}
+function cajaPorDetalle() {
+	var sumConjunto=0;
+	var iniciofecha = $('#inputFechaInicio').val();
+	var finFecha= $('#inputFechaFin').val();
+	$('#tabVerPorDetalle tbody').children().remove();
+	$.ajax({url:'php/reporteCajaPorDetalle.php', type: 'POST', data: {fechaIni:iniciofecha, fechaFin:finFecha}}).done(function (resp) {
+		var maxElem=JSON.parse(resp).length;
+		if(maxElem>0){
+			$.each(JSON.parse(resp), function (i, dato) { //console.log(dato.cajaMontoTotal)
+			
+			if(i>=1){ //console.log(dato.idPedido)
+				//console.log($('#tabVerPorDetalle tbody tr').last().attr('id'))
+				if(dato.idPedido==$('#tabVerPorDetalle tbody tr').last().attr('id')){
+					$('#tabVerPorDetalle tbody #'+dato.idPedido).find('.relleno').append(`
+					<p> ${dato.pedCantidad} x ${dato.prodDescripcion}  = ${parseFloat(dato.pedSubtotal).toFixed(2)}<p>`);
+				}else{
+					sumConjunto+=parseFloat(dato.cajaMontoTotal);
+					$('#tabVerPorDetalle tbody').append(`<tr id="${dato.idPedido}">
+					<td>
+					<p><strong>Mesa:</strong> ${dato.idMesa} <br> <strong>Usuario:</strong> ${dato.usuApellidos} ${dato.usuNombres} <br> <strong>Fecha:</strong> ${moment(dato.cajaFechaRegistro).format('DD/MM/YYYY h:m a')}<p>
+					</td><td class="relleno">
+						<p> ${dato.pedCantidad} x ${dato.prodDescripcion}  = ${parseFloat(dato.pedSubtotal).toFixed(2)}<p>
+					</td>
+					<td><strong>S/. ${parseFloat(dato.cajaMontoTotal).toFixed(2)}</strong></td>
+				  </tr>`);
+				}
+			}else{
+				sumConjunto+=parseFloat(dato.cajaMontoTotal);
+				$('#tabVerPorDetalle tbody').append(`<tr id="${dato.idPedido}">
+					<td>
+					<p><strong>Mesa:</strong> ${dato.idMesa} <br> <strong>Usuario:</strong> ${dato.usuApellidos} ${dato.usuNombres} <br> <strong>Fecha:</strong> ${moment(dato.cajaFechaRegistro).format('DD/MM/YYYY h:m a')}<p>
+					</td><td class="relleno">
+						<p> ${dato.pedCantidad} x ${dato.prodDescripcion}  = ${parseFloat(dato.pedSubtotal).toFixed(2)}<p>
+					</td><td><strong>S/. ${parseFloat(dato.cajaMontoTotal).toFixed(2)}</strong></td>
+				  </tr>`);
+			}
+			if(maxElem-1==i){
+				$('#tabVerPorDetalle tbody').append(`<tr>
+					<td colspan="2"> <strong class="pull-right" style="padding-right: 100px;">Suma Total: S/. ${sumConjunto.toFixed(2)}</strong></td>
+					</tr>`); }
+			/*$('#tabVerPorDetalle tbody').append(`<tr>
+					<td>${elem.Qproduct}</td>
+					<td class="mayuscula">${elem.tipDescripcion}</td>
+					<td class="mayuscula">${elem.prodDescripcion}</td>
+					<td>${parseFloat(elem.dineroIngeso).toFixed(2)}</td>
+				  </tr>`);*/
+
+			});
+		}else{
+			$('#tabVerPorDetalle tbody').append(`<tr><td class="">No se encontraron datos para ésta fecha</td></tr>`);
+		}
+	});
+}
 
 </script>
 
