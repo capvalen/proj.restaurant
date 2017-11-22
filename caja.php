@@ -24,12 +24,12 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 		<link href="css/bootstrap.css" rel="stylesheet">
 
 		<!-- Custom CSS -->
-		<link href="css/estilosElementosv2.css?version=1.0.2" rel="stylesheet">
+		<link href="css/estilosElementosv2.css?version=1.0.4" rel="stylesheet">
 		<link href="css/sidebarDeslizable.css?version=1.0.1" rel="stylesheet">
 		<link rel="stylesheet" href="css/cssBarraTop.css?version=1.0.1">
 		<link rel="stylesheet" href="css/icofont.css">
 		<link rel="stylesheet" href="css/animate.css">
-		<link rel="stylesheet" href="css/snack.css?version=1.0.4">
+		<link rel="stylesheet" href="css/snack.css?version=1.0.5">
 
 		<link href="css/bootstrap-select.min.css" rel="stylesheet"> <!-- extraido de: https://silviomoreto.github.io/bootstrap-select/-->
 		<link rel="stylesheet" href="css/icofont.css"> <!-- iconos extraidos de: http://icofont.com/-->
@@ -131,7 +131,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 </div>
 <!-- Page Content -->
 <div id="page-content-wrapper">
-	<div class="container-fluid">				 
+	<div class="container-fluid noselect">				 
 			<div class="row">
 				<div class="col-lg-12 contenedorDeslizable">
 				<!-- Empieza a meter contenido principal dentro de estas etiquetas -->
@@ -348,7 +348,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 </div>
 
 <!-- Modal para buscar un producto -->
-<div class="modal fade modal-buscarProducto" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+<div class="modal fade modal-buscarProducto noselect" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
 <div class="modal-dialog"  role="document">
 	<div class="modal-content">
 		<div class="modal-header-morado">
@@ -513,9 +513,11 @@ $('body').on('click', '.btnRemoverProducto',function () {
 	else{
 		$.ajax({url:'php/eliminarProductoPedido.php', type:"POST", data:{idProd:idEliminar , mesa:$('#idMesaSpan').text(), idUser:$.JsonUsuario.idUsuario }}).done(function (resp) { //console.log(resp)
 			if(parseInt(resp)>0){
+				var vTotalProd=parseFloat($(`.contanedorDivsProductos`).find(`#${idEliminar}`).parent().parent().find('.valorTotalProducto').text());
+				var vTotalPed=parseFloat($('#idTotalSpan').text());
+				$('#idTotalSpan').text(parseFloat(vTotalPed-vTotalProd).toFixed(2));
 				$(`.contanedorDivsProductos`).find(`#${idEliminar}`).parent().parent().remove();
 			}
-			
 		});
 	}
 });
@@ -658,16 +660,28 @@ return lineaImpr;
 $('.modal-buscarProducto').on('shown.bs.modal', function() { /*$('#txtParaFiltrarProducto').focus();*/
 
 });
-$('#btnCajaAgregarProducto').click(function () { 
+$('#btnCajaAgregarProducto').click(function () {
 	listarProductos();
+	$('.bs-callout').find('.panel-heading').addClass('collapsed').attr({'aria-expanded':'false'});
+	$('.bs-callout').find('.panel-collapse').removeClass('in');
 	$('.modal-buscarProducto').modal('show'); });
 function listarProductos() {
 	$('.modal-buscarProducto .panel-body').children().remove();
 	$.ajax({url:'php/listarProductos.php', type:'POST'}).done(function (resp) {
 		$.each(JSON.parse(resp), function (i, dato) {
-			$(`#${dato.tpNombreWeb} .panel-body`).append(`
-					<div class="row divUnSoloProductodivUnSoloProducto" id="${dato.idProducto}"><div class="col-xs-7"><h4 class="h4NombreProducto mayuscula ${dato.tpDivBebidaCocina}" id="${dato.idProducto}">${dato.prodDescripcion}</h4> <span class="stockPlato">(<span class="stockFict">${dato.stockCantidad}</span>)</span></div><div class="col-xs-3"><h5 class="h4precioProducto">S/. <span class="valorProducto">${parseFloat(dato.prodPrecio).toFixed(2)}</span></h5></div><div class="col-xs-2"><button class="btn btn-warning btn-outline btn-block btnAgregarProducto"><i class="icofont icofont-check"></i></button></div></div>
+			if(dato.idProcedencia==2){
+				if($('#RegTodosBebidas .tipTrago:contains("'+dato.tipDescripcion+'")').length==0){
+					$(`#RegTodosBebidas .panel-body`).append(`<p class="tipTrago mayuscula">${dato.tipDescripcion}</p>`);
+				}
+				$(`#RegTodosBebidas .panel-body`).append(`
+				<div class="row divUnSoloProducto" id="${dato.idProducto}"><div class="col-xs-7"><h4 class="h4NombreProducto mayuscula ${dato.tpDivBebidaCocina}" id="${dato.idProducto}">${dato.prodDescripcion}</h4> <span class="stockPlato">(<span class="stockFict">${dato.stockCantidad}</span>)</span></div><div class="col-xs-3"><h5 class="h4precioProducto">S/. <span class="valorProducto">${parseFloat(dato.prodPrecio).toFixed(2)}</span></h5></div><div class="col-xs-2"><button class="btn btn-warning btn-outline btn-block btnAgregarProducto"><i class="icofont icofont-check"></i></button></div></div>
 				`);
+			}else{
+				$(`#${dato.tpNombreWeb} .panel-body`).append(`
+				<div class="row divUnSoloProducto" id="${dato.idProducto}"><div class="col-xs-7"><h4 class="h4NombreProducto mayuscula ${dato.tpDivBebidaCocina}" id="${dato.idProducto}">${dato.prodDescripcion}</h4> <span class="stockPlato">(<span class="stockFict">${dato.stockCantidad}</span>)</span></div><div class="col-xs-3"><h5 class="h4precioProducto">S/. <span class="valorProducto">${parseFloat(dato.prodPrecio).toFixed(2)}</span></h5></div><div class="col-xs-2"><button class="btn btn-warning btn-outline btn-block btnAgregarProducto"><i class="icofont icofont-check"></i></button></div></div>
+				`);
+			}
+			
 		});
 		//console.log(resp);
 	});
@@ -719,14 +733,14 @@ $('.modal-buscarProducto').on('click', '.btnAgregarProducto', function () {
 	var idProd=contenedor.attr('id');
 	var preccio=parseFloat(contenedor.find('.valorProducto').text());
 	if($('.contanedorDivsProductos').find('#'+idProd).html()==null){
-		$('.contanedorDivsProductos').append(`<div class="divUnSoloProducto row"><div class="col-xs-7"><button class="btn btn-danger btn-circle btn-NoLine btn-outline btnRemoverProducto" id="${idProd}"><i class="icofont icofont-close"></i></button> <h4 class="h4NombreProducto mayuscula" id="${idProd}">${contenedor.find('.h4NombreProducto').text()}</h4> </div><div class="col-xs-3"><button class="btn btn-warning btn-circle btn-NoLine btnRestarProducto"><i class="icofont icofont-minus-circle"></i></button> <span class="cantidadProducto">1</span> <button class="btn btn-warning btn-circle btn-NoLine btnSumarProducto"><i class="icofont icofont-plus-circle"></i></button></div><div class="col-xs-2"><h5 class="h4precioProducto"><span class="valorUndProducto sr-only">${preccio}</span>S/. <span class="valorTotalProducto">${preccio}</span></h5></div></div>`);
+		$('.contanedorDivsProductos').append(`<div class="divUnSoloProducto row"><div class="col-xs-7"><button class="btn btn-danger btn-circle btn-NoLine btn-outline btnRemoverProducto" id="${idProd}"><i class="icofont icofont-close"></i></button> <h4 class="h4NombreProducto mayuscula" id="${idProd}">${contenedor.find('.h4NombreProducto').text()}</h4> </div><div class="col-xs-3"><button class="btn btn-warning btn-circle btn-NoLine btnRestarProducto"><i class="icofont icofont-minus-circle"></i></button> <span class="cantidadProducto">1</span> <button class="btn btn-warning btn-circle btn-NoLine btnSumarProducto"><i class="icofont icofont-plus-circle"></i></button></div><div class="col-xs-2"><h5 class="h4precioProducto"><span class="valorUndProducto sr-only">${preccio.toFixed(2)}</span>S/. <span class="valorTotalProducto">${preccio.toFixed(2)}</span></h5></div></div>`);
 		$.ajax({url: 'php/insertarPedidoDetalle.php', type:'POST', data:{idProd:idProd ,  precio:preccio, cantidad:1,  idPedido: $('#idPedidoMesa').text() }}).done(function (resp) { console.log(resp)
 				var response=JSON.parse(resp)[0];
 				if(response.respuesta=='Y'){
-					
 					var cant=1;
-					var total=parseFloat(parseFloat($('#idTotalSpan').text())+preccio).toFixed(2);
-					$('#idTotalSpan').text(total);
+					var total=parseFloat(parseFloat($('#idTotalSpan').text())+preccio);
+					// console.log(total)
+					$('#idTotalSpan').text(total.toFixed(2));
 			}
 		});
 	}else{

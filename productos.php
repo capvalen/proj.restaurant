@@ -278,7 +278,9 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 		<div class="modal-body">
 			<div class="container-fluid">
 			<div class="row">
-				<label for="">Producto:</label> <span class="mayuscula" id="spanModalPrecioConf"></span><span class="hidden" id="spanModalIdProdConf"></span>
+				<label for="">Producto:</label>
+				<input type="text" class="form-control mayuscula" id="txtModalNomConf">
+				<span class="hidden" id="spanModalIdProdConf"></span>
 			</div>
 			<div class="row">
 				<label for="">Categoría:</label>
@@ -453,7 +455,7 @@ $.ajax({url:'php/listarProductos.php', data: 'POST'}).done(function (resp) { //c
 $('body').on('click', '.btnConfigProducto', function () {
 	var contenedor= $(this).parent().parent();
 	$('#spanModalIdProdConf').text($(this).attr('id'));
-	$('#spanModalPrecioConf').text(contenedor.find('.divNombrProd').text());
+	$('#txtModalNomConf').val(contenedor.find('.divNombrProd').text());
 	$('#txtModalPrecioConf').val(contenedor.find('.divPrecPro').text());
 	$('#txtModalStockConf').val(0);
 	$('#spanStockAct').text(contenedor.find('.divStockPro').text());
@@ -470,7 +472,7 @@ $('#btnGuardarCambioConfig').click(function () {
 		//console.log(idCategoria);
 		var diferencia= $('#txtModalStockConf').val();/*-$('#stockAnterior').val();*/
 		//console.log(diferencia)
-		$.ajax({url:'php/actualizarStockPrecioProducto.php', type: 'POST', data:{idProd: $('#spanModalIdProdConf').text(), precio: $('#txtModalPrecioConf').val() , categoria: idCategoria, idUser: $.JsonUsuario.idUsuario, cantidad: diferencia }}).done(function (resp) {
+		$.ajax({url:'php/actualizarStockPrecioProducto.php', type: 'POST', data:{idProd: $('#spanModalIdProdConf').text(), nomPro:$('#txtModalNomConf').val(),  precio: $('#txtModalPrecioConf').val() , categoria: idCategoria, idUser: $.JsonUsuario.idUsuario, cantidad: diferencia }}).done(function (resp) {
 			console.log(resp)
 			if(resp>0){location.reload();}
 		});

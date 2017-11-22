@@ -38,6 +38,9 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 </head>
 
 <body>
+<style>
+	h1,h2,h3{font-weight: 500!important; }
+</style>
 
 <div id="wrapper">
 

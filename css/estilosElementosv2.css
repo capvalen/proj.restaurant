@@ -155,6 +155,8 @@ h2{margin-top: 0px; } .breadcrumb{margin-bottom: 10px; }
 .btnEliminarCode{margin-right: 8px; margin-bottom: 3px}
 .form-control[disabled]{cursor: default;}
 
+.divUnSoloProducto, .divUnSoloProductoDisponible{margin-right: -6px!important; margin-left: -6px!important; cursor: pointer;}
+
 .bs-callout {
     padding: 8px;
     margin: 0;

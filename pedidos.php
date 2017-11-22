@@ -259,7 +259,7 @@ $('.btnMesa').click(function () {
 		$.ajax({url:'php/listarPedidoMesaOcupada.php', type: 'POST', data: {mesa: idMesa}}).done(function (resp) {
 		//console.log(resp);
 		$.each(JSON.parse(resp), function (i, dato) {
-			$('#regMesaCliente .panel-body').append(`<div class="row divUnSoloProducto guardado" id="${dato.idProducto}"><div class="col-xs-7"><button class="btn btn-success btn-circle btn-NoLine btn-outline" id="${dato.idProducto}"><i class="icofont icofont-check"></i></button> <h4 class="h4NombreProducto mayuscula" id="${dato.idProducto}">${dato.prodDescripcion}</h4> </div><div class="col-xs-3"> <span class="cantidadProducto">${dato.pedCantidad}</span> <button class="btn btn-warning btn-circle btn-NoLine btnSumarProducto"><i class="icofont icofont-plus-circle"></i></button> <span class="cantAnteriorProd hidden">${dato.pedCantidad}</span></div><div class="col-xs-2"><h5 class="h4precioProducto"><span class="valorUndProducto sr-only">${dato.prodPrecio}</span>S/. <span class="valorTotalProducto">${parseFloat(dato.subTotal).toFixed(2)}</span></h5></div></div>`);
+			$('#regMesaCliente .panel-body').append(`<div class="row divUnSoloProducto guardado" id="${dato.idProducto}"><div class="col-xs-7"><button class="btn btn-success btn-circle btn-NoLine btn-outline" id="${dato.idProducto}"><i class="icofont icofont-check"></i></button> <h4 class="h4NombreProducto mayuscula" id="${dato.idProducto}">${dato.prodDescripcion}</h4> </div><div class="col-xs-3"> <button class="btn btn-warning btn-circle btn-NoLine btnRestarProducto hidden"><i class="icofont icofont-minus-circle"></i></button> <span class="cantidadProducto">${dato.pedCantidad}</span> <button class="btn btn-warning btn-circle btn-NoLine btnSumarProducto"><i class="icofont icofont-plus-circle"></i></button> <span class="cantAnteriorProd hidden">${dato.pedCantidad}</span></div><div class="col-xs-2"><h5 class="h4precioProducto"><span class="valorUndProducto sr-only">${dato.prodPrecio}</span>S/. <span class="valorTotalProducto">${parseFloat(dato.subTotal).toFixed(2)}</span></h5></div></div>`);
 			cantRes=parseInt($(`.${dato.tpNombreWeb}`).find('.platoResValor').text())+1;
 			$(`.${dato.tpNombreWeb}`).find('.platoResValor').text(cantRes);
 
@@ -272,7 +272,7 @@ $('.btnMesa').click(function () {
 function listarProductos() {
 	$('.panelProductosColecc .panel-body').children().remove();
 	$.ajax({url:'php/listarProductos.php', type:'POST'}).done(function (resp) {
-		$.each(JSON.parse(resp), function (i, dato) { console.log(dato)
+		$.each(JSON.parse(resp), function (i, dato) {// console.log(dato)
 			if(dato.idProcedencia==2){
 				if($('#RegTodosBebidas .tipTrago:contains("'+dato.tipDescripcion+'")').length==0){
 					$(`#RegTodosBebidas .panel-body`).append(`<p class="tipTrago mayuscula">${dato.tipDescripcion}</p>`);
@@ -343,6 +343,9 @@ $('body').on('click', '.btnSumarProducto', function () {
 	if(contenedorSuma.hasClass('guardado')){
 		contenedorSuma.find('.cantAnteriorProd').text(contenedorSuma.find('.cantidadProducto').text());
 		contenedorSuma.removeClass('guardado').addClass('actualizar');
+	}
+	if(contenedorSuma.hasClass('actualizar')){
+		contenedorSuma.find('.btnRestarProducto').removeClass('hidden');
 	}
 	
 	var cantidadAdd=parseFloat(contenedorSuma.find('.cantidadProducto').text())+1;
@@ -441,7 +444,7 @@ $('#btnGuardarPedido').click(function () { moment.locale('es');
 							$.each(JSON.parse(resp), function (ii, dato2) {
 								if(dato2.respuesta=='Y'){
 									$(`#regMesaCliente #${dato2.idProducto}`).addClass('guardado').find('.btnRemoverProducto').html('<i class="icofont icofont-check"></i>').removeClass('btn-danger').addClass('btn-success').removeClass('btnRemoverProducto').addClass('btn-outline');
-									$(`#regMesaCliente #${dato2.idProducto}`).find('.btnRestarProducto').remove();
+									$(`#regMesaCliente #${dato2.idProducto}`).find('.btnRestarProducto').addClass('hidden');
 									if($(dato).find('.h4NombreProducto').hasClass('divProdBebida')){
 										textoProductosBar+=' '+$(dato).find('.cantidadProducto').text()+'   '+$(dato).find('.h4NombreProducto').text()+'\n';
 									}else{
