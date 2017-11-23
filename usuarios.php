@@ -179,6 +179,47 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 </div><!-- /#wrapper -->
 
 
+<!-- Modal para agregar producto nuevo a la BD -->
+<div class="modal fade modal-updUserBD" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+<div class="modal-dialog modal-sm" role="document">
+	<div class="modal-content">
+		<div class="modal-header-warning">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<h4 class="modal-title" id="myModalLabel"><i class="icofont icofont-help-robot"></i> Actualizar usuario</h4>
+		</div>
+		<div class="modal-body">
+			<div class="container-fluid">
+			<div class="row"> <span class="hidden" id="idUserModf"></span>
+				<label for="">Apellidos:</label> <input type="text" class="form-control text-center mayuscula" id="txtModalApellidUser">
+				<label for="">Nombres:</label>
+				<input type="text" class="form-control text-center mayuscula" id="txtModalUpdNombUser">
+				<label for="">D.N.I.:</label>
+				<input type="text" class="form-control text-center mayuscula" id="txtModalUpdDniUser">
+				<label for="">Nick:</label>
+				<input type="text" class="form-control text-center" id="txtModalUpdNickUser">
+				<label for="">Contraseña.:</label>
+				<input type="text" class="form-control text-center" id="txtModalUpdPassUser">
+				<label for="">Nivel:</label>
+				<div  id="divSelectNivelListUpdv2">
+					<select class="selectpicker mayuscula" title="Nivel de usuario..."  data-width="100%" data-live-search="true"">
+						<?php require 'php/listarNivelesOption.php'; ?>
+					</select>
+				</div>
+			</div>
+			<div class="" id="divCajaProductosExtrResultado" style="padding-top: 15px;">
+
+			</div>
+			</div>
+			<label class="text-danger labelError hidden" for=""><i class="icofont icofont-animal-squirrel"></i> Lo siento! <span class=mensaje></span></label>
+		</div>
+		
+		<div class="modal-footer">
+			<button class="btn btn-danger btn-outline" data-dismiss="modal" ><i class="icofont icofont-close"></i> Cerrar</button>
+			<button class="btn btn-success btn-outline" id="btnGuardarUpdUser"><i class="icofont icofont-save"></i> Actualizar</button>
+		</div>
+	</div>
+	</div>
+</div>
 
 <!-- Modal para agregar producto nuevo a la BD -->
 <div class="modal fade modal-addUserBD" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
@@ -231,7 +272,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 				<h4 class="modal-title" id="myModalLabel"><i class="icofont icofont-help-robot"></i> Eliminar usuario</h4>
 			</div>
 			<div class="modal-body">
-				<p><span class="hidden" id="spanIdUser"></span>Deseas eliminar a «<span class="mayuscula" id="spanUser"></span>» de la funcion de «<span class="mayuscula" id="spanFuncion"></span>»</p>
+				<p><span class="hidden" id="spanIdUser"></span>Deseas desactivar a «<span class="mayuscula" id="spanUser"></span>» de la funcion de «<span class="mayuscula" id="spanFuncion"></span>»</p>
 			</div>
 			<div class="modal-footer">
 				<button class="btn btn-default btn-outline" data-dismiss="modal"><i class="icofont icofont-close"></i> Cerrar</button>
@@ -276,7 +317,10 @@ $.ajax({url:'php/listarUsuarios.php', data: 'POST'}).done(function (resp) { cons
 		$('#divUsuariosListado').append(`<div class="row">
 				<div class="col-xs-2 mayuscula"><button class="btn btn-danger btn-circle btn-NoLine btn-outline btnRemoverUsuario" id="${dato.idUsuario}"><i class="icofont icofont-close"></i></button>${i+1}. <span class="userFuncion">${dato.Descripcion}</span></div>
 				<div class="col-xs-3"><span class="apellidos mayuscula">${dato.usuApellidos}</span> <span class="nombres mayuscula">${dato.usuNombres}</span></div>
-				<div class="col-xs-2">${dato.usuNick}</div>
+				<div class="col-xs-2 nick">${dato.usuNick}</div>
+				<span class="hidden mayuscula nivel">${dato.Descripcion}</span>
+				<span class="hidden activo">${dato.usuActivo}</span>
+				<span class="hidden usuDni">${dato.usuDni}</span>
 				<div class="col-xs-1"><button class="btn btn-success btn-outline btn-NoLine btnConfigUser" id="${dato.idUsuario}"><i class="icofont icofont-options"></i></button></div></div>`);
 	});
 });
@@ -318,6 +362,46 @@ $('#divUsuariosListado').on('click', '.btnRemoverUsuario', function () {
 $('#btnEliminarUser').click(function () {
 	$.ajax({url: 'php/eliminarUsuario.php', type:'POST', data:{idUser:$('#spanIdUser').text()}}).done(function (resp) {
 		if(resp>0){window.location.href = 'usuarios.php';}
+	});
+});
+$('body').on('click', '.btnConfigUser',function () {
+	var contenedor = $(this).parent().parent();
+	console.log(contenedor.find('.activo').text())
+	if(contenedor.find('.activo').text()==0){
+		$('#divSelectNivelListUpdv2').find('.selectpicker').selectpicker('val','Desabilitado');
+	}else{
+		$('#divSelectNivelListUpdv2').find('.selectpicker').selectpicker('val',contenedor.find('.nivel').text());
+	}
+	$('#idUserModf').text(contenedor.find('.btnConfigUser').attr('id'));
+	$('#txtModalApellidUser').val(contenedor.find('.apellidos').text());
+	$('#txtModalUpdNombUser').val(contenedor.find('.nombres').text());
+	$('#txtModalUpdDniUser').val(contenedor.find('.usuDni').text());
+	$('#txtModalUpdNickUser').val(contenedor.find('.nick').text());
+	$('#txtModalUpdPassUser').val('');
+
+	$('.modal-updUserBD').modal('show');
+});
+$('#btnGuardarUpdUser').click(function () {
+	if($('#txtModalUpdPassUser').val()!=''){
+		$.ajax({url: 'php/actualizarContrasenaUser.php', type: 'POST', data: {idUser:$('#idUserModf').text(), pass: $('#txtModalUpdPassUser').val()}}).done(function (resp) { console.log(resp)
+	});
+	}
+
+	var idProcedencia=$('#divSelectNivelListUpdv2').find('li.selected a').attr('data-tokens');
+	var activo=0;
+	if(idProcedencia==4){activo=0}
+	else{activo=1}
+
+	$.ajax({url: 'php/actualizarDatosUser.php', type: 'POST', data: {
+		nombres: $('#txtModalUpdNombUser').val(),
+		apellidos: $('#txtModalApellidUser').val(),
+		nick: $('#txtModalUpdNickUser').val(),
+		dni: $('#txtModalUpdDniUser').val(),
+		poder: idProcedencia,
+		activo: activo,
+		idUser: $('#idUserModf').text()
+	}}).done(function (resp) {
+		location.reload();
 	});
 });
 </script>
