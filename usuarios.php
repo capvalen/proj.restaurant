@@ -313,8 +313,11 @@ $('input').keypress(function (e) {
 
 
 $.ajax({url:'php/listarUsuarios.php', data: 'POST'}).done(function (resp) { console.log(resp)
+	var cancelRojo='';
 	$.each(JSON.parse(resp), function (i, dato) {
-		$('#divUsuariosListado').append(`<div class="row">
+
+		if(dato.usuActivo==0){cancelRojo='text-danger';}else{cancelRojo='text-primary';}
+		$('#divUsuariosListado').append(`<div class="row ${cancelRojo}">
 				<div class="col-xs-2 mayuscula"><button class="btn btn-danger btn-circle btn-NoLine btn-outline btnRemoverUsuario" id="${dato.idUsuario}"><i class="icofont icofont-close"></i></button>${i+1}. <span class="userFuncion">${dato.Descripcion}</span></div>
 				<div class="col-xs-3"><span class="apellidos mayuscula">${dato.usuApellidos}</span> <span class="nombres mayuscula">${dato.usuNombres}</span></div>
 				<div class="col-xs-2 nick">${dato.usuNick}</div>
