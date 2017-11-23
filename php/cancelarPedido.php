@@ -3,7 +3,7 @@ require("conectkarl.php");
 
 
 
-$sql = mysqli_query($conection,"call cancelarPedido(".$_POST['mesa'].", ".$_POST['idUser']." );");
+$sql = mysqli_query($conection,"call cancelarPedido(".$_POST['mesa'].", ".$_POST['idUser'].", '".$_POST['comentario']."' );");
 $i=0;
 // if (!$sql) { ////codigo para ver donde esta el error
 //     printf("Error: %s\n", mysqli_error($conection));

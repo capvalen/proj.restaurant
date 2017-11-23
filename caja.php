@@ -18,7 +18,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 		<meta name="description" content="">
 		<meta name="author" content="">
 
-		<title>Inicio: Infocat Snack</title>
+		<title>Caja: Infocat Snack</title>
 
 		<!-- Bootstrap Core CSS -->
 		<link href="css/bootstrap.css" rel="stylesheet">
@@ -182,7 +182,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 					<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="40"><i class="icofont icofont-food-cart"></i> Mesa 40</button></div>
 				</div>
 
-		<div class="row DetalleMesa">
+		<div class="row DetalleMesa hidden">
 			<div class="col-xs-9">
 				
 				<div class="row stockNombrePlato">
@@ -202,11 +202,14 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 			</div>
 			<div class="col-xs-3">
 				<h3 class="text-center">Mesa: <span id="idMesaSpan"></span></h3> <span class="hidden" id="idPedidoMesa"></span>
-				<h3 class="text-center">Total S/. <span id="idTotalSpan">36.50</span></h3>
-					<div class="container clContenedorCateg">
-						<?php include 'php/listarProductosCategoriaResumen.php'; ?>
+				<p><strong>N° Items por categoría:</strong></p>
+				<div class="clContenedorCateg">
+						<?php include 'php/listarCategoriasGrupal.php'; ?>
 					</div>
+				<h3 class="text-center">Total S/. <span id="idTotalSpan">0.00</span></h3>
+					
 				<button class="btn btn-primary btn-lg btn-outline btn-block hidden"><i class="icofont icofont-users"></i> Asignar cliente</button>
+				<button class="btn btn-morado btn-lg btn-outline btn-block" id="btnImprCta"><i class="icofont icofont-print"></i> Imprimir cuenta</button>
 				<button class="btn btn-success btn-lg btn-outline btn-block" id="btnCobrarCliente"><i class="icofont icofont-money-bag"></i> Cobrar</button>
 				<button class="btn btn-warning btn-lg btn-outline btn-block" id="btnCajaAgregarProducto"><i class="icofont icofont-bbq"></i> Agregar producto</button>
 				<button class="btn btn-danger btn-lg btn-outline btn-block" id="btnCancelarPedido"><i class="icofont icofont-close-circled"></i> Cancelar pedido</button>
@@ -361,6 +364,33 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 </div>
 </div>
 
+<!-- Modal para advertir que se elimina todo -->
+<div class="modal fade modal-deseasAnular" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+<div class="modal-dialog " role="document">
+	<div class="modal-content">
+		<div class="modal-header-danger">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<h4 class="modal-title" id="myModalLabel"><i class="icofont icofont-help-robot"></i> Anular pedido</h4>
+		</div>
+		<div class="modal-body">
+			<p class="text-center">Estas por anular el pedido, deseamos saber: ¿Por qué deseas anular?</p>
+			<div class="container-fluid">
+				<div class="col-xs-8 col-xs-offset-2"><input type="text" class="form-control mayuscula" id="txtRazonAnular"></div>
+			</div>
+			<div class="checkbox checkbox-success text-center">
+						<input id="chkReglas" class="styled" type="checkbox" value="">
+						<label for="chkReglas">Acepto los cambios</label>
+					</div>
+			<label class="text-danger text-center labelError hidden" for=""><i class="icofont icofont-animal-squirrel"></i> Lo siento! <span class=mensaje></span></label>
+		</div>
+		<div class="modal-footer">
+			<button class="btn btn-default btn-outline" data-dismiss="modal"><i class="icofont icofont-alarm"></i> Cerrar</button>
+			<button class="btn btn-danger btn-outline" id="btnAnularPedidov2"><i class="icofont icofont-fire"></i> Anular pedido</button>
+		</div>
+	</div>
+	</div>
+</div>
+
 		
 <!-- Modal para indicar que falta completar campos o datos con error -->
 	<div class="modal fade modal-faltaCompletar" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
@@ -437,11 +467,17 @@ $('.btnMesa').click(function () {
 		var sumaTotales=0, cantRes=0;
 		$('.contanedorDivsProductos').children().remove();
 		$.ajax({url:'php/listarPedidoMesaOcupada.php', type: 'POST', data: {mesa: iddeMesa}}).done(function (resp) {
-			$.each(JSON.parse(resp), function (i, dato) {
+			$.each(JSON.parse(resp), function (i, dato) { console.log(dato)
 				$('#idPedidoMesa').text(dato.idPedido);
 				$('.contanedorDivsProductos').append(`<div class="divUnSoloProducto row"><div class="col-xs-7"><button class="btn btn-danger btn-circle btn-NoLine btn-outline btnRemoverProducto" id="${dato.idProducto}"><i class="icofont icofont-close"></i></button> <h4 class="h4NombreProducto mayuscula" id="${dato.idProducto}">${dato.prodDescripcion}</h4> </div><div class="col-xs-3"><button class="btn btn-warning btn-circle btn-NoLine btnRestarProducto"><i class="icofont icofont-minus-circle"></i></button> <span class="cantidadProducto">${dato.pedCantidad}</span> <button class="btn btn-warning btn-circle btn-NoLine btnSumarProducto"><i class="icofont icofont-plus-circle"></i></button></div><div class="col-xs-2"><h5 class="h4precioProducto"><span class="valorUndProducto sr-only">${dato.prodPrecio}</span>S/. <span class="valorTotalProducto">${parseFloat(dato.subTotal).toFixed(2)}</span></h5></div></div>`);
-				cantRes=parseInt($(`.${dato.tpNombreWeb}`).find('.platoResValor').text())+1;
-				$(`.${dato.tpNombreWeb}`).find('.platoResValor').text(cantRes);
+				
+				if(dato.idProcedencia==2){
+					cantRes=parseInt($(`.todasBebidas`).find('.platoResValor').text())+1;
+					$(`.todasBebidas`).find('.platoResValor').text(cantRes);}
+				else{
+					cantRes=parseInt($(`.${dato.tpNombreWeb}`).find('.platoResValor').text())+1;
+					$(`.${dato.tpNombreWeb}`).find('.platoResValor').text(cantRes);}
+				
 
 				sumaTotales+=parseFloat(dato.subTotal);
 				$('#idTotalSpan').text(parseFloat(sumaTotales).toFixed(2));
@@ -465,13 +501,7 @@ $('#txtCuantoPagaCliente').keypress(function (e) {
 	if (e.keyCode == 13) { 	$('#btbSalvarVenta').click(); }
 })
 $('#btnCancelarPedido').click(function () {
-	$.ajax({url:'php/cancelarPedido.php', type:'POST', data:{mesa:$('#idMesaSpan').text() , idUser: $.JsonUsuario.idUsuario}}).done(function (resp) {
-		//console.log(resp)
-		if(parseInt(resp)>0){
-			$('#btnRegresarAMesas').click();
-			$('#btnObtenerEstadoMesas').click();
-		}
-	})
+	$('.modal-deseasAnular').modal('show');
 });
 $('body').on('click', '.btnRemoverProducto',function () {
 	var idEliminar=$(this).attr('id');
@@ -495,6 +525,8 @@ $('#btnCobrarCliente').click(function () {
 	$('#h3CuentaFinal').text($('#idTotalSpan').text())
 	$('.modal-preguntarCliente').modal('show');
 	$('#txtCuantoPagaCliente').val('0.00');
+	$('#txtCuantPagaClienteTarjet').val('0.00');
+	$('#txtCuantPagaClienteTarjet').val('0.00');
 });
 $('.modal-finalizarPedidoAVenta').on('shown.bs.modal', function() {
 	$('#txtCuantoPagaCliente').focus();
@@ -513,22 +545,24 @@ $('#btnClienteSimple').click(function(){
 	$('.modal-finalizarPedidoAVenta').modal('show');
 
 });
+function imprimirCajaCuenta() {
+	console.log($.ticket.length);
+	$.each($('.divUnSoloProducto'), function (i, dato) {
+		$.ticket.push({'id': $(dato).find('.h4NombreProducto').attr('id'), 'nomProducto': $(dato).find('.cantidadProducto').text() +' Und. '+ $(dato).find('.h4NombreProducto').text() , 'cant': $(dato).find('.cantidadProducto').text(), 'sub': $(dato).find('.valorTotalProducto').text() });
+		});
+		var fecha=moment().format('DD/MM/YYYY H:mm a');
+		
+		$.ajax({url: 'printTicketCaja.php', type: 'POST', data: {numMesa: $('#idMesaSpan').text(), hora: fecha, texto: retornarCadenaImprimir() , usuario: $.JsonUsuario.usuNombres, cuentaTotal: $('#idTotalSpan').text(), paga: $('#txtCuantPagaClienteTarjet').val(), cambio: '0.00'} });
+}
 $('#btbSalvarVentaTarjeta').click(function () {
 	var idMod=$('#divSelectTarjeta').find('li.selected a').attr('data-tokens');
 	if( $('#txtCuantPagaClienteTarjet').val()==''){
 		$('.modal-finalizarPedidoAVentaTarjeta .labelError').removeClass('hidden').find('.mensaje').text('No se puede guardar montos vacíos.');	}
 	else if(idMod==null){ $('.modal-finalizarPedidoAVentaTarjeta .labelError').removeClass('hidden').find('.mensaje').text('Debe selecionar una tarjeta.');}
 	else{
-		$.ajax({url:'php/insertarVentaFinalTarjeta.php', type: 'POST', data: {mesa: $('#idMesaSpan').text(), idUser: $.JsonUsuario.idUsuario, idCli : $('#spanTipoCliente').text(), montoTotal: $('#idTotalSpan').text(), idModo: idMod,  pagaTarj: $('#txtCuantPagaClienteTarjet').val(), pagaEfe: $('#txtCuantPagaClienteEfect').val() }}).done(function (resp) { //console.log(resp)
+		$.ajax({url:'php/insertarVentaFinalTarjeta.php', type: 'POST', data: {mesa: $('#idMesaSpan').text(), idUser: $.JsonUsuario.idUsuario, idCli : $('#spanTipoCliente').text(), montoTotal: $('#idTotalSpan').text(), idModo: idMod,  pagaTarj: $('#txtCuantPagaClienteTarjet').val(), pagaEfe: $('#txtCuantPagaClienteEfect').val() }}).done(function (resp) { console.log(resp)
 			if(parseInt(resp)>0){
 				var vuelto= parseFloat($('#txtCuantPagaClienteTarjet').val()-$('#idTotalSpan').text()).toFixed(2);
-
-				$.each($('.divUnSoloProducto'), function (i, dato) {
-				$.ticket.push({'id': $(dato).find('.h4NombreProducto').attr('id'), 'nomProducto': $(dato).find('.cantidadProducto').text() +' Und. '+ $(dato).find('.h4NombreProducto').text() , 'cant': $(dato).find('.cantidadProducto').text(), 'sub': $(dato).find('.valorTotalProducto').text() });
-				});
-				var fecha=moment().format('DD/MM/YYYY H:mm a');
-				
-				$.ajax({url: 'printTicketCaja.php', type: 'POST', data: {numMesa: $('#idMesaSpan').text(), hora: fecha, texto: retornarCadenaImprimir() , usuario: $.JsonUsuario.usuNombres, cuentaTotal: $('#idTotalSpan').text(), paga: $('#txtCuantPagaClienteTarjet').val(), cambio: '0.00'} });
 
 				$('.modal-finalizarPedidoAVentaTarjeta').modal('hide');
 				$('.modal-VueltoConExito').modal('show');
@@ -540,6 +574,8 @@ $('#btbSalvarVentaTarjeta').click(function () {
 		});
 	}
 });
+$('.modal-deseasAnular').on('shown.bs.modal', function() { $('#txtRazonAnular').focus(); });
+
 $('#btbSalvarVenta').click(function () {
 	if($('#txtCuantoPagaCliente').val()< parseFloat($('#h3CuentaFinal').text()) || $('#txtCuantoPagaCliente').val()==''){
 		$('.modal-finalizarPedidoAVenta .labelError').removeClass('hidden').find('.mensaje').text('No se puede guardar un monto menor a la cuenta.');	}
@@ -549,12 +585,7 @@ $('#btbSalvarVenta').click(function () {
 			if(parseInt(resp)>0){
 				var vuelto= parseFloat($('#txtCuantoPagaCliente').val()-$('#idTotalSpan').text()).toFixed(2);
 
-				$.each($('.divUnSoloProducto'), function (i, dato) {
-				$.ticket.push({'id': $(dato).find('.h4NombreProducto').attr('id'), 'nomProducto': $(dato).find('.cantidadProducto').text() +' Und. '+ $(dato).find('.h4NombreProducto').text() , 'cant': $(dato).find('.cantidadProducto').text(), 'sub': $(dato).find('.valorTotalProducto').text() });
-				});
-				var fecha=moment().format('DD/MM/YYYY H:mm a');
 				
-				$.ajax({url: 'printTicketCaja.php', type: 'POST', data: {numMesa: $('#idMesaSpan').text(), hora: fecha, texto: retornarCadenaImprimir() , usuario: $.JsonUsuario.usuNombres, cuentaTotal: $('#idTotalSpan').text(), paga: $('#txtCuantoPagaCliente').val(), cambio: vuelto} });
 
 				$('.modal-finalizarPedidoAVenta').modal('hide');
 				$('.modal-VueltoConExito').modal('show');
@@ -566,6 +597,15 @@ $('#btbSalvarVenta').click(function () {
 		});
 	}
 });
+$('#btnImprCta').click(function () { imprimirCuentaCliente(); });
+function imprimirCuentaCliente() {
+	$.each($('.divUnSoloProducto'), function (i, dato) {
+	$.ticket.push({'id': $(dato).find('.h4NombreProducto').attr('id'), 'nomProducto': $(dato).find('.cantidadProducto').text() +' Und. '+ $(dato).find('.h4NombreProducto').text() , 'cant': $(dato).find('.cantidadProducto').text(), 'sub': $(dato).find('.valorTotalProducto').text() });
+	});
+	var fecha=moment().format('DD/MM/YYYY H:mm a');
+	
+	$.ajax({url: 'printTicketCaja.php', type: 'POST', data: {numMesa: $('#idMesaSpan').text(), hora: fecha, texto: retornarCadenaImprimir() , usuario: $.JsonUsuario.usuNombres, cuentaTotal: $('#idTotalSpan').text(), } });
+}
 
 function retornarCadenaImprimir(){
 var totalImprimir=40;
@@ -612,7 +652,7 @@ $.each($.ticket, function (i, elem) {
 
 	}
 	});
-
+//console.log(lineaImpr)
 return lineaImpr;
 }
 $('.modal-buscarProducto').on('shown.bs.modal', function() { /*$('#txtParaFiltrarProducto').focus();*/
@@ -670,7 +710,7 @@ $('.DetalleMesa').on('click', '.btnRestarProducto', function () {
 $('#txtCuantPagaClienteTarjet').keyup(function (e) {
 	var cantT=parseFloat($('#h3CuentaFinal2').text());
 	var pagT=parseFloat($('#txtCuantPagaClienteTarjet').val());
-	//resF= cantT-pagT; console.log(resF)
+	resF= cantT-pagT;/* console.log(resF)*/
 	if(resF>=0){$('#txtCuantPagaClienteEfect').val(resF.toFixed(2))}
 		else{$('#txtCuantPagaClienteEfect').val('0.00')}
 });
@@ -693,6 +733,22 @@ $('.modal-buscarProducto').on('click', '.btnAgregarProducto', function () {
 		$('.contanedorDivsProductos').find('#'+idProd).parent().parent().find('.btnSumarProducto').click();
 	}
 	$('.modal-buscarProducto').modal('hide');
+});
+$('#btnAnularPedidov2').click(function () {
+	if( $('#txtRazonAnular').val()=='' ){$('.modal-deseasAnular .labelError').removeClass('hidden').find('.mensaje').text('Debe incluir una razón breve para guardar');}
+	else if( !($('#chkReglas:checked').val()=='')){
+		$('.modal-deseasAnular .labelError').removeClass('hidden').find('.mensaje').text('Tiene que aceptar los cambios que se harán.');
+	}else{
+		$('.modal-deseasAnular .labelError').addClass('hidden');
+		$.ajax({url:'php/cancelarPedido.php', type:'POST', data:{mesa:$('#idMesaSpan').text() , idUser: $.JsonUsuario.idUsuario, comentario:'«'+$('#txtRazonAnular').val()+'». '+$.JsonUsuario.usuNombres }}).done(function (resp) {
+		//console.log(resp)
+		$('.modal-deseasAnular').modal('hide');
+		if(parseInt(resp)>0){
+			$('#btnRegresarAMesas').click();
+			$('#btnObtenerEstadoMesas').click();
+		}
+		})
+	}
 });
 // SELECT DATE_FORMAT(`cajaFechaRegistro`,'%d/%m/%Y') FROM `caja`
 </script>

@@ -272,19 +272,32 @@ $('.btnMesa').click(function () {
 function listarProductos() {
 	$('.panelProductosColecc .panel-body').children().remove();
 	$.ajax({url:'php/listarProductos.php', type:'POST'}).done(function (resp) {
-		$.each(JSON.parse(resp), function (i, dato) {
-			$(`#${dato.tpNombreWeb} .panel-body`).append(`
+		$.each(JSON.parse(resp), function (i, dato) { console.log(dato)
+			if(dato.idProcedencia==2){
+				if($('#RegTodosBebidas .tipTrago:contains("'+dato.tipDescripcion+'")').length==0){
+					$(`#RegTodosBebidas .panel-body`).append(`<p class="tipTrago mayuscula">${dato.tipDescripcion}</p>`);
+				}
+
+				$(`#RegTodosBebidas .panel-body`).append(`
+					<div class="row divUnSoloProductoDisponible"><div class="col-xs-7"><h4 class="h4NombreProducto mayuscula ${dato.tpDivBebidaCocina}" id="${dato.idProducto}">${dato.prodDescripcion}</h4> <span class="stockPlato">(<span class="stockFict">${dato.stockCantidad}</span>)</span></div><div class="col-xs-3"><h5 class="h4precioProducto">S/. <span class="valorProducto">${parseFloat(dato.prodPrecio).toFixed(2)}</span></h5></div><div class="col-xs-2"><button class="btn btn-warning btn-outline btn-block btnAgregarProducto"><i class="icofont icofont-check"></i></button></div></div>
+					`);
+			}
+			else{
+				$(`#${dato.tpNombreWeb} .panel-body`).append(`
 					<div class="row divUnSoloProductoDisponible"><div class="col-xs-7"><h4 class="h4NombreProducto mayuscula ${dato.tpDivBebidaCocina}" id="${dato.idProducto}">${dato.prodDescripcion}</h4> <span class="stockPlato">(<span class="stockFict">${dato.stockCantidad}</span>)</span></div><div class="col-xs-3"><h5 class="h4precioProducto">S/. <span class="valorProducto">${parseFloat(dato.prodPrecio).toFixed(2)}</span></h5></div><div class="col-xs-2"><button class="btn btn-warning btn-outline btn-block btnAgregarProducto"><i class="icofont icofont-check"></i></button></div></div>
 				`);
+			}
 		});
 		//console.log(resp);
 	});
 }
+
 $('#btnCancelarPedido').click(function () {// console.log('cli')
 	listarMesasEstado();
 	$('#divPedido').addClass('sr-only');
 	$('#divMesas').removeClass('sr-only');
 });
+// $('body').on('click', '.divUnSoloProductoDisponible', function () { $(this).find('.btnAgregarProducto').click(); });
 $('body').on('click', '.h4NombreProducto', function () { $(this).parent().parent().find('.btnAgregarProducto').click(); });
 $('body').on('click', '.h4precioProducto', function () { $(this).parent().parent().find('.btnAgregarProducto').click(); });
 $('body').on('click', '.btnAgregarProducto',function () {		
@@ -301,7 +314,7 @@ $('body').on('click', '.btnAgregarProducto',function () {
 		if(contenedor.find('.stockFict').text()!=="0"){
 			$('#noProducto').remove();
 			if(contenedor.find('.h4NombreProducto').hasClass('divProdBebida')){elementoProducto='divProdBebida'}else{elementoProducto='divCocina'}
-			$('#regMesaCliente .panel-body').append(`<div class="row divUnSoloProducto"  id="${contenedor.find('.h4NombreProducto').attr('id')}"><div class="col-xs-7"><button class="btn btn-danger btn-circle btn-NoLine btn-outline btnRemoverProducto"><i class="icofont icofont-close"></i></button> <h4 class="h4NombreProducto ${elementoProducto} mayuscula" >${contenedor.find('.h4NombreProducto').text()}</h4> </div><div class="col-xs-3"><button class="btn btn-warning btn-circle btn-NoLine btnRestarProducto"><i class="icofont icofont-minus-circle"></i></button> <span class="cantidadProducto">1</span> <button class="btn btn-warning btn-circle btn-NoLine btnSumarProducto"><i class="icofont icofont-plus-circle"></i></button> <span class="cantAnteriorProd hidden"></span> </div><div class="col-xs-2"><h5 class="h4precioProducto"><span class="valorUndProducto sr-only">${contenedor.find('.valorProducto').text()}</span>S/. <span class="valorTotalProducto">${contenedor.find('.valorProducto').text()}</span></h5></div></div>`);
+			$('#regMesaCliente .panel-body').append(`<div class="row divUnSoloProducto"  id="${contenedor.find('.h4NombreProducto').attr('id')}"><div class="col-xs-7"><button class="btn btn-danger btn-circle btn-NoLine btnRemoverProducto"><i class="icofont icofont-close"></i></button> <h4 class="h4NombreProducto ${elementoProducto} mayuscula" >${contenedor.find('.h4NombreProducto').text()}</h4> </div><div class="col-xs-3"><button class="btn btn-warning btn-circle btn-NoLine btnRestarProducto"><i class="icofont icofont-minus-circle"></i></button> <span class="cantidadProducto">1</span> <button class="btn btn-warning btn-circle btn-NoLine btnSumarProducto"><i class="icofont icofont-plus-circle"></i></button> <span class="cantAnteriorProd hidden"></span> </div><div class="col-xs-2"><h5 class="h4precioProducto"><span class="valorUndProducto sr-only">${contenedor.find('.valorProducto').text()}</span>S/. <span class="valorTotalProducto">${contenedor.find('.valorProducto').text()}</span></h5></div></div>`);
 			var precio=parseFloat($('#smallPreciototal').text())+parseFloat(contenedor.find('.valorProducto').text());
 			$('#smallPreciototal').text(parseFloat(precio).toFixed(2));
 
@@ -427,7 +440,7 @@ $('#btnGuardarPedido').click(function () { moment.locale('es');
 							//console.log(resp);
 							$.each(JSON.parse(resp), function (ii, dato2) {
 								if(dato2.respuesta=='Y'){
-									$(`#regMesaCliente #${dato2.idProducto}`).addClass('guardado').find('.btnRemoverProducto').html('<i class="icofont icofont-check"></i>').removeClass('btn-danger').addClass('btn-success').removeClass('btnRemoverProducto');
+									$(`#regMesaCliente #${dato2.idProducto}`).addClass('guardado').find('.btnRemoverProducto').html('<i class="icofont icofont-check"></i>').removeClass('btn-danger').addClass('btn-success').removeClass('btnRemoverProducto').addClass('btn-outline');
 									$(`#regMesaCliente #${dato2.idProducto}`).find('.btnRestarProducto').remove();
 									if($(dato).find('.h4NombreProducto').hasClass('divProdBebida')){
 										textoProductosBar+=' '+$(dato).find('.cantidadProducto').text()+'   '+$(dato).find('.h4NombreProducto').text()+'\n';

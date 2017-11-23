@@ -31,6 +31,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 		<link rel="stylesheet" href="css/snack.css?version=1.0.6">
 		<link href="css/bootstrap-select.min.css" rel="stylesheet"> <!-- extraido de: https://silviomoreto.github.io/bootstrap-select/-->
 		<link rel="stylesheet" href="css/bootstrap-datepicker3.css"> <!-- extraído de: https://uxsolutions.github.io/bootstrap-datepicker/-->
+		<link rel="stylesheet" href="css/awesome-bootstrap-checkbox.css"> <!-- extraido de: http://flatlogic.github.io/awesome-bootstrap-checkbox/demo/-->
 
 </head>
 
@@ -148,7 +149,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 								<div class="col-xs-4"></div>
 								<div class="col-xs-4"></div>
 							</div>
-							<?php include 'php/listarCategoriasdivProd.php'; ?>
+							<?php include 'php/listarCabecerasCategorias.php'; ?>
 							<!-- <div class="row"><strong>
 								<div class="col-xs-2">Categoría</div>
 								<div class="col-xs-5">Producto</div>
@@ -227,6 +228,45 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 	</div>
 </div>
 
+
+<!-- Modal para editar una categoría a la BD -->
+<div class="modal fade modal-updateCategoryBD" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+<div class="modal-dialog modal-sm" role="document">
+	<div class="modal-content">
+		<div class="modal-header-warning">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<h4 class="modal-title" id="myModalLabel"><i class="icofont icofont-help-robot"></i> Editar Categoría</h4>
+		</div>
+		<div class="modal-body">
+			<div class="container-fluid">
+				<div class="row"><span class="hidden" id="spanCategUpd"></span>
+					<label for="">Categoría:</label> <input type="text" class="form-control text-center mayuscula" id="txtModalNomCategUpd">
+					<label for="">Procedencia:</label>
+					<div  id="divSelectProcedenciaUpdCateg">
+						<select class="selectpicker mayuscula" title="Procedencia..."  data-width="100%" data-live-search="true"">
+							<option class="optProducto mayuscula" data-tokens="1">Cocina</option>
+							<option class="optProducto mayuscula" data-tokens="2">Bar</option>
+						</select>
+					</div>
+					<!-- <label for="">Activo:</label>
+					<div class="checkbox checkbox-success">
+						<input id="chkReglas" class="styled" type="checkbox" value="" checked>
+						<label for="chkReglas">Activo</label>
+					</div> -->
+				</div>
+			</div>
+			<label class="text-danger labelError hidden" for=""><i class="icofont icofont-animal-squirrel"></i> Lo siento! <span class=mensaje></span></label>
+		</div>
+		
+		<div class="modal-footer">
+			<button class="btn btn-danger btn-outline" data-dismiss="modal" ><i class="icofont icofont-close"></i> Cerrar</button>
+			<button class="btn btn-success btn-outline" id="btnUpdCategConfig"><i class="icofont icofont-save"></i> Guardar</button>
+		</div>
+	</div>
+	</div>
+</div>
+
+
 <!-- Modal para agregar producto extra a caja -->
 <div class="modal fade modal-configurarProducto" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
 <div class="modal-dialog modal-sm" role="document">
@@ -287,6 +327,13 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 			<div class="row">
 				<label for="">Detalle de categoría:</label>
 				<input type="text" class="form-control" id="txtCateDetalle">
+				<label for="">Procedencia:</label>
+				<div  id="divSelectProcedenciaAddCategv2">
+					<select class="selectpicker mayuscula" title="Procedencia..."  data-width="100%" data-live-search="true"">
+						<option class="optProducto mayuscula" data-tokens="1">Cocina</option>
+						<option class="optProducto mayuscula" data-tokens="2">Bar</option>
+					</select>
+				</div>
 			</div>
 
 			</div>
@@ -477,9 +524,17 @@ $('#btnNewCategoria').click(function () {
 });
 $('#btnGuardarNuevCategor').click(function () {
 	var nomWeb= $('#txtCateDetalle').val().split(' ').join('');
-	$.ajax({url: 'php/insertarCategoria.php', type: 'POST', data:{ nombreCateg:$('#txtCateDetalle').val(), nombreWeb:nomWeb } }).done(function (resp) {
-		location.reload();
-	});
+	var nomDivWeb='';
+	var idProcedencia=$('#divSelectProcedenciaAddCategv2').find('li.selected a').attr('data-tokens');
+	if(idProcedencia==1){nomDivWeb='div'+nomWeb;}else{nomDivWeb='divProdBebida';}
+	if(idProcedencia == null){$('.modal-nuevaCategoria .labelError').removeClass('hidden').find('.mensaje').text('Debe seleccionar una procedencia');}
+	else if($('#txtCateDetalle').val()==''){$('.modal-nuevaCategoria .labelError').removeClass('hidden').find('.mensaje').text('No se puede guardar detalle vacío');}
+	else{
+		$('.modal-nuevaCategoria .labelError').addClass('hidden');
+		$.ajax({url: 'php/insertarCategoria.php', type: 'POST', data:{ nombreCateg:$('#txtCateDetalle').val(), nombreWeb:nomWeb, divProd:nomDivWeb } }).done(function (resp) {
+			location.reload();
+		});
+	}
 });
 
 $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {	
@@ -497,6 +552,28 @@ if(target=='#tabCambiarPassUser'){
 }
 });
 
+$('body').on('click', '.btnConfigCategoria', function () {
+	var contenedor=$(this);
+	$('#spanCategUpd').text(contenedor.attr('id'));
+	$('#txtModalNomCategUpd').val(contenedor.parent().parent().find('.spanCategoria').text());
+	$('.modal-updateCategoryBD').modal('show');
+});
+$('#btnUpdCategConfig').click(function () {
+	var activ=0;
+	var nomWeb= $('#txtModalNomCategUpd').val().split(' ').join('');
+	var idProcedencia=$('#divSelectProcedenciaUpdCateg').find('li.selected a').attr('data-tokens');
+	if(idProcedencia==1){nomDivWeb='div'+nomWeb;}else{nomDivWeb='divProdBebida';}
+	// if(!($('#chkReglas:checked').val()=='')){activ=0;}else{activ=1;}
+	
+	if(idProcedencia == null){$('.modal-updateCategoryBD .labelError').removeClass('hidden').find('.mensaje').text('Debe seleccionar una procedencia');}
+	else if($('#txtModalNomCategUpd').val()==''){$('.modal-updateCategoryBD .labelError').removeClass('hidden').find('.mensaje').text('No se puede guardar detalle vacío');}
+	else{
+		$('.modal-updateCategoryBD .labelError').addClass('hidden');
+		$.ajax({url: 'php/updateCategoria.php', type: 'POST', data:{idCat:$('#spanCategUpd').text(), nomCat:$('#txtModalNomCategUpd').val(), activCat: 1, webCat:nomWeb, divCat:nomDivWeb } }).done(function (resp) {// console.log(resp)
+			location.reload();
+		});
+	}
+});
 
 </script>
 </body>

@@ -9,6 +9,7 @@ $i=0;
 
 if($totalRow==0){
 	echo '<p > No se encontraron datos aún. </p>';
+	echo '<span class="hidden" id="spanEntradasFinal">0.00</span>';
 }else{
 	while($row = mysqli_fetch_array($sql, MYSQLI_ASSOC))
 	{
@@ -17,6 +18,7 @@ if($totalRow==0){
 		echo '<p > #'.$i.' <span class="mayuscula">'.$row['cajaDescripcion'].'</span> = S/.  '.number_format($row['cajaMontoTotal'],2). ' </p>';
 		if($totalRow==$i){
 			echo '<p > <strong>Total: S/. '.number_format(round($sumaIngr,1,PHP_ROUND_HALF_UP),2).'</strong> </p>';
+			echo '<span class="hidden" id="spanEntradasFinal">'.number_format(round($sumaIngr,1,PHP_ROUND_HALF_UP),2).'</span>';
 		}
 	}
 }

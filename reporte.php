@@ -190,11 +190,22 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 									</div>
 								
 									<div class="tab-pane fade container-fluid" id="tabVerPorMesa">
-										<table class="table table-hover">
+										<table class="table table-hover" id="tablaSumaMesas">
 											<thead>
 											<tr>
 												<th>N° Mesa</th>
-												<th>SubTotal</th>
+												<th>Total</th>
+											</tr>
+											</thead>
+											<tbody>
+											</tbody>
+										</table>
+										<table class="table table-hover" id="tablaIncidentesMesas">
+											<thead>
+											<tr>
+												<th>N° Mesa anulada</th>
+												<th>Razón</th>
+												<th>Total</th>
 											</tr>
 											</thead>
 											<tbody>
@@ -393,22 +404,39 @@ function cajaPorMesa() {
 	var finFecha= $('#inputFechaFin').val();
 	$('#tabVerPorMesa tbody').children().remove();
 	$.ajax({url:'php/reporteCajaPorMesa.php', type: 'POST', data: {fechaIni:iniciofecha, fechaFin:finFecha}}).done(function (resp) {
-		var maxElem=JSON.parse(resp).length;  
+		var maxElem=JSON.parse(resp).length;
 		if(maxElem>0){
+
 			$.each(JSON.parse(resp), function (i, elem) {
 			sumConjunto+=parseFloat(elem.dineroIngeso);
-			$('#tabVerPorMesa tbody').append(`<tr>
+			$('#tablaSumaMesas tbody').append(`<tr>
 					<td class="mayuscula">Mesa ${elem.idMesa}</td>
 					<td>${parseFloat(elem.dineroIngeso).toFixed(2)}</td>
 				  </tr>`);
 			if(maxElem-1==i){
-				$('#tabVerPorMesa tbody').append(`<tr>
+				$('#tablaSumaMesas tbody').append(`<tr>
 					<td colspan="3"> <strong class="pull-right" style="padding-right: 100px;">Suma Total: S/. ${sumConjunto.toFixed(2)}</strong></td>
 					</tr>`); }
 			});
 		}else{
-			$('#tabVerPorMesa tbody').append(`<tr><td class="">No se encontraron datos para ésta fecha</td></tr>`);
+			$('#tablaSumaMesas tbody').append(`<tr><td class="">No se encontraron datos para ésta fecha</td></tr>`);
 		}
+	});
+	$.ajax({url: 'php/reportePedidosAnulados.php', type: 'POST', data: {fechaIni:iniciofecha, fechaFin:finFecha}}).done(function (anul) {
+		console.log(anul)//tablaIncidentesMesas
+		var maxElem2=JSON.parse(anul).length; console.log(maxElem2)
+		if(maxElem2==0){
+			$('#tablaIncidentesMesas tbody').append('<tr><td>No hay mesas anuladas en estas fechas.</td></tr>');
+		}else{
+			$.each(JSON.parse(anul), function (i, dato) {
+				$('#tablaIncidentesMesas tbody').append(`<tr>
+					<td class="mayuscula">Mesa ${dato.idMesa}</td>
+					<td class="mayuscula">${dato.pedRazonAnular}</td>
+					<td>${parseFloat(dato.total).toFixed(2)}</td>
+				  </tr>`);
+			});
+		}
+		
 	});
 }
 function cajaPorProducto() {

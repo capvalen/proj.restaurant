@@ -39,7 +39,12 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 
 </head>
 
-<body>
+<body onselectstart="return false" oncontextmenu="return false" 
+ondragstart="return false" onMouseOver="window.status='..mensaje personal .. '; return true;">
+
+<style>
+	.dineroXMesas{    padding-left: 15px;}
+</style>
 
 
 <div id="wrapper">
@@ -138,6 +143,9 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 
 				<div class="container-fluid ">
 					<div class="row">
+						<div class="col-xs-12 text-center">
+							<button class="btn btn-morado btn-outline" id="btnImprimirCuadreCaja"><i class="icofont icofont-print" ></i> Imprimir cuadre de caja</button>
+						</div>
 						<div class="col-xs-4"><h4>Ventas finalizadas</h4>
 							<div class="dineroXMesas"><?php include 'php/cuadreCajaPorMesaP.php'; ?></div>
 						</div>
@@ -212,7 +220,27 @@ $('input').keypress(function (e) {
 
 });//Fin de document ready
 
+$('#btnImprimirCuadreCaja').click(function () {
+	var vConEgresos= parseFloat($('#spanGastosFinal').text());
+	var vConIngresos= parseFloat($('#spanEntradasFinal').text());
+	var vConVisa= parseFloat($('#spanCuadreVisa').text());
+	var vConMaster= parseFloat($('#spanCuadreMaster').text());
+	var vConEfe= parseFloat($('#spanCuadreEfec').text());
+	var vConTotal= vConIngresos+ vConVisa + vConMaster +vConEfe-vConEgresos;
+	/*console.log(vConTotal.toFixed(2))*/
+	moment.locale('es');
 
+	$.ajax({url: 'printTicketCuadre.php', type: 'POST', data: {
+		hora: moment().format('dddd DD/MM/YYYY h:m a'),
+		conEgresos: vConEgresos,
+		conIngresos: vConIngresos,
+		conVisa: vConVisa,
+		conMaster: vConMaster,
+		conEfe: vConEfe,
+		conTotal: vConTotal.toFixed(2),
+		usuario: $.JsonUsuario.usuNombres
+	} });
+});
 
 // SELECT DATE_FORMAT(`cajaFechaRegistro`,'%d/%m/%Y') FROM `caja`
 </script>
