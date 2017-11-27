@@ -50,8 +50,8 @@ if($totalRow==0){
 			echo '<p> <strong>Suma Mastercard: S/. '.number_format(round($sumaMaster,1,PHP_ROUND_HALF_UP),2).'</span></strong> </p>';
 			echo '<p> <strong>Suma Visa: S/. '.number_format(round($sumaVisa,1,PHP_ROUND_HALF_UP),2).'</span></strong> </p>';
 			echo '<p> <strong>Suma Efectivo: S/. '.number_format(round($sumaEfectivo,1,PHP_ROUND_HALF_UP),2).'</span></strong> </p>';
-			/*echo '<hr>';
-			echo '<p> <strong>Total: S/. '.number_format(round($sumaIngr,1,PHP_ROUND_HALF_UP),2).'</span></strong> </p>';*/
+			echo '<hr>';
+			echo '<p> <strong>Total: S/. '.number_format(round($sumaIngr,1,PHP_ROUND_HALF_UP),2).'</span></strong> </p>';
 
 			echo '<span class="hidden" id="spanCuadreMaster">'.number_format(round($sumaMaster,1,PHP_ROUND_HALF_UP),2).'</span>';
 			echo '<span class="hidden" id="spanCuadreVisa">'.number_format(round($sumaVisa,1,PHP_ROUND_HALF_UP),2).'</span>';

@@ -257,7 +257,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 			<p class="">¿Con qué tarjeta está pagando el cliente?</p>
 			<div class="row ">
 				<div  id="divSelectTarjeta">
-					<select class="selectpicker mayuscula" title="Producto..."  data-width="50%" data-live-search="true">
+					<select class="selectpicker mayuscula" title="Tarjeta..."  data-width="50%" data-live-search="true">
 						<?php require 'php/listarTarjetasPagoOpt.php'; ?>
 					</select>
 				</div>
@@ -467,7 +467,7 @@ $('.btnMesa').click(function () {
 		var sumaTotales=0, cantRes=0;
 		$('.contanedorDivsProductos').children().remove();
 		$.ajax({url:'php/listarPedidoMesaOcupada.php', type: 'POST', data: {mesa: iddeMesa}}).done(function (resp) {
-			$.each(JSON.parse(resp), function (i, dato) { console.log(dato)
+			$.each(JSON.parse(resp), function (i, dato) { //console.log(dato)
 				$('#idPedidoMesa').text(dato.idPedido);
 				$('.contanedorDivsProductos').append(`<div class="divUnSoloProducto row"><div class="col-xs-7"><button class="btn btn-danger btn-circle btn-NoLine btn-outline btnRemoverProducto" id="${dato.idProducto}"><i class="icofont icofont-close"></i></button> <h4 class="h4NombreProducto mayuscula" id="${dato.idProducto}">${dato.prodDescripcion}</h4> </div><div class="col-xs-3"><button class="btn btn-warning btn-circle btn-NoLine btnRestarProducto"><i class="icofont icofont-minus-circle"></i></button> <span class="cantidadProducto">${dato.pedCantidad}</span> <button class="btn btn-warning btn-circle btn-NoLine btnSumarProducto"><i class="icofont icofont-plus-circle"></i></button></div><div class="col-xs-2"><h5 class="h4precioProducto"><span class="valorUndProducto sr-only">${dato.prodPrecio}</span>S/. <span class="valorTotalProducto">${parseFloat(dato.subTotal).toFixed(2)}</span></h5></div></div>`);
 				
@@ -523,8 +523,9 @@ $('body').on('click', '.btnRemoverProducto',function () {
 });
 
 $('#btnCobrarCliente').click(function () {
-	$('#queMesaEsSpan').text($('#idMesaSpan').text())
-	$('#h3CuentaFinal').text($('#idTotalSpan').text())
+	$('#queMesaEsSpan').text($('#idMesaSpan').text());
+	$('#queMesaEsSpan2').text($('#idMesaSpan').text());
+	$('#h3CuentaFinal').text($('#idTotalSpan').text());
 	$('.modal-preguntarCliente').modal('show');
 	$('#txtCuantoPagaCliente').val('0.00');
 	$('#txtCuantPagaClienteTarjet').val('0.00');
@@ -561,6 +562,9 @@ $('#btbSalvarVentaTarjeta').click(function () {
 	if( $('#txtCuantPagaClienteTarjet').val()==''){
 		$('.modal-finalizarPedidoAVentaTarjeta .labelError').removeClass('hidden').find('.mensaje').text('No se puede guardar montos vacíos.');	}
 	else if(idMod==null){ $('.modal-finalizarPedidoAVentaTarjeta .labelError').removeClass('hidden').find('.mensaje').text('Debe selecionar una tarjeta.');}
+	else if( $('#txtCuantPagaClienteTarjet').val()> parseFloat( $('#h3CuentaFinal2').text()) ){
+		$('.modal-finalizarPedidoAVentaTarjeta .labelError').removeClass('hidden').find('.mensaje').text('El monto de la tarjeta no puede ser superior a la cuenta final.');
+	}
 	else{
 		$.ajax({url:'php/insertarVentaFinalTarjeta.php', type: 'POST', data: {mesa: $('#idMesaSpan').text(), idUser: $.JsonUsuario.idUsuario, idCli : $('#spanTipoCliente').text(), montoTotal: $('#idTotalSpan').text(), idModo: idMod,  pagaTarj: $('#txtCuantPagaClienteTarjet').val(), pagaEfe: $('#txtCuantPagaClienteEfect').val() }}).done(function (resp) { console.log(resp)
 			if(parseInt(resp)>0){
@@ -587,8 +591,6 @@ $('#btbSalvarVenta').click(function () {
 			if(parseInt(resp)>0){
 				var vuelto= parseFloat($('#txtCuantoPagaCliente').val()-$('#idTotalSpan').text()).toFixed(2);
 
-				
-
 				$('.modal-finalizarPedidoAVenta').modal('hide');
 				$('.modal-VueltoConExito').modal('show');
 				$('#h3VueltoFinal').text(vuelto);
@@ -601,12 +603,19 @@ $('#btbSalvarVenta').click(function () {
 });
 $('#btnImprCta').click(function () { imprimirCuentaCliente(); });
 function imprimirCuentaCliente() {
-	$.each($('.divUnSoloProducto'), function (i, dato) {
-	$.ticket.push({'id': $(dato).find('.h4NombreProducto').attr('id'), 'nomProducto': $(dato).find('.cantidadProducto').text() +' Und. '+ $(dato).find('.h4NombreProducto').text() , 'cant': $(dato).find('.cantidadProducto').text(), 'sub': $(dato).find('.valorTotalProducto').text() });
-	});
-	var fecha=moment().format('DD/MM/YYYY H:mm a');
+	$.ticket=[];
+	var cantidadRowTicket=$('.contanedorDivsProductos .divUnSoloProducto').length; //console.log(cantidadRowTicket)
+	$.each($('.contanedorDivsProductos .divUnSoloProducto'), function (i, dato) {
+		$.ticket.push({'id': $(dato).find('.h4NombreProducto').attr('id'), 'nomProducto': $(dato).find('.cantidadProducto').text() +' Und. '+ $(dato).find('.h4NombreProducto').text() , 'cant': $(dato).find('.cantidadProducto').text(), 'sub': $(dato).find('.valorTotalProducto').text() });
+
+		if( cantidadRowTicket-1==i){
+			var fecha=moment().format('DD/MM/YYYY H:mm a');
+			$.ajax({url: 'printTicketCaja.php', type: 'POST', data: {numMesa: $('#idMesaSpan').text(), hora: fecha, texto: retornarCadenaImprimir() , usuario: $.JsonUsuario.usuNombres, cuentaTotal: $('#idTotalSpan').text(), } });
+		}
+		/*console.log($(dato).find('.h4NombreProducto').text() );*/
 	
-	$.ajax({url: 'printTicketCaja.php', type: 'POST', data: {numMesa: $('#idMesaSpan').text(), hora: fecha, texto: retornarCadenaImprimir() , usuario: $.JsonUsuario.usuNombres, cuentaTotal: $('#idTotalSpan').text(), } });
+	});
+	
 }
 
 function retornarCadenaImprimir(){
@@ -654,7 +663,7 @@ $.each($.ticket, function (i, elem) {
 
 	}
 	});
-//console.log(lineaImpr)
+// console.log(lineaImpr)
 return lineaImpr;
 }
 $('.modal-buscarProducto').on('shown.bs.modal', function() { /*$('#txtParaFiltrarProducto').focus();*/

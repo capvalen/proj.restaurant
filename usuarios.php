@@ -190,11 +190,11 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 		<div class="modal-body">
 			<div class="container-fluid">
 			<div class="row"> <span class="hidden" id="idUserModf"></span>
-				<label for="">Apellidos:</label> <input type="text" class="form-control text-center mayuscula" id="txtModalApellidUser">
+				<label for="">Apellidos:</label> <input type="text" class="form-control text-center mayuscula" id="txtModalApellidUserUP">
 				<label for="">Nombres:</label>
 				<input type="text" class="form-control text-center mayuscula" id="txtModalUpdNombUser">
-				<label for="">D.N.I.:</label>
-				<input type="text" class="form-control text-center mayuscula" id="txtModalUpdDniUser">
+				<!-- <label for="">D.N.I.:</label>
+				<input type="text" class="form-control text-center mayuscula" id="txtModalUpdDniUser"> -->
 				<label for="">Nick:</label>
 				<input type="text" class="form-control text-center" id="txtModalUpdNickUser">
 				<label for="">Contraseña.:</label>
@@ -235,8 +235,8 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 				<label for="">Apellidos:</label> <input type="text" class="form-control text-center mayuscula" id="txtModalApellidUser">
 				<label for="">Nombres:</label>
 				<input type="text" class="form-control text-center mayuscula" id="txtModalNombUser">
-				<label for="">D.N.I.:</label>
-				<input type="text" class="form-control text-center mayuscula" id="txtModalDniUser">
+				<!-- <label for="">D.N.I.:</label>
+				<input type="text" class="form-control text-center mayuscula" id="txtModalDniUser"> -->
 				<label for="">Nick:</label>
 				<input type="text" class="form-control text-center" id="txtModalNickUser">
 				<label for="">Contraseña.:</label>
@@ -343,13 +343,13 @@ $('#btnGuardarAddUser').click(function () {
 	var idNivel=$('#divSelectNivelListNew').find('li.selected a').attr('data-tokens');// console.log(idNivel)
 	if($('#txtModalApellidUser').val()==''){$('.modal-addUserBD .labelError').removeClass('hidden').find('.mensaje').text('Debe ingresar los apellidos.');}
 	else if($('#txtModalNombUser').val()==''){$('.modal-addUserBD .labelError').removeClass('hidden').find('.mensaje').text('Debe ingresar los nombres.');}
-	else if($('#txtModalDniUser').val()==''){$('.modal-addUserBD .labelError').removeClass('hidden').find('.mensaje').text('Debe ingresar un Dni.');}
+	/*else if($('#txtModalDniUser').val()==''){$('.modal-addUserBD .labelError').removeClass('hidden').find('.mensaje').text('Debe ingresar un Dni.');}*/
 	else if($('#txtModalNickUser').val()==''){$('.modal-addUserBD .labelError').removeClass('hidden').find('.mensaje').text('Debe ingresar un nick para iniciar sesión.');}
 	else if($('#txtModalPassUser').val()==''){$('.modal-addUserBD .labelError').removeClass('hidden').find('.mensaje').text('Debe ingresar una contraseña.');}
 	else if(idNivel === null || idNivel === undefined  ){ $('.modal-addUserBD .labelError').removeClass('hidden').find('.mensaje').text('Debe selecionar un nivel.');}
 	else{
 		$('.modal-addUserBD .labelError').addClass('hidden');
-		$.ajax({url:'php/insertarUsuario.php', type:'POST', data:{nombres:$('#txtModalNombUser').val(), apellidos:$('#txtModalApellidUser').val(), nick: $('#txtModalNickUser').val(), pass: $('#txtModalPassUser').val(), dni: $('#txtModalDniUser').val(), poder: idNivel }}).done(function (resp) {
+		$.ajax({url:'php/insertarUsuario.php', type:'POST', data:{nombres:$('#txtModalNombUser').val(), apellidos:$('#txtModalApellidUser').val(), nick: $('#txtModalNickUser').val(), pass: $('#txtModalPassUser').val(), poder: idNivel }}).done(function (resp) { console.log(resp)
 			if(resp>0){window.location.href = 'usuarios.php';}
 		});
 	}
@@ -376,7 +376,7 @@ $('body').on('click', '.btnConfigUser',function () {
 		$('#divSelectNivelListUpdv2').find('.selectpicker').selectpicker('val',contenedor.find('.nivel').text());
 	}
 	$('#idUserModf').text(contenedor.find('.btnConfigUser').attr('id'));
-	$('#txtModalApellidUser').val(contenedor.find('.apellidos').text());
+	$('#txtModalApellidUserUP').val(contenedor.find('.apellidos').text());
 	$('#txtModalUpdNombUser').val(contenedor.find('.nombres').text());
 	$('#txtModalUpdDniUser').val(contenedor.find('.usuDni').text());
 	$('#txtModalUpdNickUser').val(contenedor.find('.nick').text());
@@ -397,7 +397,7 @@ $('#btnGuardarUpdUser').click(function () {
 
 	$.ajax({url: 'php/actualizarDatosUser.php', type: 'POST', data: {
 		nombres: $('#txtModalUpdNombUser').val(),
-		apellidos: $('#txtModalApellidUser').val(),
+		apellidos: $('#txtModalApellidUserUP').val(),
 		nick: $('#txtModalUpdNickUser').val(),
 		dni: $('#txtModalUpdDniUser').val(),
 		poder: idProcedencia,

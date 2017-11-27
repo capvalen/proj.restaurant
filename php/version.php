@@ -1,5 +1,4 @@
 <?php 
-echo "Ver. 1.9 Compilación 22.11.21";
 /*Cambios
 
 
@@ -12,7 +11,10 @@ Ver 1.9
 - se agrego la opcion de editar el nombre del producto
 
 
-
+- Se agrego suma total al cuadre
+- Se arregló la impreson de nota de pedido
+- Se arregló ingreso de usuario
+- Se arregló ingreso de tarjetas
 
  */
  ?>
