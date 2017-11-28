@@ -232,11 +232,11 @@ $('#btnImprimirCuadreCaja').click(function () {
 
 	$.ajax({url: 'printTicketCuadre.php', type: 'POST', data: {
 		hora: moment().format('dddd DD/MM/YYYY h:m a'),
-		conEgresos: vConEgresos,
-		conIngresos: vConIngresos,
-		conVisa: vConVisa,
-		conMaster: vConMaster,
-		conEfe: vConEfe,
+		conEgresos: vConEgresos.toFixed(2),
+		conIngresos: vConIngresos.toFixed(2),
+		conVisa: vConVisa.toFixed(2),
+		conMaster: vConMaster.toFixed(2),
+		conEfe: vConEfe.toFixed(2),
 		conTotal: vConTotal.toFixed(2),
 		usuario: $.JsonUsuario.usuNombres
 	} });
