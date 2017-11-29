@@ -1,5 +1,5 @@
 <?php 
-echo "Ver. 1.10 Compilación 25.11.21";
+echo "Ver. 1.11 Compilación 29.11.21";
 /*Cambios
 
 
@@ -18,6 +18,12 @@ Ver 1.10
 - Se arregló ingreso de usuario
 - Se arregló ingreso de tarjetas
 
+Ver 1.11
+- Se arreglo doble guardado al hacer doble click en guardar
+- Se revisó cuadre de caja impresión en miles fallida
+- Se agregó detalle de notas en los pedidos para caja y cocina: BD-> tbl Pedido -> 2 campos más:
+    ALTER TABLE `pedido` ADD `observacBar` VARCHAR(200) NOT NULL DEFAULT '' AFTER `pedRazonAnular`, ADD `observacCocina` VARCHAR(200) NOT NULL DEFAULT '' AFTER `observacBar`;
+- 
  */
  ?>
 

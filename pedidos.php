@@ -10,7 +10,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 	<meta charset="UTF-8">
 	<title>Pedidos - Infocat Snack</title>
 	<link rel="stylesheet" href="css/bootstrap.min.css">
-	<link rel="stylesheet" href="css/estilosElementosv2.css?version=1.0.3">
+	<link rel="stylesheet" href="css/estilosElementosv2.css?version=1.0.5">
 	<link rel="stylesheet" href="css/snack.css?version=1.0.4">
 	<link rel="stylesheet" href="css/icofont.css">
 	<link rel="stylesheet" href="css/toastr.css?version=1.0.2"> <!-- extraído de: http://codeseven.github.io/toastr/demo.html-->
@@ -84,9 +84,9 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 		<div class="col-xs-12 col-sm-6">
 			<h3 class="text-center"><i class="icofont icofont-users"></i> Pedido del cliente</h3>
 			<div class="panel-body">
-				<div class="panel-group" id="listMesaCliente" role="tablist" aria-multiselectable="true">
-					<div class="panel bs-callout bs-callout-jelly panel-sombreado" style="margin-bottom: 10px;">
-						<div class="panel-heading " role="button" data-toggle="collapse" data-parent="#accordion" href="#regMesaCliente" aria-expanded="true" aria-controls="regMesaCliente"><h4 class="panel-title"><strong class="mayuscula"><i class="icofont icofont-prescription"></i> Pedido actual</strong> <small>S/. </small><small id="smallPreciototal">0.00</small></h4>
+				<div class="panel-group" id="listMesaCliente" >
+					<div class="panel bs-callout bs-callout-jelly " style="margin-bottom: 10px;">
+						<div class="panel-heading " role="button" data-parent="#accordion" href="#regMesaCliente" aria-expanded="true" aria-controls="regMesaCliente"><h4 class="panel-title"><strong class="mayuscula"><i class="icofont icofont-chicken"></i> Pedido actual</strong> <small>S/. </small><small id="smallPreciototal">0.00</small></h4>
 						</div>
 						<div id="regMesaCliente" class="panel-collapse collapsed " role="tabpanel" aria-expanded="true" style="height: 0px;">
 							<div class="panel-body">
@@ -96,10 +96,35 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 					</div>
 				</div>
 			</div>
-			<div class="botonesGenerales ">
-				<button class="btn btn-lg btn-danger btn-outline" id="btnCancelarPedido"><i class="icofont icofont-close-circled"></i> Cancelar pedido</button>
-				<button class="btn btn-lg btn-success btn-outline pull-right disabled" id="btnGuardarPedido"><i class="icofont icofont-diskette"></i> Guardar pedido</button>
+			<div class="panel-body">
+				<div class="panel-group" id="ddw" >
+					<div class="panel bs-callout bs-callout-default " style="margin-bottom: 10px;">
+						<div class="panel-heading " role="button" data-parent="#accordion" href="#panelObservaciones" aria-expanded="true" aria-controls="panelObservaciones"><h4 class="panel-title"><strong class="mayuscula"><i class="icofont icofont-prescription"></i> Observaciones</strong></h4>
+						</div>
+						<div id="panelObservaciones" class="panel-collapse collapsed collapse in " role="tabpanel" aria-expanded="true" >
+							<div class="panel-body">
+								<div class="col-xs-6">
+									<label for="">Nota para Cocina</label>
+									<textarea name="" id="txtObsCocina" class="form-control mayuscula" rows="5"></textarea>
+								</div>
+								<div class="col-xs-6">
+									<label for="">Nota para Bar</label>
+									<textarea name="" id="txtObsbarra" class="form-control mayuscula" rows="5"></textarea>
+								</div>
+							</div>
+
+						</div><br>
+						<div class="panel-footer">
+							<div class="botonesGenerales ">
+								<button class="btn btn-lg btn-danger btn-outline" id="btnCancelarPedido"><i class="icofont icofont-close-circled"></i> Cancelar pedido</button>
+								<button class="btn btn-lg btn-success btn-outline pull-right disabled" id="btnGuardarPedido"><i class="icofont icofont-diskette"></i> Guardar pedido</button>
+							</div>
+
+						</div>
+					</div>
+				</div>
 			</div>
+			
 		</div>
 
 		<div class="col-xs-12 col-sm-6">
@@ -243,6 +268,7 @@ $('.btnMesa').click(function () {
 	var idMesa=$(this).attr('id');
 	$('#spanNumMesa').text(idMesa);
 	$('#btnCancelarPedido').html('<i class="icofont icofont-close-circled"></i> Cancelar pedido');
+	$('#txtObsCocina').val(''); $('#txtObsbarra').val('');
 	listarProductos();
 
 	$('#smallPreciototal').text('0.00')
@@ -257,8 +283,11 @@ $('.btnMesa').click(function () {
 		var sumaTotales=0, cantRes=0;
 		$('#regMesaCliente .panel-body').children().remove();
 		$.ajax({url:'php/listarPedidoMesaOcupada.php', type: 'POST', data: {mesa: idMesa}}).done(function (resp) {
-		//console.log(resp);
+//		console.log(resp);
+
 		$.each(JSON.parse(resp), function (i, dato) {
+			$('#txtObsCocina').val(dato.observacCocina);
+			$('#txtObsbarra').val(dato.observacBar);
 			$('#regMesaCliente .panel-body').append(`<div class="row divUnSoloProducto guardado" id="${dato.idProducto}"><div class="col-xs-7"><button class="btn btn-success btn-circle btn-NoLine btn-outline" id="${dato.idProducto}"><i class="icofont icofont-check"></i></button> <h4 class="h4NombreProducto mayuscula" id="${dato.idProducto}">${dato.prodDescripcion}</h4> </div><div class="col-xs-3"> <button class="btn btn-warning btn-circle btn-NoLine btnRestarProducto hidden"><i class="icofont icofont-minus-circle"></i></button> <span class="cantidadProducto">${dato.pedCantidad}</span> <button class="btn btn-warning btn-circle btn-NoLine btnSumarProducto"><i class="icofont icofont-plus-circle"></i></button> <span class="cantAnteriorProd hidden">${dato.pedCantidad}</span></div><div class="col-xs-2"><h5 class="h4precioProducto"><span class="valorUndProducto sr-only">${dato.prodPrecio}</span>S/. <span class="valorTotalProducto">${parseFloat(dato.subTotal).toFixed(2)}</span></h5></div></div>`);
 			cantRes=parseInt($(`.${dato.tpNombreWeb}`).find('.platoResValor').text())+1;
 			$(`.${dato.tpNombreWeb}`).find('.platoResValor').text(cantRes);
@@ -272,7 +301,7 @@ $('.btnMesa').click(function () {
 function listarProductos() {
 	$('.panelProductosColecc .panel-body').children().remove();
 	$.ajax({url:'php/listarProductos.php', type:'POST'}).done(function (resp) {
-		$.each(JSON.parse(resp), function (i, dato) { console.log(dato)
+		$.each(JSON.parse(resp), function (i, dato) { //console.log(dato)
 			if(dato.idProcedencia==2){
 				if($('#RegTodosBebidas .tipTrago:contains("'+dato.tipDescripcion+'")').length==0){
 					$(`#RegTodosBebidas .panel-body`).append(`<p class="tipTrago mayuscula">${dato.tipDescripcion}</p>`);
@@ -409,23 +438,26 @@ $('body').on('click', '.btnRestarProducto', function () {
 		});
 	}
 });
-$('#btnGuardarPedido').click(function () { moment.locale('es');
-	var prodFueraStock=''; var iteraciones=0, iteraciones2=0;
-	var cantDivsPedidosNuevos=$('#regMesaCliente .divUnSoloProducto').length;
-	var cantDivPedidosGuardados=$('#regMesaCliente .guardado').length;
-	var cantDivPedidosActualizados=$('#regMesaCliente .actualizar').length;
-
-	console.log('total nuevos '+cantDivsPedidosNuevos)
-	console.log('guardados '+cantDivPedidosGuardados)
-	console.log('actualizado '+cantDivPedidosActualizados)
+$('#btnGuardarPedido').click(function () {
+	
+	
 	//var datosPedido=[];
 	if(!$('#btnGuardarPedido').hasClass('disabled')){
-		$('#btnGuardarPedido').addClass('disabled'); 
-		$.ajax({url:'php/insertarPedidoCabecera.php', type:'POST', data:{mesa: $('#spanNumMesa').text(), idUser: $.JsonUsuario.idUsuario}}).done(function (resp) {
-			//console.log(resp)
+		$('#btnGuardarPedido').addClass('disabled');
+		moment.locale('es');
+		var prodFueraStock=''; var iteraciones=0, iteraciones2=0;
+		var cantDivsPedidosNuevos=$('#regMesaCliente .divUnSoloProducto').length;
+		var cantDivPedidosGuardados=$('#regMesaCliente .guardado').length;
+		var cantDivPedidosActualizados=$('#regMesaCliente .actualizar').length;
+
+		console.log('total nuevos '+cantDivsPedidosNuevos)
+		console.log('guardados '+cantDivPedidosGuardados)
+		console.log('actualizado '+cantDivPedidosActualizados)
+		$.ajax({url:'php/insertarPedidoCabecera.php', type:'POST', data:{mesa: $('#spanNumMesa').text(), idUser: $.JsonUsuario.idUsuario, ObsCocina: $('#txtObsCocina').val(), ObsBar:$('#txtObsbarra').val()}}).done(function (resp) {
+			console.log(resp)
 		if(parseInt(resp)>0){
 			$('#spanIdPedidoAct').text(resp);
-			$('#btnCancelarPedido').html('<i class="icofont icofont-check"></i> Volver a mesas');$('#btnGuardarPedido').removeClass('disabled');
+			$('#btnCancelarPedido').html('<i class="icofont icofont-check"></i> Volver a mesas');/*$('#btnGuardarPedido').removeClass('disabled');*/
 			var textoProductosBar=''; var textoProductosCocina=''; var cantPedido='', prodRowNombre='';
 
 			if( $('#regMesaCliente .divUnSoloProducto').length>0 ){
@@ -500,35 +532,14 @@ $('#btnGuardarPedido').click(function () { moment.locale('es');
 									$('.modal-fueraStock').modal('show');
 								}
 								listarProductos();
-								/*if(resp>0){
-
-									
-								}*/
+								
 							});
 						}
 					}
 
-				}).promise().done(function (resp) { //Promise sólo corre cuando acaba el each
-					
-					//console.log(prodFueraStock)
-					
-					// if(textoProductosBar.length>0){console.log('A Bar:\n'+textoProductosBar)
-					// 	$.ajax({url:'printTicketBar.php', type:'POST', data: {hora:moment().format('DD [de] MMMM [de] YYYY h:mm a'),numMesa:$('#spanNumMesa').text(), texto:textoProductosBar}}).done(function (resp) {
-					// 	console.log(resp)
-					// 	});
-					// }
-					// if(textoProductosCocina.length>0){console.log('A cocina:\n'+textoProductosCocina)
-					// 	$.ajax({url:'printTicketCocina.php', type:'POST', data: {hora:moment().format('DD [de] MMMM [de] YYYY h:mm a'),numMesa:$('#spanNumMesa').text(), texto:textoProductosCocina}}).done(function (resp) {
-					// 	console.log(resp)
-					// 	});
-					// }
-					
-					// $('.modal-pedidoGuardado').modal('show');
-					// $('#divPedido').addClass('sr-only');
-					// $('#divMesas').removeClass('sr-only');
 				});
 			}
-		}
+		} //fin de parseint resp
 		}); // fin de ajax insertarPedidoCabecera
 	
 } //fin de if de hasclass disabled
@@ -542,12 +553,12 @@ $('#btnCerrarSesion').click(function () { console.log('ho')
 });
 function impresionTickers(textoProductosBar, textoProductosCocina){
 	if(textoProductosBar.length>0){console.log('A Bar:\n'+textoProductosBar)
-		$.ajax({url:'printTicketBar.php', type:'POST', data: {hora:moment().format('DD [de] MMMM [de] YYYY h:mm a'),numMesa:$('#spanNumMesa').text(), texto:textoProductosBar, usuario: $.JsonUsuario.usuNombres}}).done(function (resp) {
+		$.ajax({url:'printTicketBar.php', type:'POST', data: {hora:moment().format('DD [de] MMMM [de] YYYY h:mm a'),numMesa:$('#spanNumMesa').text(), texto:textoProductosBar, usuario: $.JsonUsuario.usuNombres, obsBar: $('#txtObsbarra').val()}}).done(function (resp) {
 		console.log(resp)
 		});
 	}else{exito1=true;}
 	if(textoProductosCocina.length>0){console.log('A cocina:\n'+textoProductosCocina)
-		$.ajax({url:'printTicketCocina.php', type:'POST', data: {hora:moment().format('DD [de] MMMM [de] YYYY h:mm a'),numMesa:$('#spanNumMesa').text(), texto:textoProductosCocina, usuario: $.JsonUsuario.usuNombres}}).done(function (resp) {
+		$.ajax({url:'printTicketCocina.php', type:'POST', data: {hora:moment().format('DD [de] MMMM [de] YYYY h:mm a'),numMesa:$('#spanNumMesa').text(), texto:textoProductosCocina, usuario: $.JsonUsuario.usuNombres, obsCocina: $('#txtObsCocina').val()}}).done(function (resp) {
 		console.log(resp)
 		});
 	}

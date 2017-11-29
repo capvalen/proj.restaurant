@@ -2,7 +2,7 @@
 header('Content-Type: text/html; charset=utf8');
 require("conectkarl.php");
 
-$sql= "call insertarPedidoCabecera (".$_POST['mesa'].",".$_POST['idUser']." )";
+$sql= "call insertarPedidoCabecera (".$_POST['mesa'].",".$_POST['idUser'].", '".$_POST['ObsCocina']."', '".$_POST['ObsBar']."' )";
 //echo $sql;
 
 if ($llamadoSQL = $conection->query($sql)) { //Ejecución mas compleja con retorno de dato de sql del procedure.

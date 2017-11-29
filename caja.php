@@ -185,11 +185,13 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 		<div class="row DetalleMesa hidden">
 			<div class="col-xs-9">
 				
-				<div class="row stockNombrePlato">
-					
+				<div class="row obsMesa">
+					<div class="col-xs-6"><label for="">Observaciones para Cocina:</label>
+					<p class="mayuscula" id="pDetCocina"></p></div>
+					<div class="col-xs-6"><label for="">Observaciones para Bar:</label>
+					<p class="mayuscula" id="pDetBar"></p></div>
 				</div>
 				<div class="row">
-					
 						<div class="col-xs-7 text" style="padding-left: 45px;"><h4>Producto</h4></div>
 						<div class="col-xs-3 text"><h4>Cantidad</h4></div>
 						<div class="col-xs-2 text"><h4>SubTotal</h4></div>
@@ -466,8 +468,10 @@ $('.btnMesa').click(function () {
 		$('#idMesaSpan').text(iddeMesa);
 		var sumaTotales=0, cantRes=0;
 		$('.contanedorDivsProductos').children().remove();
-		$.ajax({url:'php/listarPedidoMesaOcupada.php', type: 'POST', data: {mesa: iddeMesa}}).done(function (resp) {
+		$.ajax({url:'php/listarPedidoMesaOcupada.php', type: 'POST', data: {mesa: iddeMesa}}).done(function (resp) { //console.log(resp)
 			$.each(JSON.parse(resp), function (i, dato) { //console.log(dato)
+				if(dato.observacCocina==''){$('#pDetCocina').parent().addClass('hidden');}else{$('#pDetCocina').text(dato.observacCocina).parent().removeClass('hidden');}
+				if(dato.observacBar==''){$('#pDetBar').parent().addClass('hidden');}else{$('#pDetBar').text(dato.observacBar).parent().removeClass('hidden');}
 				$('#idPedidoMesa').text(dato.idPedido);
 				$('.contanedorDivsProductos').append(`<div class="divUnSoloProducto row"><div class="col-xs-7"><button class="btn btn-danger btn-circle btn-NoLine btn-outline btnRemoverProducto" id="${dato.idProducto}"><i class="icofont icofont-close"></i></button> <h4 class="h4NombreProducto mayuscula" id="${dato.idProducto}">${dato.prodDescripcion}</h4> </div><div class="col-xs-3"><button class="btn btn-warning btn-circle btn-NoLine btnRestarProducto"><i class="icofont icofont-minus-circle"></i></button> <span class="cantidadProducto">${dato.pedCantidad}</span> <button class="btn btn-warning btn-circle btn-NoLine btnSumarProducto"><i class="icofont icofont-plus-circle"></i></button></div><div class="col-xs-2"><h5 class="h4precioProducto"><span class="valorUndProducto sr-only">${dato.prodPrecio}</span>S/. <span class="valorTotalProducto">${parseFloat(dato.subTotal).toFixed(2)}</span></h5></div></div>`);
 				
@@ -511,7 +515,7 @@ $('body').on('click', '.btnRemoverProducto',function () {
 		$('#btnCancelarPedido').click();
 	}
 	else{
-		$.ajax({url:'php/eliminarProductoPedido.php', type:"POST", data:{idProd:idEliminar , mesa:$('#idMesaSpan').text(), idUser:$.JsonUsuario.idUsuario }}).done(function (resp) { //console.log(resp)
+		$.ajax({url:'php/eliminarProductoPedido.php', type:"POST", data:{idProd:idEliminar , mesa:$('#idMesaSpan').text(), idUser:$.JsonUsuario.idUsuario }}).done(function (resp) { console.log(resp)
 			if(parseInt(resp)>0){
 				var vTotalProd=parseFloat($(`.contanedorDivsProductos`).find(`#${idEliminar}`).parent().parent().find('.valorTotalProducto').text());
 				var vTotalPed=parseFloat($('#idTotalSpan').text());

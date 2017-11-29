@@ -15,7 +15,7 @@ while($row = mysqli_fetch_array($sql, MYSQLI_ASSOC))
 	if($i>count($info)-1){ $i=0; }
 	$color=$info[$i];/* echo $color;*/
 	$i++;
-	echo '<div class="panel bs-callout '.$color.' panel-sombreado" style="margin-bottom: 10px;">
+	echo '<div class="panel bs-callout '.$color.' " style="margin-bottom: 10px;">
 			<div class="panel-heading collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#'.$row['tpNombreWeb'].'" aria-expanded="false" aria-controls="'.$row['tpNombreWeb'].'"><h4 class="panel-title"><strong class="mayuscula"><i class="icofont icofont-chicken-fry"></i> '.$row['tipDescripcion'].'</strong></h4>
 			</div>
 			<div id="'.$row['tpNombreWeb'].'" class="panel-collapse collapse" role="tabpanel" aria-expanded="false" style="height: 0px;">
@@ -24,7 +24,7 @@ while($row = mysqli_fetch_array($sql, MYSQLI_ASSOC))
 			</div>
 		</div>';
 }
-echo '<div class="panel bs-callout bs-callout-success panel-sombreado" style="margin-bottom: 10px;">
+echo '<div class="panel bs-callout bs-callout-success " style="margin-bottom: 10px;">
 			<div class="panel-heading collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#RegTodosBebidas" aria-expanded="false" aria-controls="RegTodosBebidas"><h4 class="panel-title"><strong class="mayuscula"><i class="icofont icofont-beer"></i> Bebidas</strong></h4>
 			</div>
 			<div id="RegTodosBebidas" class="panel-collapse collapse" role="tabpanel" aria-expanded="false" style="height: 0px;">
