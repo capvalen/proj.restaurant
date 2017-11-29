@@ -15,7 +15,7 @@ use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
  */
 
  
-    $connector_cocina = new WindowsPrintConnector("smb://127.0.0.1/BIXOLON_COCINA");
+    $connector_cocina = new WindowsPrintConnector("smb://127.0.0.1/COCINA");
 try {
     
     // A FilePrintConnector will also work, but on non-Windows systems, writes

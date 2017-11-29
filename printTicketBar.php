@@ -15,7 +15,7 @@ use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
  */
 
  
-    $connector_bar = new WindowsPrintConnector("smb://127.0.0.1/BIXOLON_BAR");
+    $connector_bar = new WindowsPrintConnector("smb://127.0.0.1/BAR");
 try {
     
     // A FilePrintConnector will also work, but on non-Windows systems, writes
