@@ -28,6 +28,7 @@ Ver 1.12
 - Reduce stock: Actualizado SP actualizarStockPrecioProducto y Modificado la estructura de stockdetalle
 -  modificado SP: insertarPedidoCabecera
 - ALTER TABLE `pedidodetalle` ADD `pedNota` VARCHAR(200) NOT NULL DEFAULT '' AFTER `pedSubtotal`;
+- Agrego notas por producto
  */
  ?>
 
