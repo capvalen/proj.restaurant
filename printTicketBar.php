@@ -31,7 +31,7 @@ try {
     $printer -> text("Cant.  Producto\n");
     $printer -> text("".$_POST['texto']." \n\n");
     if($_POST['obsBar']<>''){
-        $printer -> text("Obs.: ".$_POST['obsBar']." \n\n");
+        $printer -> text("Obs.: ".$_POST['obsBarra']." \n\n");
     }
     $printer -> text("*  Usuario: ".$_POST['usuario']."  *\n");
     $printer -> cut();

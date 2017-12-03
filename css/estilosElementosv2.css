@@ -3,8 +3,7 @@
 ************* Para:
 ************* Farmacia Virgen Maria. Huancayo - Perú.
 */
-::selection {background: #fff2a8;}::-moz-selection {background: #fff2a8;
-}
+::selection {background: #fff2a8;}::-moz-selection {background: #fff2a8;}
 html body{ background-color: #eeeeee ; /*background-color: #191617; background: #191617 url("../images/dark_mosaic.png") repeat scroll 0% 0%;*/}
 
 main, .contenedorDeslizable{background-color: #fff; border-radius:8px; margin-bottom: 20px; padding-bottom: 20px; border: 1px solid #e3e3e3;padding-top: 10px}

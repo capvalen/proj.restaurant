@@ -24,7 +24,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 	.divPrincipal{margin-top:0px!important;}
 </style>
 
-<div class="container-fluid divPrincipal" >
+<div class="container-fluid divPrincipal noselect" >
 	
 
 	<div class="row" id="divMesas">
@@ -79,7 +79,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 		<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="40"><i class="icofont icofont-food-cart"></i> Mesa 40</button></div>
 
 	</div>
-	<div class="row sr-only" id="divPedido">
+	<div class="row sr-only noselect" id="divPedido">
 		<h1 class="text-center" style="color: #442e9e"><i class="icofont icofont-bbq"></i> Pedido de mesa <small class="mayuscula"># <span id="spanNumMesa"></span> - <?php echo $_SESSION['Atiende']; ?></small></h1> <span class="hidden" id="spanIdPedidoAct"></span>
 		<div class="col-xs-12 col-sm-6">
 			<h3 class="text-center"><i class="icofont icofont-users"></i> Pedido del cliente</h3>
@@ -97,17 +97,19 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 				</div>
 			</div>
 			<div class="panel-body">
-				<div class="panel-group" id="ddw" >
+				<div class="panel-group hidden" id="pnlObsOcult" >
 					<div class="panel bs-callout bs-callout-default " style="margin-bottom: 10px;">
-						<div class="panel-heading " role="button" data-parent="#accordion" href="#panelObservaciones" aria-expanded="true" aria-controls="panelObservaciones"><h4 class="panel-title"><strong class="mayuscula"><i class="icofont icofont-prescription"></i> Observaciones</strong></h4>
+						<div class="panel-heading " role="button" data-parent="#accordion" href="#panelObservaciones" aria-expanded="true" aria-controls="panelObservaciones"><h4 class="panel-title"><strong><i class="icofont icofont-prescription"></i> Observaciones para: <span class="mayuscula" id="txtNotaProducto"></span></strong></h4>
 						</div>
 						<div id="panelObservaciones" class="panel-collapse collapsed collapse in " role="tabpanel" aria-expanded="true" >
 							<div class="panel-body">
-								<div class="col-xs-6">
+								<div class="col-xs-12"><label for="">Nota:</label> <span class="hidden" id="notaIdProviene"></span>
+									<textarea name="" id="txtObsNotaEscrita" class="form-control mayuscula" rows="3"></textarea></div>
+								<div class="col-xs-6 hidden">
 									<label for="">Nota para Cocina</label>
 									<textarea name="" id="txtObsCocina" class="form-control mayuscula" rows="5"></textarea>
 								</div>
-								<div class="col-xs-6">
+								<div class="col-xs-6 hidden">
 									<label for="">Nota para Bar</label>
 									<textarea name="" id="txtObsbarra" class="form-control mayuscula" rows="5"></textarea>
 								</div>
@@ -115,75 +117,24 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 
 						</div><br>
 						<div class="panel-footer">
-							<div class="botonesGenerales ">
-								<button class="btn btn-lg btn-danger btn-outline" id="btnCancelarPedido"><i class="icofont icofont-close-circled"></i> Cancelar pedido</button>
-								<button class="btn btn-lg btn-success btn-outline pull-right disabled" id="btnGuardarPedido"><i class="icofont icofont-diskette"></i> Guardar pedido</button>
-							</div>
+							
 
 						</div>
 					</div>
 				</div>
 			</div>
+			<div class="botonesGenerales ">
+				<button class="btn btn-lg btn-danger btn-outline" id="btnCancelarPedido"><i class="icofont icofont-close-circled"></i> Cancelar pedido</button>
+				<button class="btn btn-lg btn-success btn-outline pull-right disabled" id="btnGuardarPedido"><i class="icofont icofont-diskette"></i> Guardar pedido</button>
+			</div>
 			
 		</div>
 
-		<div class="col-xs-12 col-sm-6">
+		<div class="col-xs-12 col-sm-6 noselect">
 			<div><h3 class="text-center" style="display: inline-block;"><i class="icofont icofont-food-cart"></i> Productos disponibles</h3> <button class="btn btn-default btn-outline btn-NoLine btn-lg pull-right" id="btnRefreshProducts"><i class="icofont icofont-refresh"></i></button></div>
 			<div class="panel-body">
 				<div class="panel-group panelProductosColecc" id="accordion" role="tablist" aria-multiselectable="true">
 					<?php include 'php/rellenoCategoriasCabeceras.php'; ?>
-					<!-- <div class="panel bs-callout bs-callout-primary panel-sombreado" style="margin-bottom: 10px;">
-						<div class="panel-heading collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#RegTodosPlatosEntradas" aria-expanded="false" aria-controls="RegTodosPlatosEntradas"><h4 class="panel-title"><strong class="mayuscula"><i class="icofont icofont-chicken-fry"></i> Entradas</strong></h4>
-						</div>
-						<div id="RegTodosPlatosEntradas" class="panel-collapse collapse" role="tabpanel" aria-expanded="false" style="height: 0px;">
-							<div class="panel-body">
-								<div class="divUnSoloProducto"><div class="col-xs-7"><h4 class="h4NombreProducto divProdEntrada" id="1">Causa rellena</h4> <span class="stockPlato">(6)</span></div><div class="col-xs-3"><h5 class="h4precioProducto">S/. <span class="valorProducto">7.90</span></h5></div><div class="col-xs-2"><button class="btn btn-warning btn-outline btn-block btnAgregarProducto"><i class="icofont icofont-check"></i></button></div></div>
-								<div class="divUnSoloProducto"><div class="col-xs-7"><h4 class="h4NombreProducto divProdEntrada" id="2">Leche de tigre</h4> <span class="stockPlato">(16)</span></div><div class="col-xs-3"><h5 class="h4precioProducto">S/. <span class="valorProducto">5.60</span></h5></div><div class="col-xs-2"><button class="btn btn-warning btn-outline btn-block btnAgregarProducto"><i class="icofont icofont-check"></i></button></div></div>
-								<div class="divUnSoloProducto"><div class="col-xs-7"><h4 class="h4NombreProducto divProdEntrada" id="3">Papa a la huancaína</h4> <span class="stockPlato">(13)</span></div><div class="col-xs-3"><h5 class="h4precioProducto">S/. <span class="valorProducto">6.40</span></h5></div><div class="col-xs-2"><button class="btn btn-warning btn-outline btn-block btnAgregarProducto"><i class="icofont icofont-check"></i></button></div></div>
-								<div class="divUnSoloProducto"><div class="col-xs-7"><h4 class="h4NombreProducto divProdEntrada" id="4">Papa rellena</h4> <span class="stockPlato">(21)</span></div><div class="col-xs-3"><h5 class="h4precioProducto">S/. <span class="valorProducto">6.90</span></h5></div><div class="col-xs-2"><button class="btn btn-warning btn-outline btn-block btnAgregarProducto"><i class="icofont icofont-check"></i></button></div></div>
-							</div>
-						</div>
-					</div>
-					<div class="panel bs-callout bs-callout-success panel-sombreado" style="margin-bottom: 10px;">
-						<div class="panel-heading collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#RegTodosPlatosEspeciales" aria-expanded="false" aria-controls="RegTodosPlatosEspeciales"><h4 class="panel-title"><strong class="mayuscula"><i class="icofont icofont-chicken"></i> Platos especiales</strong></h4>
-						</div>
-						<div id="RegTodosPlatosEspeciales" class="panel-collapse collapse" role="tabpanel" aria-expanded="false" style="height: 0px;">
-							<div class="panel-body">
-								<div class="divUnSoloProducto"><div class="col-xs-7"><h4 class="h4NombreProducto divProdEspecial" id="5">Ají de gallina</h4> <span class="stockPlato">(6)</span></div><div class="col-xs-3"><h5 class="h4precioProducto">S/. <span class="valorProducto">15.60</span></h5></div><div class="col-xs-2"><button class="btn btn-warning btn-outline btn-block btnAgregarProducto"><i class="icofont icofont-check"></i></button></div></div>
-								<div class="divUnSoloProducto"><div class="col-xs-7"><h4 class="h4NombreProducto divProdEspecial" id="6">Anticuchos</h4> <span class="stockPlato">(16)</span></div><div class="col-xs-3"><h5 class="h4precioProducto">S/. <span class="valorProducto">16.50</span></h5></div><div class="col-xs-2"><button class="btn btn-warning btn-outline btn-block btnAgregarProducto"><i class="icofont icofont-check"></i></button></div></div>
-								<div class="divUnSoloProducto"><div class="col-xs-7"><h4 class="h4NombreProducto divProdEspecial" id="7">Arroz chaufa</h4> <span class="stockPlato">(13)</span></div><div class="col-xs-3"><h5 class="h4precioProducto">S/. <span class="valorProducto">17.50</span></h5></div><div class="col-xs-2"><button class="btn btn-warning btn-outline btn-block btnAgregarProducto"><i class="icofont icofont-check"></i></button></div></div>
-								<div class="divUnSoloProducto"><div class="col-xs-7"><h4 class="h4NombreProducto divProdEspecial" id="8">Ceviche de pescado</h4> <span class="stockPlato">(21)</span></div><div class="col-xs-3"><h5 class="h4precioProducto">S/. <span class="valorProducto">16.90</span></h5></div><div class="col-xs-2"><button class="btn btn-warning btn-outline btn-block btnAgregarProducto"><i class="icofont icofont-check"></i></button></div></div>
-								<div class="divUnSoloProducto"><div class="col-xs-7"><h4 class="h4NombreProducto divProdEspecial" id="9">Cuy asado</h4> <span class="stockPlato">(16)</span></div><div class="col-xs-3"><h5 class="h4precioProducto">S/. <span class="valorProducto">20.50</span></h5></div><div class="col-xs-2"><button class="btn btn-warning btn-outline btn-block btnAgregarProducto"><i class="icofont icofont-check"></i></button></div></div>
-								<div class="divUnSoloProducto"><div class="col-xs-7"><h4 class="h4NombreProducto divProdEspecial" id="10">Lomo saltado</h4> <span class="stockPlato">(9)</span></div><div class="col-xs-3"><h5 class="h4precioProducto">S/. <span class="valorProducto">18.70</span></h5></div><div class="col-xs-2"><button class="btn btn-warning btn-outline btn-block btnAgregarProducto"><i class="icofont icofont-check"></i></button></div></div>
-							
-							</div>
-						</div>
-					</div>
-					<div class="panel bs-callout bs-callout-warning panel-sombreado" style="margin-bottom: 10px;">
-						<div class="panel-heading collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#RegTodosBebidas" aria-expanded="false" aria-controls="RegTodosBebidas"><h4 class="panel-title"><strong class="mayuscula"><i class="icofont icofont-beer"></i> Bebidas</strong></h4>
-						</div>
-						<div id="RegTodosBebidas" class="panel-collapse collapse" role="tabpanel" aria-expanded="false" style="height: 0px;">
-							<div class="panel-body">
-								<div class="divUnSoloProducto"><div class="col-xs-7"><h4 class="h4NombreProducto divProdBebida" id="11">Cerveza Cuzqueña 620ml</h4> <span class="stockPlato">(6)</span></div><div class="col-xs-3"><h5 class="h4precioProducto">S/. <span class="valorProducto">10.00</span></h5></div><div class="col-xs-2"><button class="btn btn-warning btn-outline btn-block btnAgregarProducto"><i class="icofont icofont-check"></i></button></div></div>
-								<div class="divUnSoloProducto"><div class="col-xs-7"><h4 class="h4NombreProducto divProdBebida" id="12">Cerveza Pilsen 650ml</h4> <span class="stockPlato">(16)</span></div><div class="col-xs-3"><h5 class="h4precioProducto">S/. <span class="valorProducto">9.50</span></h5></div><div class="col-xs-2"><button class="btn btn-warning btn-outline btn-block btnAgregarProducto"><i class="icofont icofont-check"></i></button></div></div>
-								<div class="divUnSoloProducto"><div class="col-xs-7"><h4 class="h4NombreProducto divProdBebida" id="13">Gaseosa Coca Cola 500ml</h4> <span class="stockPlato">(13)</span></div><div class="col-xs-3"><h5 class="h4precioProducto">S/. <span class="valorProducto">4.00</span></h5></div><div class="col-xs-2"><button class="btn btn-warning btn-outline btn-block btnAgregarProducto"><i class="icofont icofont-check"></i></button></div></div>
-								<div class="divUnSoloProducto"><div class="col-xs-7"><h4 class="h4NombreProducto divProdBebida" id="14">Gaseosa Inka Kola 500ml</h4> <span class="stockPlato">(21)</span></div><div class="col-xs-3"><h5 class="h4precioProducto">S/. <span class="valorProducto">4.50</span></h5></div><div class="col-xs-2"><button class="btn btn-warning btn-outline btn-block btnAgregarProducto"><i class="icofont icofont-check"></i></button></div></div>
-								<div class="divUnSoloProducto"><div class="col-xs-7"><h4 class="h4NombreProducto divProdBebida" id="15">Jarra de chica morada 1L</h4> <span class="stockPlato">(16)</span></div><div class="col-xs-3"><h5 class="h4precioProducto">S/. <span class="valorProducto">8.00</span></h5></div><div class="col-xs-2"><button class="btn btn-warning btn-outline btn-block btnAgregarProducto"><i class="icofont icofont-check"></i></button></div></div>
-								<div class="divUnSoloProducto"><div class="col-xs-7"><h4 class="h4NombreProducto divProdBebida" id="16">Jarra de chica morada 500ml</h4> <span class="stockPlato">(9)</span></div><div class="col-xs-3"><h5 class="h4precioProducto">S/. <span class="valorProducto">4.50</span></h5></div><div class="col-xs-2"><button class="btn btn-warning btn-outline btn-block btnAgregarProducto"><i class="icofont icofont-check"></i></button></div></div>
-							
-							</div>
-						</div>
-					</div>
-					<div class="panel bs-callout bs-callout-info panel-sombreado" style="margin-bottom: 10px;">
-						<div class="panel-heading collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#RegTodosPostres" aria-expanded="false" aria-controls="RegTodosPostres"><h4 class="panel-title"><strong class="mayuscula"><i class="icofont icofont-cup-cake"></i> Postres</strong></h4>
-						</div>
-						<div id="RegTodosPostres" class="panel-collapse collapse" role="tabpanel" aria-expanded="false" style="height: 0px;">
-							<div class="panel-body">
-								<div class="divUnSoloProducto"><div class="col-xs-7"><h4 class="h4NombreProducto divProdPostre" id="17">Suspiro a la limeña</h4> <span class="stockPlato">(6)</span></div><div class="col-xs-3"><h5 class="h4precioProducto">S/. <span class="valorProducto">10.00</span></h5></div><div class="col-xs-2"><button class="btn btn-warning btn-outline btn-block btnAgregarProducto"><i class="icofont icofont-check"></i></button></div></div>
-								<div class="divUnSoloProducto"><div class="col-xs-7"><h4 class="h4NombreProducto divProdPostre" id="18">Mazamorra de calabaza</h4> <span class="stockPlato">(16)</span></div><div class="col-xs-3"><h5 class="h4precioProducto">S/. <span class="valorProducto">10.00</span></h5></div><div class="col-xs-2"><button class="btn btn-warning btn-outline btn-block btnAgregarProducto"><i class="icofont icofont-check"></i></button></div></div>
-							</div>
-						</div>
-					</div> -->
 				</div>
 			</div>		
 
@@ -269,6 +220,7 @@ $('.btnMesa').click(function () {
 	$('#spanNumMesa').text(idMesa);
 	$('#btnCancelarPedido').html('<i class="icofont icofont-close-circled"></i> Cancelar pedido');
 	$('#txtObsCocina').val(''); $('#txtObsbarra').val('');
+	$('#pnlObsOcult').addClass('hidden');
 	listarProductos();
 
 	$('#smallPreciototal').text('0.00')
@@ -285,15 +237,15 @@ $('.btnMesa').click(function () {
 		$.ajax({url:'php/listarPedidoMesaOcupada.php', type: 'POST', data: {mesa: idMesa}}).done(function (resp) {
 //		console.log(resp);
 
-		$.each(JSON.parse(resp), function (i, dato) {
+		$.each(JSON.parse(resp), function (i, dato) { console.log(dato)
 			$('#txtObsCocina').val(dato.observacCocina);
 			$('#txtObsbarra').val(dato.observacBar);
-			$('#regMesaCliente .panel-body').append(`<div class="row divUnSoloProducto guardado" id="${dato.idProducto}"><div class="col-xs-7"><button class="btn btn-success btn-circle btn-NoLine btn-outline" id="${dato.idProducto}"><i class="icofont icofont-check"></i></button> <h4 class="h4NombreProducto mayuscula" id="${dato.idProducto}">${dato.prodDescripcion}</h4> </div><div class="col-xs-3"> <button class="btn btn-warning btn-circle btn-NoLine btnRestarProducto hidden"><i class="icofont icofont-minus-circle"></i></button> <span class="cantidadProducto">${dato.pedCantidad}</span> <button class="btn btn-warning btn-circle btn-NoLine btnSumarProducto"><i class="icofont icofont-plus-circle"></i></button> <span class="cantAnteriorProd hidden">${dato.pedCantidad}</span></div><div class="col-xs-2"><h5 class="h4precioProducto"><span class="valorUndProducto sr-only">${dato.prodPrecio}</span>S/. <span class="valorTotalProducto">${parseFloat(dato.subTotal).toFixed(2)}</span></h5></div></div>`);
+			$('#regMesaCliente .panel-body').append(`<div class="row divUnSoloProducto guardado" id="${dato.idProducto}"><div class="col-xs-7"><button class="btn btn-success btn-circle btn-NoLine btn-outline" id="${dato.idProducto}"><i class="icofont icofont-check"></i></button> <h4 class="h4NombreProducto mayuscula" id="${dato.idProducto}">${dato.prodDescripcion}</h4> <span class="prodNota">${dato.pedNota}</span></div><div class="col-xs-3"> <button class="btn btn-warning btn-circle btn-NoLine btnRestarProducto hidden"><i class="icofont icofont-minus-circle"></i></button> <span class="cantidadProducto">${dato.pedCantidad}</span> <button class="btn btn-warning btn-circle btn-NoLine btnSumarProducto"><i class="icofont icofont-plus-circle"></i></button> <span class="cantAnteriorProd hidden">${dato.pedCantidad}</span></div><div class="col-xs-2"><h5 class="h4precioProducto"><span class="valorUndProducto sr-only">${dato.prodPrecio}</span>S/. <span class="valorTotalProducto">${parseFloat(dato.subTotal).toFixed(2)}</span></h5></div></div>`);
 			cantRes=parseInt($(`.${dato.tpNombreWeb}`).find('.platoResValor').text())+1;
 			$(`.${dato.tpNombreWeb}`).find('.platoResValor').text(cantRes);
 
 			sumaTotales+=parseFloat(dato.subTotal);
-			$('#idTotalSpan').text(parseFloat(sumaTotales).toFixed(2));
+			$('#smallPreciototal').text(parseFloat(sumaTotales).toFixed(2));
 		});
 		});
 	}
@@ -343,7 +295,7 @@ $('body').on('click', '.btnAgregarProducto',function () {
 		if(contenedor.find('.stockFict').text()!=="0"){
 			$('#noProducto').remove();
 			if(contenedor.find('.h4NombreProducto').hasClass('divProdBebida')){elementoProducto='divProdBebida'}else{elementoProducto='divCocina'}
-			$('#regMesaCliente .panel-body').append(`<div class="row divUnSoloProducto"  id="${contenedor.find('.h4NombreProducto').attr('id')}"><div class="col-xs-7"><button class="btn btn-danger btn-circle btn-NoLine btnRemoverProducto"><i class="icofont icofont-close"></i></button> <h4 class="h4NombreProducto ${elementoProducto} mayuscula" >${contenedor.find('.h4NombreProducto').text()}</h4> </div><div class="col-xs-3"><button class="btn btn-warning btn-circle btn-NoLine btnRestarProducto"><i class="icofont icofont-minus-circle"></i></button> <span class="cantidadProducto">1</span> <button class="btn btn-warning btn-circle btn-NoLine btnSumarProducto"><i class="icofont icofont-plus-circle"></i></button> <span class="cantAnteriorProd hidden"></span> </div><div class="col-xs-2"><h5 class="h4precioProducto"><span class="valorUndProducto sr-only">${contenedor.find('.valorProducto').text()}</span>S/. <span class="valorTotalProducto">${contenedor.find('.valorProducto').text()}</span></h5></div></div>`);
+			$('#regMesaCliente .panel-body').append(`<div class="row divUnSoloProducto"  id="${contenedor.find('.h4NombreProducto').attr('id')}"><div class="col-xs-7"><button class="btn btn-danger btn-circle btn-NoLine btnRemoverProducto"><i class="icofont icofont-close"></i></button> <h4 class="h4NombreProducto ${elementoProducto} mayuscula" >${contenedor.find('.h4NombreProducto').text()}</h4> <span class="prodNota"></span></div><div class="col-xs-3"><button class="btn btn-warning btn-circle btn-NoLine btnRestarProducto"><i class="icofont icofont-minus-circle"></i></button> <span class="cantidadProducto">1</span> <button class="btn btn-warning btn-circle btn-NoLine btnSumarProducto"><i class="icofont icofont-plus-circle"></i></button> <span class="cantAnteriorProd hidden"></span> </div><div class="col-xs-2"><h5 class="h4precioProducto"><span class="valorUndProducto sr-only">${contenedor.find('.valorProducto').text()}</span>S/. <span class="valorTotalProducto">${contenedor.find('.valorProducto').text()}</span></h5></div></div>`);
 			var precio=parseFloat($('#smallPreciototal').text())+parseFloat(contenedor.find('.valorProducto').text());
 			$('#smallPreciototal').text(parseFloat(precio).toFixed(2));
 
@@ -427,19 +379,33 @@ $('body').on('click', '.btnRestarProducto', function () {
 	var contenedorResta=$(this).parent().parent();
 	var cantidadAdd=parseFloat(contenedorResta.find('.cantidadProducto').text())-1;
 	if(cantidadAdd>=1){
-		var precioLess=parseFloat(contenedorResta.find('.valorUndProducto').text());
-		var totalAdd=parseFloat(precioLess*cantidadAdd).toFixed(2);
-		contenedorResta.find('.cantidadProducto').text(cantidadAdd);
-		contenedorResta.find('.valorTotalProducto').text(totalAdd);
-		var restaPedido=0;
-		$.each($('.valorTotalProducto'), function (i, dato) {
-			restaPedido+=parseFloat($(dato).text());
-			$('#smallPreciototal').text(restaPedido.toFixed(2));
-		});
+		if(contenedorResta.hasClass('actualizar') && parseInt(contenedorResta.find('.cantAnteriorProd').text())<=cantidadAdd ){
+			/*console.log('resta')*/
+			var precioLess=parseFloat(contenedorResta.find('.valorUndProducto').text());
+			var totalAdd=parseFloat(precioLess*cantidadAdd).toFixed(2);
+			contenedorResta.find('.cantidadProducto').text(cantidadAdd);
+			contenedorResta.find('.valorTotalProducto').text(totalAdd);
+			var restaPedido=0;
+			$.each($('.valorTotalProducto'), function (i, dato) {
+				restaPedido+=parseFloat($(dato).text());
+				$('#smallPreciototal').text(restaPedido.toFixed(2));
+			});
+		}
+		else{
+			/*console.log('resta')*/
+			var precioLess=parseFloat(contenedorResta.find('.valorUndProducto').text());
+			var totalAdd=parseFloat(precioLess*cantidadAdd).toFixed(2);
+			contenedorResta.find('.cantidadProducto').text(cantidadAdd);
+			contenedorResta.find('.valorTotalProducto').text(totalAdd);
+			var restaPedido=0;
+			$.each($('.valorTotalProducto'), function (i, dato) {
+				restaPedido+=parseFloat($(dato).text());
+				$('#smallPreciototal').text(restaPedido.toFixed(2));
+			});
+		}
 	}
 });
 $('#btnGuardarPedido').click(function () {
-	
 	
 	//var datosPedido=[];
 	if(!$('#btnGuardarPedido').hasClass('disabled')){
@@ -453,12 +419,12 @@ $('#btnGuardarPedido').click(function () {
 		console.log('total nuevos '+cantDivsPedidosNuevos)
 		console.log('guardados '+cantDivPedidosGuardados)
 		console.log('actualizado '+cantDivPedidosActualizados)
-		$.ajax({url:'php/insertarPedidoCabecera.php', type:'POST', data:{mesa: $('#spanNumMesa').text(), idUser: $.JsonUsuario.idUsuario, ObsCocina: $('#txtObsCocina').val(), ObsBar:$('#txtObsbarra').val()}}).done(function (resp) {
+		$.ajax({url:'php/insertarPedidoCabecera.php', type:'POST', data:{mesa: $('#spanNumMesa').text(), idUser: $.JsonUsuario.idUsuario, obsCocina: $('#txtObsCocina').val(), obsBarra:$('#txtObsbarra').val()}}).done(function (resp) {
 			console.log(resp)
 		if(parseInt(resp)>0){
 			$('#spanIdPedidoAct').text(resp);
 			$('#btnCancelarPedido').html('<i class="icofont icofont-check"></i> Volver a mesas');/*$('#btnGuardarPedido').removeClass('disabled');*/
-			var textoProductosBar=''; var textoProductosCocina=''; var cantPedido='', prodRowNombre='';
+			var textoProductosBar=''; var textoProductosCocina=''; var cantPedido='', prodRowNombre='', laNota='', laCantidad;
 
 			if( $('#regMesaCliente .divUnSoloProducto').length>0 ){
 				var contenedoresProdPorGuardar=$('#regMesaCliente .divUnSoloProducto');
@@ -469,20 +435,25 @@ $('#btnGuardarPedido').click(function () {
 					cantPedido=$(dato).find('.cantidadProducto').text();
 					precPro=$(dato).find('.valorUndProducto').text();
 					prodRowNombre=$(dato).find('.h4NombreProducto').text();
+					laNota=$(dato).find('.prodNota').text();
 					if(!$(dato).hasClass('actualizar') && !$(dato).hasClass('guardado') ){
 						//datosPedido.push({idProd: idProducto,cantidad: cantPedido, producto: prodRowNombre} );
-						$.ajax({url:'php/insertarPedidoDetalle.php', type: 'POST', data:{idProd: idProducto, precio:precPro ,cantidad: cantPedido, producto: prodRowNombre, idPedido: resp }}).done(function (resp) {
+						$.ajax({url:'php/insertarPedidoDetalle.php', type: 'POST', data:{idProd: idProducto, precio:precPro ,cantidad: cantPedido, producto: prodRowNombre, idPedido: resp, nota: laNota  }}).done(function (resp) {
 							//console.log(resp);
 							$.each(JSON.parse(resp), function (ii, dato2) {
 								if(dato2.respuesta=='Y'){
 									$(`#regMesaCliente #${dato2.idProducto}`).addClass('guardado').find('.btnRemoverProducto').html('<i class="icofont icofont-check"></i>').removeClass('btn-danger').addClass('btn-success').removeClass('btnRemoverProducto').addClass('btn-outline');
 									$(`#regMesaCliente #${dato2.idProducto}`).find('.btnRestarProducto').addClass('hidden');
 									if($(dato).find('.h4NombreProducto').hasClass('divProdBebida')){
-										textoProductosBar+=' '+$(dato).find('.cantidadProducto').text()+'   '+$(dato).find('.h4NombreProducto').text()+'\n';
+										laCantidad=$(dato).find('.cantidadProducto').text();
+										if(laCantidad<=9){laCantidad=' '+laCantidad;}
+										textoProductosBar+=' '+ laCantidad+'   '+$(dato).find('.h4NombreProducto').text()+ '. '+ $(dato).find('.prodNota').text() +'\n';
 									}else{
-										textoProductosCocina+=' '+$(dato).find('.cantidadProducto').text()+'   '+$(dato).find('.h4NombreProducto').text()+'\n';
+										laCantidad=$(dato).find('.cantidadProducto').text();
+										if(laCantidad<=9){laCantidad=' '+laCantidad;}
+										textoProductosCocina+=' '+ laCantidad+'   '+$(dato).find('.h4NombreProducto').text()+ '. '+ $(dato).find('.prodNota').text() +'\n';
 									}
-									if(cantDivsPedidosNuevos-cantDivPedidosGuardados-cantDivPedidosActualizados-1==iteraciones){console.log(textoProductosBar); console.log(textoProductosCocina); 
+									if(cantDivsPedidosNuevos-cantDivPedidosGuardados-cantDivPedidosActualizados-1==iteraciones){/*console.log(textoProductosBar); console.log(textoProductosCocina); */
 										impresionTickers(textoProductosBar, textoProductosCocina); }else{iteraciones++;}
 								}else{
 									var contenedorRestaurar=$('#regMesaCliente #'+idProducto);
@@ -553,7 +524,7 @@ $('#btnCerrarSesion').click(function () { console.log('ho')
 });
 function impresionTickers(textoProductosBar, textoProductosCocina){
 	if(textoProductosBar.length>0){console.log('A Bar:\n'+textoProductosBar)
-		$.ajax({url:'printTicketBar.php', type:'POST', data: {hora:moment().format('DD [de] MMMM [de] YYYY h:mm a'),numMesa:$('#spanNumMesa').text(), texto:textoProductosBar, usuario: $.JsonUsuario.usuNombres, obsBar: $('#txtObsbarra').val()}}).done(function (resp) {
+		$.ajax({url:'printTicketBar.php', type:'POST', data: {hora:moment().format('DD [de] MMMM [de] YYYY h:mm a'),numMesa:$('#spanNumMesa').text(), texto:textoProductosBar, usuario: $.JsonUsuario.usuNombres, obsBarra: $('#txtObsbarra').val()}}).done(function (resp) {
 		console.log(resp)
 		});
 	}else{exito1=true;}
@@ -563,7 +534,16 @@ function impresionTickers(textoProductosBar, textoProductosCocina){
 		});
 	}
 }
-
+$('#regMesaCliente').on('click','.divUnSoloProducto',function () {
+	var contenedor=$(this);
+	$('#txtNotaProducto').text(contenedor.find('.h4NombreProducto').text());
+	$('#notaIdProviene').text(contenedor.attr('id'));
+	$('#pnlObsOcult').removeClass('hidden');
+	$('#txtObsNotaEscrita').val('');
+});
+$('#txtObsNotaEscrita').keyup(function () {
+	$('#listMesaCliente #'+$('#notaIdProviene').text()).find('.prodNota').text($('#txtObsNotaEscrita').val());
+});
 </script>
 	
 	

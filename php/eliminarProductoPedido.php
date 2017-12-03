@@ -2,7 +2,7 @@
 header('Content-Type: text/html; charset=utf8');
 require("conectkarl.php");
 
-echo "call eliminarProductoPedido (".$_POST['idProd'].", ".$_POST['mesa'].", ".$_POST['idUser']." );";
+//echo "call eliminarProductoPedido (".$_POST['idProd'].", ".$_POST['mesa'].", ".$_POST['idUser']." );";
 $sql= "call eliminarProductoPedido (".$_POST['idProd'].", ".$_POST['mesa'].", ".$_POST['idUser']." );";
 //echo $sql;
 

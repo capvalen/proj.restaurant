@@ -1,7 +1,9 @@
 <?php
 session_start();
 if (isset($_SESSION['idUsuario'])){
-	header("Location:principal.php");
+	if($_SESSION['Power']==3){header("Location:pedido.php");}
+	if($_SESSION['Power']==2){header("Location:caja.php");}
+	if($_SESSION['Power']==1){header("Location:principal.php");}
 }
 ?>
 
@@ -25,38 +27,50 @@ if (isset($_SESSION['idUsuario'])){
 
 <body >
 <style type="text/css">
-	body{background: linear-gradient(90deg, #100b19 10%, #291c40 90%);}
-	.container{ margin-top:80px; padding:0 50px}
-	.wello{padding:40px 50px; border-radius: 6px;}
-	.noselect {
+.form-control:focus{    border-color: #FFEB3B;box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 6px rgba(255, 193, 7, 0.55);}
+body{background: linear-gradient(90deg, #100b19 10%, #291c40 90%);}
+.noselect{ margin-top:80px;}
+.wello{padding:40px 50px; border-radius: 6px;}
+.noselect {
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none;   /* Chrome/Safari/Opera */
   -khtml-user-select: none;    /* Konqueror */
   -moz-user-select: none;      /* Firefox */
   -ms-user-select: none;       /* Internet Explorer/Edge */
-  user-select: none;           /* Non-prefixed version, currently
-                                  not supported by any browser */
+  user-select: none;           /* Non-prefixed version, currently not supported by any browser */
 }
+a{    color: #947cc1;
+    font-weight: 700;}
+a:hover{color:#694D9F;}
+input{height: 45px!important;
+display: inline-block!important;
+    /* width: 95%!important; */}
+.icoTransparent{display: inline-block; color: #555; font-size: 16px;
+margin-left: -25px; opacity: 0.5}
 </style>
-<div class="container noselect">
+<main class="noselect">
 	<div class="row">
 		<div class="col-md-12">
-			<div class="wello login-box" style="color:#493267" >
-				<h2 class="text-center" style="font-family: 'Pacifico', cursive;">Info-Cat</h2>
-				<legend  style="color:#493267"><small style=" font-size: 80%;">Sistema para Casa de Barro</small></legend>
+			<div class="wello login-box" style="color:#7956C1" >
+				<div class="row">
+					<div class="col-xs-4"><img src="images/VirtualCorto.png" class="img-responsive" alt=""></div>
+					<div class="col-xs-8"><h3 class="text-center" style="margin-bottom: 0px;">Info-Cat </h3>
+						<div class="text-center"><span >App para «Casa de Barro»</span></div>
+						<legend  style="color:#7956C1"><small style=" font-size: 70%;"></small></legend></div>
+				</div>
 				
 			<div class="form-group">
-				<label for="username"><i class="icofont icofont-user"></i> Usuario</label>
-				<input class="form-control" value='' id="txtUser_grifo" placeholder="Ingrese su nombre de usuario" type="text"  />
+				<label class="hidden" for="username"><i class="icofont icofont-user"></i> Usuario</label>
+				<input class="form-control" value='' id="txtUser_grifo" placeholder="Usuario" type="text"  /><div class="icoTransparent"><i class="icofont icofont-user"></i> </div>
 			</div>
 			<div class="form-group">
-				<label for="password"><i class="icofont icofont-key"></i> Contraseña</label>
-				<input class="form-control" id="txtPassw" value='' placeholder="Contraseña" type="password" />
+				<label class="hidden" for="password"><i class="icofont icofont-key"></i> Contraseña</label>
+				<input class="form-control" id="txtPassw" value='' placeholder="Contraseña" type="password" /><div class="icoTransparent"><i class="icofont icofont-ui-text-loading"></i>
 			</div>
 			
-			<div class="form-group text-center">
-				<button class="btn btn-danger btn-outline" id="btnCancelar"><i class="icofont icofont-logout"></i> Cancelar</button>
-				<button class="btn btn-morado btn-outline" id="btnAcceder"><div class="fa-spin sr-only"><i class="icofont icofont-spinner"></i> </div><i class="icofont icofont-key"></i> Iniciar</button>
+			<div class="form-group text-center"><br>
+				<button class="btn btn-danger btn-outline hidden" id="btnCancelar"><i class="icofont icofont-logout"></i> Cancelar</button>
+				<button class="btn btn-morado btn-outline btn-block btn-lg" id="btnAcceder"><div class="fa-spin sr-only"><i class="icofont icofont-spinner "></i> </div><i class="icofont icofont-key"></i> Iniciar sesión</button>
 			</div>
 			<div class="form-group text-center text-danger hidden" id="divError">Error en alguno de los datos, complételos todos cuidadosamente.</div>
 			
@@ -64,7 +78,7 @@ if (isset($_SESSION['idUsuario'])){
 			</div>
 		</div>
 	</div>
-</div>
+</main>
 </body>
 
 	<script src="js/jquery-2.2.4.min.js"></script>

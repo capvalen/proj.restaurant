@@ -6,7 +6,7 @@ header('Content-Type: text/html; charset=utf8');
 $resultados=array();
 
 //echo "call insertarPedidoDetalle(".$_POST['idProd'].", ".$_POST['precio'].", ".$_POST['cantidad'].", ".$_POST['idPedido']." );";
-$sql = mysqli_query($conection,"call insertarPedidoDetalle(".$_POST['idProd'].", ".$_POST['precio'].", ".$_POST['cantidad'].", ".$_POST['idPedido']." );");
+$sql = mysqli_query($conection,"call insertarPedidoDetalle(".$_POST['idProd'].", ".$_POST['precio'].", ".$_POST['cantidad'].", ".$_POST['idPedido'].", '".$_POST['nota']."' );");
 $row=mysqli_fetch_array($sql, MYSQLI_ASSOC);
 //echo $row['resp'][0];
 

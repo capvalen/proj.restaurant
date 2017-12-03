@@ -42,11 +42,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 	<!-- Sidebar -->
 	<div id="sidebar-wrapper">
 		<ul class="sidebar-nav">
-				<div class="sidebar-brand ocultar-mostrar-menu" >
-						<a href="#">
-								Control Panel
-						</a>
-				</div>
+				
 				<div class="logoEmpresa ocultar-mostrar-menu">
 					<img class="img-responsive" src="images/empresa.png" alt="">
 				</div>
@@ -228,6 +224,33 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 	</div>
 </div>
 
+<!-- Modal para editar una categoría a la BD -->
+<div class="modal fade modal-updateStockLessProducto" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+<div class="modal-dialog modal-sm" role="document">
+	<div class="modal-content">
+		<div class="modal-header-danger">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<h4 class="modal-title" id="myModalLabel"><i class="icofont icofont-help-robot"></i> Reducir stock</h4>
+		</div>
+		<div class="modal-body">
+			<div class="container-fluid">
+				<div class="row"><span class="hidden" id="spanStockUpd"></span><span class="hidden" id="spanPrecioUpd"></span><span class="hidden" id="spanCategStock"></span><span class="hidden" id="spanMaxStockLess"></span>
+					<label for="">Producto: </label> <span id="lessStockNomProducto"></span> <br>
+					<label for="">Cantidad a reducir:</label> <input type="number" class="form-control text-center" id="txtLessStockCantidad" step=1 min=0>
+					<label for="">Detalle:</label> <input type="text" class="form-control text-center mayuscula" id="txtLessStockDetalle">
+				</div>
+			</div>
+			<label class="text-danger labelError hidden" for=""><i class="icofont icofont-animal-squirrel"></i> Lo siento! <span class=mensaje></span></label>
+		</div>
+		
+		<div class="modal-footer">
+			<button class="btn btn-default btn-outline" data-dismiss="modal" ><i class="icofont icofont-close"></i> Cerrar</button>
+			<button class="btn btn-danger btn-outline" id="btnUpdLessStock"><i class="icofont icofont-save"></i> Guardar</button>
+		</div>
+	</div>
+	</div>
+</div>
+
 
 <!-- Modal para editar una categoría a la BD -->
 <div class="modal fade modal-updateCategoryBD" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
@@ -310,7 +333,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 		
 		<div class="modal-footer">
 			<button class="btn btn-danger btn-outline" data-dismiss="modal" ><i class="icofont icofont-close"></i> Cerrar</button>
-			<button class="btn btn-success btn-outline" id="btnGuardarCambioConfig"><i class="icofont icofont-save"></i> Guardar</button>
+			<button class="btn btn-warning btn-outline" id="btnGuardarCambioConfig"><i class="icofont icofont-save"></i> Guardar</button>
 		</div>
 	</div>
 	</div>
@@ -443,11 +466,11 @@ $.ajax({url:'php/listarProductos.php', data: 'POST'}).done(function (resp) { //c
 	$.each(JSON.parse(resp), function (i, dato) { //console.log(dato)
 		var cant= $('#'+dato.tpDivBebidaCocina+' .row').length;
 		$('#'+dato.tpDivBebidaCocina).append(`<div class="row">  `+
-			`<div class="col-xs-2 mayuscula"><button class="btn btn-danger btn-circle btn-NoLine btn-outline btnRemoverProducto" id="${dato.idProducto}"><i class="icofont icofont-close"></i></button> ${cant}. <span class="spanCategoria">${dato.tipDescripcion}</span></div> `+
+			`<div class="col-xs-2 mayuscula"><button class="btn btn-danger btn-circle btn-NoLine btn-outline btnRemoverProducto" id="${dato.idProducto}"><i class="icofont icofont-close"></i></button> ${cant}. <span class="spanCategoria">${dato.tipDescripcion}</span><span class="hidden spanIdCategoria" >${dato.idTipoProducto}</span></div> `+
 			`<div class="col-xs-5 mayuscula divNombrProd">${dato.prodDescripcion}</div> `+
 			`<div class="col-xs-2 divPrecPro">${parseFloat(dato.prodPrecio).toFixed(2)}</div> `+
-			`<div class="col-xs-2 divStockPro">${dato.stockCantidad}</div> `+
-			`<div class="col-xs-1"><button class="btn btn-success btn-outline btn-NoLine btnConfigProducto" id="${dato.idProducto}"><i class="icofont icofont-options"></i></button></div></div>`);
+			`<div class="col-xs-1 divStockPro">${dato.stockCantidad}</div> `+
+			`<div class="col-xs-2 text-right"><button class="btn btn-danger btn-outline btn-NoLine btnConfigReducirStock" id="${dato.idProducto}"><i class="icofont icofont-minus"></i></button><button class="btn btn-success btn-outline btn-NoLine btnConfigProducto" id="${dato.idProducto}"><i class="icofont icofont-options"></i></button></div></div>`);
 	});
 });
 }); //Fin de document ready
@@ -472,7 +495,7 @@ $('#btnGuardarCambioConfig').click(function () {
 		//console.log(idCategoria);
 		var diferencia= $('#txtModalStockConf').val();/*-$('#stockAnterior').val();*/
 		//console.log(diferencia)
-		$.ajax({url:'php/actualizarStockPrecioProducto.php', type: 'POST', data:{idProd: $('#spanModalIdProdConf').text(), nomPro:$('#txtModalNomConf').val(),  precio: $('#txtModalPrecioConf').val() , categoria: idCategoria, idUser: $.JsonUsuario.idUsuario, cantidad: diferencia }}).done(function (resp) {
+		$.ajax({url:'php/actualizarStockPrecioProducto.php', type: 'POST', data:{idProd: $('#spanModalIdProdConf').text(), nomPro:$('#txtModalNomConf').val(),  precio: $('#txtModalPrecioConf').val() , categoria: idCategoria, idUser: $.JsonUsuario.idUsuario, cantidad: diferencia, detalle: '' }}).done(function (resp) {
 			console.log(resp)
 			if(resp>0){location.reload();}
 		});
@@ -573,6 +596,31 @@ $('#btnUpdCategConfig').click(function () {
 		$('.modal-updateCategoryBD .labelError').addClass('hidden');
 		$.ajax({url: 'php/updateCategoria.php', type: 'POST', data:{idCat:$('#spanCategUpd').text(), nomCat:$('#txtModalNomCategUpd').val(), activCat: 1, webCat:nomWeb, divCat:nomDivWeb } }).done(function (resp) {// console.log(resp)
 			location.reload();
+		});
+	}
+});
+$('body').on('click', '.btnConfigReducirStock', function () {
+	var contenedor=$(this);
+	$('#spanStockUpd').text(contenedor.attr('id'));
+	$('#spanPrecioUpd').text(contenedor.parent().parent().find('.divPrecPro').text());
+	$('#spanCategStock').text(contenedor.parent().parent().find('.spanIdCategoria').text());
+	$('#spanMaxStockLess').text(contenedor.parent().parent().find('.divStockPro').text());
+	$('#lessStockNomProducto').text(contenedor.parent().parent().find('.divNombrProd').text());
+	$('#txtLessStockCantidad').val('0');
+	$('#txtLessStockDetalle').val('');
+	$('.modal-updateStockLessProducto').modal('show');
+});
+$('#btnUpdLessStock').click(function () {
+	// $('#spanStockUpd').text()
+	if( $('#txtLessStockCantidad').val()<=0){$('.modal-updateStockLessProducto .labelError').removeClass('hidden').find('.mensaje').text('No se puede guardar valores ceros o negativos.'); }
+	else if( $('#txtLessStockCantidad').val()>parseInt($('#spanMaxStockLess').text())){$('.modal-updateStockLessProducto .labelError').removeClass('hidden').find('.mensaje').text('No puede disminuir más de lo que se encuentra en stock.'); }
+	else if( $('#txtLessStockDetalle').val()==''){$('.modal-updateStockLessProducto .labelError').removeClass('hidden').find('.mensaje').text('Debe ingresar un campo de detalle.'); }
+	else{
+		var diferencia= 0 - $('#txtLessStockCantidad').val();/*-$('#stockAnterior').val();*/
+		//console.log(diferencia)
+		$.ajax({url:'php/actualizarStockPrecioProducto.php', type: 'POST', data:{idProd: $('#spanStockUpd').text(), nomPro:$('#lessStockNomProducto').text(),  precio: $('#spanPrecioUpd').text() , categoria: $('#spanCategStock').text() , idUser: $.JsonUsuario.idUsuario, cantidad: diferencia, detalle: $('#txtLessStockDetalle').val() }}).done(function (resp) {
+//			console.log(resp)
+			if(resp>0){location.reload();}
 		});
 	}
 });

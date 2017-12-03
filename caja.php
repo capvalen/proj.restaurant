@@ -48,11 +48,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 	<!-- Sidebar -->
 	<div id="sidebar-wrapper">
 		<ul class="sidebar-nav">
-				<div class="sidebar-brand ocultar-mostrar-menu" >
-						<a href="#">
-								Control Panel
-						</a>
-				</div>
+				
 				<div class="logoEmpresa ocultar-mostrar-menu">
 					<img class="img-responsive" src="images/empresa.png" alt="">
 				</div>
@@ -505,6 +501,8 @@ $('#txtCuantoPagaCliente').keypress(function (e) {
 	if (e.keyCode == 13) { 	$('#btbSalvarVenta').click(); }
 })
 $('#btnCancelarPedido').click(function () {
+	$('#txtRazonAnular').val('');
+	$('#chkReglas:checked').val('')
 	$('.modal-deseasAnular').modal('show');
 });
 $('body').on('click', '.btnRemoverProducto',function () {

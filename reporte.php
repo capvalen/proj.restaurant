@@ -45,11 +45,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 	<!-- Sidebar -->
 	<div id="sidebar-wrapper">
 		<ul class="sidebar-nav">
-				<div class="sidebar-brand ocultar-mostrar-menu" >
-						<a href="#">
-								Control Panel
-						</a>
-				</div>
+				
 				<div class="logoEmpresa ocultar-mostrar-menu">
 					<img class="img-responsive" src="images/empresa.png" alt="">
 				</div>
@@ -136,10 +132,10 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 			<div class="row">
 				<div class="col-lg-12 contenedorDeslizable">
 				<!-- Empieza a meter contenido principal dentro de estas etiquetas -->
-				 <h2 class="purple-text text-lighten-1"><i class="icofont icofont-options"></i> Reportería</h2>
+				 <h2 class="purple-text text-lighten-1"><i class="icofont icofont-options"></i> Reportes</h2>
 
 					<ul class="nav nav-tabs">
-					<li class="active"><a href="#tabAgregarLabo" data-toggle="tab">Resumen de ventas en caja</a></li>
+					<li class="active"><a href="#tabAgregarLabo" data-toggle="tab">Resumen</a></li>
 					<li class="hidden"><a href="#tabCambiarPassUser" data-toggle="tab">Cambiar contraseña</a></li>
 					
 					</ul>
@@ -213,12 +209,23 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 										</table>
 									</div>
 									<div class="tab-pane fade container-fluid" id="tabVerPorProducto">
-										<table class="table table-hover">
+										<table class="table table-hover" id="tablaProductoCantidad">
 											<thead>
 											<tr>
 												<th>Cantidad</th>
 												<th>Producto</th>
 												<th>SubTotal</th>
+											</tr>
+											</thead>
+											<tbody>
+											</tbody>
+										</table>
+										<table class="table table-hover" id="tablaReducidoStock">
+											<thead>
+											<tr>
+												<th>Cantidad Menos</th>
+												<th>Productos descartados en stock</th>
+												<th>Motivo</th>
 											</tr>
 											</thead>
 											<tbody>
@@ -449,19 +456,33 @@ function cajaPorProducto() {
 		if(maxElem>0){
 			$.each(JSON.parse(resp), function (i, elem) {
 			sumConjunto+=parseFloat(elem.dineroIngeso);
-			$('#tabVerPorProducto tbody').append(`<tr>
+			$('#tablaProductoCantidad tbody').append(`<tr>
 					<td>${elem.Qproduct}</td>
 					<td class="mayuscula">${elem.prodDescripcion}</td>
 					<td>${parseFloat(elem.dineroIngeso).toFixed(2)}</td>
 				  </tr>`);
 			if(maxElem-1==i){
-				$('#tabVerPorProducto tbody').append(`<tr>
+				$('#tablaProductoCantidad tbody').append(`<tr>
 					<td colspan="3"> <strong class="pull-right" style="padding-right: 100px;">Suma Total: S/. ${sumConjunto.toFixed(2)}</strong></td>
 					</tr>`); }
 			});
 		}else{
-			$('#tabVerPorProducto tbody').append(`<tr><td class="">No se encontraron datos para ésta fecha</td></tr>`);
+			$('#tablaProductoCantidad tbody').append(`<tr><td class="">No se encontraron datos para ésta fecha</td></tr>`);
 		}
+	});
+	$.ajax({url: 'php/reporteProductosMenosStock.php', type: 'POST', data: {fechaIni:iniciofecha, fechaFin:finFecha}}).done(function (resp2) {
+		//console.log(resp2)
+		var maxElem=JSON.parse(resp2).length;
+		if(maxElem>0){
+			$.each(JSON.parse(resp2), function (i, elemStk) {
+				$('#tablaReducidoStock tbody').append(`<tr>
+					<td>${elemStk.stdCantidad}</td>
+					<td class="mayuscula">${elemStk.prodDescripcion}</td>
+					<td class="mayuscula">${elemStk.stdDetalle}</td>
+				  </tr>`);
+			});}else{
+				$('#tablaReducidoStock tbody').append(`<tr><td class="">No se encontraron datos en ésta fecha</td></tr>`);
+			}
 	});
 }
 function cajaPorBebidas() {
