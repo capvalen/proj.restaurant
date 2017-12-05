@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (isset($_SESSION['idUsuario'])){
-	if($_SESSION['Power']==3){header("Location:pedido.php");}
+	if($_SESSION['Power']==3){header("Location:pedidos.php");}
 	if($_SESSION['Power']==2){header("Location:caja.php");}
 	if($_SESSION['Power']==1){header("Location:principal.php");}
 }
@@ -49,7 +49,7 @@ display: inline-block!important;
 margin-left: -25px; opacity: 0.5}
 </style>
 <main class="noselect">
-	<div class="row">
+	<div class="container-fluid">
 		<div class="col-md-12">
 			<div class="wello login-box" style="color:#7956C1" >
 				<div class="row">
