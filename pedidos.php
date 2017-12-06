@@ -28,7 +28,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 	
 
 	<div class="row" id="divMesas">
-		<div class="container-fluid  text-center" ><h2 style="color: #442e9e; display: inline-block;"><i class="icofont icofont-fast-food"></i> Pedidos en Casa de Barro <small class="mayuscula">- <?php echo $_SESSION['Atiende']; ?></small></h2>
+		<div class="container-fluid  text-center" ><h2 style="color: #442e9e; display: inline-block;"><i class="icofont icofont-waiter-alt"></i> Pedidos en Casa de Barro <small class="mayuscula">- <?php echo $_SESSION['Atiende']; ?></small></h2>
 		</div>
 		<div class=" container-fluid ">
 			<button style="margin-top: 20px; margin-right: 10px;" class="btn btn-success btn-outline pull-left" id="btnActualizarMesas2"><i class="icofont icofont-refresh"></i> Actualizar mesas</button>
@@ -237,10 +237,11 @@ $('.btnMesa').click(function () {
 		$.ajax({url:'php/listarPedidoMesaOcupada.php', type: 'POST', data: {mesa: idMesa}}).done(function (resp) {
 //		console.log(resp);
 
-		$.each(JSON.parse(resp), function (i, dato) { console.log(dato)
+		$.each(JSON.parse(resp), function (i, dato) { //console.log(dato)
+			
 			$('#txtObsCocina').val(dato.observacCocina);
 			$('#txtObsbarra').val(dato.observacBar);
-			$('#regMesaCliente .panel-body').append(`<div class="row divUnSoloProducto guardado" id="${dato.idProducto}"><div class="col-xs-7"><button class="btn btn-success btn-circle btn-NoLine btn-outline" id="${dato.idProducto}"><i class="icofont icofont-check"></i></button> <h4 class="h4NombreProducto mayuscula" id="${dato.idProducto}">${dato.prodDescripcion}</h4> <span class="prodNota">${dato.pedNota}</span></div><div class="col-xs-3"> <button class="btn btn-warning btn-circle btn-NoLine btnRestarProducto hidden"><i class="icofont icofont-minus-circle"></i></button> <span class="cantidadProducto">${dato.pedCantidad}</span> <button class="btn btn-warning btn-circle btn-NoLine btnSumarProducto"><i class="icofont icofont-plus-circle"></i></button> <span class="cantAnteriorProd hidden">${dato.pedCantidad}</span></div><div class="col-xs-2"><h5 class="h4precioProducto"><span class="valorUndProducto sr-only">${dato.prodPrecio}</span>S/. <span class="valorTotalProducto">${parseFloat(dato.subTotal).toFixed(2)}</span></h5></div></div>`);
+			$('#regMesaCliente .panel-body').append(`<div class="row divUnSoloProducto guardado" id="${dato.idProducto}"><div class="col-xs-7"><button class="btn btn-success btn-circle btn-NoLine btn-outline" id="${dato.idProducto}"><i class="icofont icofont-check"></i></button> <h4 class="h4NombreProducto ${dato.tpDivBebidaCocina} mayuscula" id="${dato.idProducto}">${dato.prodDescripcion}</h4> <span class="prodNota">${dato.pedNota}</span></div><div class="col-xs-3"> <button class="btn btn-warning btn-circle btn-NoLine btnRestarProducto hidden"><i class="icofont icofont-minus-circle"></i></button> <span class="cantidadProducto">${dato.pedCantidad}</span> <button class="btn btn-warning btn-circle btn-NoLine btnSumarProducto"><i class="icofont icofont-plus-circle"></i></button> <span class="cantAnteriorProd hidden">${dato.pedCantidad}</span></div><div class="col-xs-2"><h5 class="h4precioProducto"><span class="valorUndProducto sr-only">${dato.prodPrecio}</span>S/. <span class="valorTotalProducto">${parseFloat(dato.subTotal).toFixed(2)}</span></h5></div></div>`);
 			cantRes=parseInt($(`.${dato.tpNombreWeb}`).find('.platoResValor').text())+1;
 			$(`.${dato.tpNombreWeb}`).find('.platoResValor').text(cantRes);
 
@@ -539,7 +540,7 @@ $('#regMesaCliente').on('click','.divUnSoloProducto',function () {
 	$('#txtNotaProducto').text(contenedor.find('.h4NombreProducto').text());
 	$('#notaIdProviene').text(contenedor.attr('id'));
 	$('#pnlObsOcult').removeClass('hidden');
-	$('#txtObsNotaEscrita').val('');
+	$('#txtObsNotaEscrita').val(contenedor.find('.prodNota').text());
 });
 $('#txtObsNotaEscrita').keyup(function () {
 	$('#listMesaCliente #'+$('#notaIdProviene').text()).find('.prodNota').text($('#txtObsNotaEscrita').val());

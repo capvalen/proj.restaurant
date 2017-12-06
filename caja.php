@@ -24,9 +24,9 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 		<link href="css/bootstrap.css" rel="stylesheet">
 
 		<!-- Custom CSS -->
-		<link href="css/estilosElementosv2.css?version=1.0.4" rel="stylesheet">
+		<link href="css/estilosElementosv2.css?version=1.0.6" rel="stylesheet">
 		<link href="css/sidebarDeslizable.css?version=1.0.1" rel="stylesheet">
-		<link rel="stylesheet" href="css/cssBarraTop.css?version=1.0.1">
+		<link rel="stylesheet" href="css/cssBarraTop.css?version=1.0.4">
 		<link rel="stylesheet" href="css/icofont.css">
 		<link rel="stylesheet" href="css/animate.css">
 		<link rel="stylesheet" href="css/snack.css?version=1.0.5">
@@ -56,16 +56,16 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 						<a href="principal.php"><i class="icofont icofont-space-shuttle"></i> Inicio</a>
 				</li>
 				<li>
-						<a href="productos.php"><i class="icofont icofont-washing-machine"></i> Productos</a>
+						<a href="productos.php"><i class="icofont icofont-restaurant-menu"></i> Productos Carta</a>
 				</li>
 				<li>
 						<a href="pedidos.php"><i class="icofont icofont-fork-and-knife"></i> Pedidos</a>
 				</li>
 				<li class="active">
-						<a href="caja.php"><i class="icofont icofont-cart"></i> Cobrar</a>
+						<a href="caja.php"><i class="icofont icofont-cart-alt"></i> Cobrar</a>
 				</li>
 				<li>
-						<a href="ventas.php"><i class="icofont icofont-cart"></i> Cuadrar caja</a>
+						<a href="ventas.php"><i class="icofont icofont-calculator-alt-1"></i> Cuadrar caja</a>
 				</li>
 				<li>
 						<a href="#!" id="aGastoExtra"><i class="icofont icofont-ui-rate-remove"></i> Gasto extra</a>
@@ -131,7 +131,10 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 			<div class="row">
 				<div class="col-lg-12 contenedorDeslizable">
 				<!-- Empieza a meter contenido principal dentro de estas etiquetas -->
-				 <h2 class="purple-text text-lighten-1" style=" display: inline-block;"><i class="icofont icofont-lens"></i> Cobro en caja - Casa de Barro <small class="deep-purple-text text-darken-4"><i class="icofont icofont-cube"></i> Libre</small> <small class="red-text text-darken-2"><i class="icofont icofont-cube"></i> Ocupado</small></h2> <button class="btn btn-success btn-lg btn-outline pull-right" id="btnObtenerEstadoMesas"><i class="icofont icofont-spoon-and-fork"></i> Actualizar estado de mesas</button> <button class="btn btn-success btn-lg btn-outline pull-right hidden" id="btnRegresarAMesas"><i class="icofont icofont-spoon-and-fork"></i> Regresar a mesas</button>
+				 <div class="row container-fluid">
+				 	<h2 class="purple-text text-lighten-1" style=" display: inline-block;"><i class="icofont icofont-lens"></i> Cobro en caja - Casa de Barro <small class="deep-purple-text text-darken-4"><i class="icofont icofont-cube"></i> Libre</small> <small class="red-text text-darken-2"><i class="icofont icofont-cube"></i> Ocupado</small></h2> <button class="btn btn-success btn-lg btn-outline pull-right" id="btnObtenerEstadoMesas"><i class="icofont icofont-spoon-and-fork"></i> Actualizar mesas</button> <button class="btn btn-success btn-lg btn-outline pull-right hidden" id="btnRegresarAMesas"><i class="icofont icofont-spoon-and-fork"></i> Regresar a mesas</button>
+				 	<button class="btn btn-warning btn-lg btn-outline pull-right" id="btnVerTickets" style="margin-right: 10px"><i class="icofont icofont-ui-copy"></i> Ver últimos tickets</button>
+				 </div>
 				<div class="row divMesas "> <span class="hidden" id="spanTipoCliente"></span>
 					<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="1"><i class="icofont icofont-food-cart"></i> Mesa 1</button></div>
 					<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="2"><i class="icofont icofont-food-cart"></i> Mesa 2</button></div>
@@ -211,6 +214,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 				<button class="btn btn-success btn-lg btn-outline btn-block" id="btnCobrarCliente"><i class="icofont icofont-money-bag"></i> Cobrar</button>
 				<button class="btn btn-warning btn-lg btn-outline btn-block" id="btnCajaAgregarProducto"><i class="icofont icofont-bbq"></i> Agregar producto</button>
 				<button class="btn btn-danger btn-lg btn-outline btn-block" id="btnCancelarPedido"><i class="icofont icofont-close-circled"></i> Cancelar pedido</button>
+				<button class="btn btn-primary btn-lg btn-outline btn-block" id="btnMoverPedido"><i class="icofont icofont-paper"></i> Mover mesa</button>
 			</div>
 		</div>
 					<!-- Fin de meter contenido principal -->
@@ -345,6 +349,50 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 </div>
 </div>
 
+<!-- Modal para ver los ultimos tickets -->
+<div class="modal fade modal-ver10Tickets noselect" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+<div class="modal-dialog modal-sm"  role="document">
+	<div class="modal-content">
+		<div class="modal-header-morado">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<h4 class="modal-title" id="myModalLabel"><i class="icofont icofont-help-robot"></i> Ver 10 últimos tickets</h4>
+		</div>
+		<div class="modal-body">
+			<?php include 'php/listar10UltimosPedidos.php'; ?>
+			<!-- <p> <span>11.35 am</span> <strong>Mesa 1: </strong> <span>S/. 50.20</span> <button class="btn btn-sm btn-morado btn-outline"><i class="icofont icofont-print"></i></button></p> -->
+
+		</div>
+		<div class="modal-footer">
+			<button class="btn btn-morado btn-outline" data-dismiss="modal"  ><i class="icofont icofont-social-meetme"></i> Aceptar</button>
+		</div>
+	
+
+	</div>
+</div>
+</div>
+
+<!-- Modal para mover de mesa a un pedido -->
+<div class="modal fade modal-moverMesa noselect" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+<div class="modal-dialog modal-sm"  role="document">
+	<div class="modal-content">
+		<div class="modal-header-morado">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<h4 class="modal-title" id="myModalLabel"><i class="icofont icofont-help-robot"></i> Mover pedido</h4>
+		</div>
+		<div class="modal-body">
+			<label for="">Ingrese ¿a qué mesa debe ir el pedido?</label>
+			<input type="number" class="form-control text-center" id="txtDestinoDeMesa">
+			<label class="text-danger text-center labelError hidden" for=""><i class="icofont icofont-animal-squirrel"></i> Lo siento! <span class=mensaje></span></label>
+		</div>
+		<div class="modal-footer">
+			<button class="btn btn-morado btn-outline" id="btnMoverMesa" ><i class="icofont icofont-social-meetme"></i> Mover</button>
+		</div>
+	
+
+	</div>
+</div>
+</div>
+
 <!-- Modal para buscar un producto -->
 <div class="modal fade modal-buscarProducto noselect" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
 <div class="modal-dialog"  role="document">
@@ -447,9 +495,9 @@ $('#btnObtenerEstadoMesas').click(function () {
 		//console.log(resp)
 		$.each(JSON.parse(resp), function (i, dato) {// console.log(dato)
 			if(dato.estadoMesa=='mesaOcupado'){
-				$(`#${dato.idMesa}`).removeClass('mesaLibre').removeClass('btn-morado').addClass(`${dato.estadoMesa}`).addClass('btn-rojoFresa');
+				$(`#${dato.idMesa}`).removeClass('mesaLibre').removeClass('btn-morado').addClass(`${dato.estadoMesa}`).addClass('btn-rojoFresa').find('i').removeClass('icofont-food-cart').addClass('icofont-read-book-alt');
 			}else{
-				$(`#${dato.idMesa}`).removeClass('mesaOcupado').removeClass('btn-rojoFresa').addClass(`${dato.estadoMesa}`).addClass('btn-morado');
+				$(`#${dato.idMesa}`).removeClass('mesaOcupado').removeClass('btn-rojoFresa').addClass(`${dato.estadoMesa}`).addClass('btn-morado').find('i').removeClass('icofont-read-book-alt').addClass('icofont-food-cart');;
 			}
 		});
 	});
@@ -535,6 +583,9 @@ $('#btnCobrarCliente').click(function () {
 });
 $('.modal-finalizarPedidoAVenta').on('shown.bs.modal', function() {
 	$('#txtCuantoPagaCliente').focus();
+});
+$('.modal-moverMesa').on('shown.bs.modal', function() {
+	$('#txtDestinoDeMesa').val('').focus();
 });
 $('#btnClienteEspecial').click(function(){
 	$('#queMesaEsSpan').text($('#idMesaSpan').text())
@@ -745,7 +796,7 @@ $('.modal-buscarProducto').on('click', '.btnAgregarProducto', function () {
 	var preccio=parseFloat(contenedor.find('.valorProducto').text());
 	if($('.contanedorDivsProductos').find('#'+idProd).html()==null){
 		$('.contanedorDivsProductos').append(`<div class="divUnSoloProducto row"><div class="col-xs-7"><button class="btn btn-danger btn-circle btn-NoLine btn-outline btnRemoverProducto" id="${idProd}"><i class="icofont icofont-close"></i></button> <h4 class="h4NombreProducto mayuscula" id="${idProd}">${contenedor.find('.h4NombreProducto').text()}</h4> </div><div class="col-xs-3"><button class="btn btn-warning btn-circle btn-NoLine btnRestarProducto"><i class="icofont icofont-minus-circle"></i></button> <span class="cantidadProducto">1</span> <button class="btn btn-warning btn-circle btn-NoLine btnSumarProducto"><i class="icofont icofont-plus-circle"></i></button></div><div class="col-xs-2"><h5 class="h4precioProducto"><span class="valorUndProducto sr-only">${preccio.toFixed(2)}</span>S/. <span class="valorTotalProducto">${preccio.toFixed(2)}</span></h5></div></div>`);
-		$.ajax({url: 'php/insertarPedidoDetalle.php', type:'POST', data:{idProd:idProd ,  precio:preccio, cantidad:1,  idPedido: $('#idPedidoMesa').text() }}).done(function (resp) { console.log(resp)
+		$.ajax({url: 'php/insertarPedidoDetalle.php', type:'POST', data:{idProd:idProd ,  precio:preccio, cantidad:1,  idPedido: $('#idPedidoMesa').text(), nota: '' }}).done(function (resp) { console.log(resp)
 				var response=JSON.parse(resp)[0];
 				if(response.respuesta=='Y'){
 					var cant=1;
@@ -775,6 +826,60 @@ $('#btnAnularPedidov2').click(function () {
 		})
 	}
 });
+$('#btnMoverPedido').click(function () {
+	$('.modal-moverMesa').modal('show');
+});
+$('#txtDestinoDeMesa').keypress(function (e) {
+	if (e.keyCode == 13){$('#btnMoverMesa').click();}
+});
+$('#btnMoverMesa').click(function () {
+	if( $('#txtDestinoDeMesa').val()<=0 || $('#txtDestinoDeMesa').val()>40 || $('#txtDestinoDeMesa').val()=='' ){
+		$('.modal-moverMesa .labelError').removeClass('hidden').find('.mensaje').text('Ingrese una mesa en el rango de 1 a 40.');
+	}
+	else if($('#txtDestinoDeMesa').val()==$('#idMesaSpan').text()){
+		$('.modal-moverMesa .labelError').removeClass('hidden').find('.mensaje').text('El pedido ya se encuentra en ésta mesa.');
+	}
+	else{
+		$.ajax({url: 'php/updateMoverMesa.php', type: 'POST', data: {mesaAnt: $('#idMesaSpan').text(), mesaNuevo: $('#txtDestinoDeMesa').val()}}).done(function (data) {
+			if(parseInt(data)>0){
+				$('.modal-moverMesa').modal('hide');
+				$('#btnRegresarAMesas').click();
+			}
+		});
+		$('.modal-moverMesa .labelError').addClass('hidden');
+	}
+});
+$('#btnVerTickets').click(function () {
+	$('.modal-ver10Tickets').modal('show');
+});
+$('.btnReImprimirTicket').click(function () {
+	var iddeMesa=$(this).attr('idMesa');
+	var itemsCocina='', itemsBar='';
+	$.ajax({url:'php/listarPedidoMesaOcupada.php', type: 'POST', data: {mesa: iddeMesa}}).done(function (resp) { 
+		var cantElem=JSON.parse(resp).length;
+		$.each(JSON.parse(resp), function (i, dato) { console.log(dato)
+			if(dato.idProcedencia==2){//se va a bar
+				itemsBar+=' '+dato.pedCantidad +' '+dato.prodDescripcion+'. '+dato.pedNota+"\n";
+			}else{//se va a cocina
+				itemsCocina+=' '+dato.pedCantidad +' '+dato.prodDescripcion+'. '+dato.pedNota+"\n";
+			}
+			if(i==cantElem-1){
+				if(itemsBar.length>0){
+					$.ajax({url:'printTicketBar.php', type:'POST', data: {hora:moment().format('DD [de] MMMM [de] YYYY h:mm a'),numMesa:$('#spanNumMesa').text(), texto:itemsBar, usuario: $.JsonUsuario.usuNombres, obsBarra: '' }}).done(function (resp) {
+				console.log(resp)
+				});
+				}
+				if(itemsCocina.length>0){
+					$.ajax({url:'printTicketCocina.php', type:'POST', data: {hora:moment().format('DD [de] MMMM [de] YYYY h:mm a'),numMesa:$('#spanNumMesa').text(), texto:itemsCocina, usuario: $.JsonUsuario.usuNombres, obsCocina: '' }}).done(function (resp) {
+					console.log(resp)
+					});
+				}
+				/*console.log(itemsBar)
+				console.log(itemsCocina)*/
+			}
+		});
+	});
+})
 // SELECT DATE_FORMAT(`cajaFechaRegistro`,'%d/%m/%Y') FROM `caja`
 </script>
 

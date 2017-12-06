@@ -60,16 +60,16 @@ ondragstart="return false" onMouseOver="window.status='..mensaje personal .. '; 
 						<a href="principal.php"><i class="icofont icofont-space-shuttle"></i> Inicio</a>
 				</li>
 				<li>
-						<a href="productos.php"><i class="icofont icofont-washing-machine"></i> Productos</a>
+						<a href="productos.php"><i class="icofont icofont-restaurant-menu"></i> Productos Carta</a>
 				</li>
 				<li>
 						<a href="pedidos.php"><i class="icofont icofont-fork-and-knife"></i> Pedidos</a>
 				</li>
 				<li>
-						<a href="caja.php"><i class="icofont icofont-cart"></i> Cobrar</a>
+						<a href="caja.php"><i class="icofont icofont-cart-alt"></i> Cobrar</a>
 				</li>
 				<li class="active">
-						<a href="ventas.php"><i class="icofont icofont-cart"></i> Cuadrar caja</a>
+						<a href="ventas.php"><i class="icofont icofont-calculator-alt-1"></i> Cuadrar caja</a>
 				</li>
 				<li>
 						<a href="#!" id="aGastoExtra"><i class="icofont icofont-ui-rate-remove"></i> Gasto extra</a>
