@@ -201,13 +201,13 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 				<input type="number" class="form-control mayuscula text-center esMoneda" id="txtModalPrecioadd" value="0" min=0 step=1 >
 				<label for="">Categoría:</label>
 				<div  id="divSelectProductoListNew">
-					<select class="selectpicker mayuscula" title="Producto..."  data-width="100%" data-live-search="true"">
+					<select class="selectpicker mayuscula" title="Producto..."  data-width="100%" data-live-search="true">
 						<?php require 'php/listarProductosCategoriaOption.php'; ?>
 					</select>
 				</div>
 				<label for="">Procedencia:</label>
 				<div  id="divSelectProcedenciaListNew">
-					<select class="selectpicker mayuscula" title="Procedencia..."  data-width="100%" data-live-search="true"">
+					<select class="selectpicker mayuscula" title="Procedencia..."  data-width="100%" data-live-search="true">
 						<option class="optProducto mayuscula" data-tokens="1">Cocina</option>
 						<option class="optProducto mayuscula" data-tokens="2">Bar</option>
 					</select>
@@ -243,7 +243,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 					<label for="">Categoría:</label> <input type="text" class="form-control text-center mayuscula" id="txtModalNomCategUpd">
 					<label for="">Procedencia:</label>
 					<div  id="divSelectProcedenciaUpdCateg">
-						<select class="selectpicker mayuscula" title="Procedencia..."  data-width="100%" data-live-search="true"">
+						<select class="selectpicker mayuscula" title="Procedencia..."  data-width="100%" data-live-search="true">
 							<option class="optProducto mayuscula" data-tokens="1">Cocina</option>
 							<option class="optProducto mayuscula" data-tokens="2">Bar</option>
 						</select>
@@ -329,7 +329,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 				<input type="text" class="form-control" id="txtCateDetalle">
 				<label for="">Procedencia:</label>
 				<div  id="divSelectProcedenciaAddCategv2">
-					<select class="selectpicker mayuscula" title="Procedencia..."  data-width="100%" data-live-search="true"">
+					<select class="selectpicker mayuscula" title="Procedencia..."  data-width="100%" data-live-search="true">
 						<option class="optProducto mayuscula" data-tokens="1">Cocina</option>
 						<option class="optProducto mayuscula" data-tokens="2">Bar</option>
 					</select>

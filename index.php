@@ -15,10 +15,10 @@ if (isset($_SESSION['idUsuario'])){
 	
 	<link href="css/bootstrap.min.css" rel="stylesheet">
 	<link href="css/inicio.css?version=1.0" rel="stylesheet">
-	<link href="css/animate.css" rel="stylesheet">
+	<!-- <link href="css/animate.css" rel="stylesheet"> -->
 	<title>Bienvenido: Infocat Snack</title>
 	<link rel="shortcut icon" href="images/peto.png" />
-	<link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
+	<!-- <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet"> -->
 
 
 </head>
@@ -77,7 +77,7 @@ if (isset($_SESSION['idUsuario'])){
 			$('#txtUser_grifo').val('');
 			$('#txtPassw').val('');
 			$('#txtUser_grifo').focus();
-			$('.wello').addClass('animated bounceIn');
+			// $('.wello').addClass('animated bounceIn');
 			$('.fa-spin').addClass('sr-only');
 			//$('body').css("background-image", "url(images/fondo.jpg)");		
 		});
