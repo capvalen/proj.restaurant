@@ -217,25 +217,35 @@ $('input').keypress(function (e) {
 });//Fin de document ready
 
 $('#btnImprimirCuadreCaja').click(function () {
-	var vConEgresos= parseFloat($('#spanGastosFinal').text());
-	var vConIngresos= parseFloat($('#spanEntradasFinal').text());
-	var vConVisa= parseFloat($('#spanCuadreVisa').text());
-	var vConMaster= parseFloat($('#spanCuadreMaster').text());
-	var vConEfe= parseFloat($('#spanCuadreEfec').text());
-	var vConTotal= vConIngresos+ vConVisa + vConMaster +vConEfe-vConEgresos;
-	/*console.log(vConTotal.toFixed(2))*/
-	moment.locale('es');
+	$.ajax({url:'php/solicitarSumaMesasOcupadas.php', type:'POST'}).done(function (resp) { console.log(resp)
+	if(resp!=-1){
+		if(resp==0){
+			$('.modal-faltaCompletar #lblFalta').text('Lo sentimos tiene mesas pendientes por cerrar. Ud podrá cerrar caja una vez que haya finalizado todas las mensas.');
+			$('.modal-faltaCompletar').modal('show');
+		}else{
+			var vConEgresos= parseFloat($('#spanGastosFinal').text());
+			var vConIngresos= parseFloat($('#spanEntradasFinal').text());
+			var vConVisa= parseFloat($('#spanCuadreVisa').text());
+			var vConMaster= parseFloat($('#spanCuadreMaster').text());
+			var vConEfe= parseFloat($('#spanCuadreEfec').text());
+			var vConTotal= vConIngresos+ vConVisa + vConMaster +vConEfe-vConEgresos;
+			
+			moment.locale('es');
 
-	$.ajax({url: 'printTicketCuadre.php', type: 'POST', data: {
-		hora: moment().format('dddd DD/MM/YYYY h:m a'),
-		conEgresos: vConEgresos.toFixed(2),
-		conIngresos: vConIngresos.toFixed(2),
-		conVisa: vConVisa.toFixed(2),
-		conMaster: vConMaster.toFixed(2),
-		conEfe: vConEfe.toFixed(2),
-		conTotal: vConTotal.toFixed(2),
-		usuario: $.JsonUsuario.usuNombres
-	} });
+			$.ajax({url: 'printTicketCuadre.php', type: 'POST', data: {
+				hora: moment().format('dddd DD/MM/YYYY h:m a'),
+				conEgresos: vConEgresos.toFixed(2),
+				conIngresos: vConIngresos.toFixed(2),
+				conVisa: vConVisa.toFixed(2),
+				conMaster: vConMaster.toFixed(2),
+				conEfe: vConEfe.toFixed(2),
+				conTotal: vConTotal.toFixed(2),
+				usuario: $.JsonUsuario.usuNombres
+			} });
+		}
+	}
+});
+	
 });
 
 // SELECT DATE_FORMAT(`cajaFechaRegistro`,'%d/%m/%Y') FROM `caja`
