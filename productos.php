@@ -18,7 +18,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 		<meta name="description" content="">
 		<meta name="author" content="">
 
-		<title>Inicio: Infocat Snack</title>
+		<title>Productos: Infocat Snack</title>
 
 		<!-- Bootstrap Core CSS -->
 		<link href="css/bootstrap.css" rel="stylesheet">

@@ -18,7 +18,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 		<meta name="description" content="">
 		<meta name="author" content="">
 
-		<title>Inicio: Infocat Snack</title>
+		<title>Reporte: Infocat Snack</title>
 
 		<!-- Bootstrap Core CSS -->
 		<link href="css/bootstrap.css" rel="stylesheet">
@@ -146,6 +146,9 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 						<div class="tab-pane fade in active container-fluid" id="tabAgregarLabo">
 						<!--Inicio de pestaña 01-->
 							<div class="row">
+								
+							</div>
+							<div class="row">
 								<p>Seleccione dos fechas para filtrar por favor:</p>
 								
 								<div class="col-xs-6">
@@ -156,6 +159,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 									<input type="text" class="input-sm form-control" id="inputFechaFin" name="end" />
 									</div>
 									</div>
+									<button class="btn btn-success btn-outline" id="btnGenerarExcel"><i class="icofont icofont-file-text"></i> Generar archivo excel</button>
 								</div>
 								<div class="col-xs-2 hidden">
 									<button class="btn btn-success btn-outline" id="btnFiltarFechas"><i class="icofont icofont-search-alt-1"></i> Filtrar</button>
@@ -169,6 +173,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 									<li><a href="#tabVerPorProducto" data-toggle="tab">Por productos</a></li>
 									<li><a href="#tabVerPorBebida" data-toggle="tab">Por bebidas</a></li>
 									<li><a href="#tabVerPorDetalle" data-toggle="tab">Detallado</a></li>
+									<li><a href="#tabVerPorKardexProdu" data-toggle="tab">Kardex productos</a></li>
 								</ul>
 								<div class="tab-content">
 									<div class="tab-pane fade container-fluid" id="tabVerPorUsuario">
@@ -259,6 +264,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 											</tbody>
 										</table>
 									</div>
+									<div class="tab-pane fade container-fluid" id="tabVerPorKardexProdu"></div>
 								</div>
 							</div>
 							<!-- <p>Fecha generada: <strong><span id="spanFechaLetra"></span></strong></p>
@@ -565,6 +571,19 @@ function cajaPorDetalle() {
 	});
 }
 
+$('#btnGenerarExcel').click(function () {
+	if($('#inputFechaInicio').val()!='' ){
+		var inicNomb=$('#inputFechaInicio').val().replace(/\//g, '-');
+		var finNomb=$('#inputFechaFin').val().replace(/\//g, '-');
+		var inputs = '<input type="hidden" name="nombreArchivo" value="Reporte_'+inicNomb+'_hasta_'+$('#inputFechaFin').val()+'" />';
+		inputs+= '<input type="hidden" name="fechaIni" value="'+$('#inputFechaInicio').val()+'" />';
+		inputs+= '<input type="hidden" name="fechaFin" value="'+$('#inputFechaFin').val()+'" />';
+		inputs+= '<input type="hidden" name="hoy" value="'+moment().format('DD/MM/YYYY h:m a')+'" />';
+		$("body").append('<form action="generarExcel.php" method="post" id="poster">'+inputs+'</form>');
+	    $("#poster").submit();
+	    $('#poster').remove();
+	}
+});
 </script>
 
 </body>
