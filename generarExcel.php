@@ -34,7 +34,7 @@ $objPHPExcel = new PHPExcel();
 $objPHPExcel->getProperties()->setCreator("Infocat Soluciones SAC")
 							 ->setLastModifiedBy("Casa de barro")
 							 ->setTitle("Resumen de ventas")
-							 ->setDescription("Autogenerado por Info-Snack");
+							 ->setDescription("Generado por Info-Snack");
 
 
 // agregando datos a la hoja 0
