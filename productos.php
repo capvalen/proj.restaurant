@@ -206,6 +206,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 					<select class="selectpicker mayuscula" title="Procedencia..."  data-width="100%" data-live-search="true">
 						<option class="optProducto mayuscula" data-tokens="1">Cocina</option>
 						<option class="optProducto mayuscula" data-tokens="2">Bar</option>
+						<option class="optProducto mayuscula" data-tokens="3">Almacén</option>
 					</select>
 				</div>
 			</div>
@@ -357,6 +358,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 					<select class="selectpicker mayuscula" title="Procedencia..."  data-width="100%" data-live-search="true">
 						<option class="optProducto mayuscula" data-tokens="1">Cocina</option>
 						<option class="optProducto mayuscula" data-tokens="2">Bar</option>
+						<option class="optProducto mayuscula" data-tokens="3">Almacén</option>
 					</select>
 				</div>
 			</div>

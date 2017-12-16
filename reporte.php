@@ -173,6 +173,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 									<li><a href="#tabVerPorProducto" data-toggle="tab">Por productos</a></li>
 									<li><a href="#tabVerPorBebida" data-toggle="tab">Por bebidas</a></li>
 									<li><a href="#tabVerPorDetalle" data-toggle="tab">Detallado</a></li>
+									<li><a href="#tabVerPorAlmacen" data-toggle="tab">Almacén</a></li>
 									<li><a href="#tabVerPorKardexProdu" data-toggle="tab">Kardex productos</a></li>
 								</ul>
 								<div class="tab-content">
@@ -264,7 +265,32 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 											</tbody>
 										</table>
 									</div>
-									<div class="tab-pane fade container-fluid" id="tabVerPorKardexProdu"></div>
+									<div class="tab-pane fade container-fluid" id="tabVerPorAlmacen">
+										<table class="table table-hover">
+											<thead>
+											<tr>
+												<th>Detalle</th>
+												<th>Pedido</th>
+												<th>Cantidad</th>
+											</tr>
+											</thead>
+											<tbody>
+											</tbody>
+										</table>
+									</div>
+									<div class="tab-pane fade container-fluid" id="tabVerPorKardexProdu">
+										<table class="table table-hover">
+											<thead>
+											<tr>
+												<th>Detalle</th>
+												<th>Pedido</th>
+												<th>Cantidad</th>
+											</tr>
+											</thead>
+											<tbody>
+											</tbody>
+										</table>
+									</div>
 								</div>
 							</div>
 							<!-- <p>Fecha generada: <strong><span id="spanFechaLetra"></span></strong></p>
@@ -383,6 +409,8 @@ if(target=='#tabVerPorMesa'){ cajaPorMesa(); }
 if(target=='#tabVerPorProducto'){ cajaPorProducto(); }
 if(target=='#tabVerPorBebida'){ cajaPorBebidas(); }
 if(target=='#tabVerPorDetalle'){ cajaPorDetalle(); }
+if(target=='#tabVerPorAlmacen'){ cajaPorAlmacen(); }
+if(target=='#tabVerPorKardexProdu'){ cajaPorKardex(); }
 });
 
 function cajaPorUser() {
@@ -567,6 +595,48 @@ function cajaPorDetalle() {
 			});
 		}else{
 			$('#tabVerPorDetalle tbody').append(`<tr><td class="">No se encontraron datos para ésta fecha</td></tr>`);
+		}
+	});
+}
+function cajaPorAlmacen() {
+	var sumConjunto=0;
+	var iniciofecha = $('#inputFechaInicio').val();
+	var finFecha= $('#inputFechaFin').val();
+	$('#tabVerPorAlmacen tbody').children().remove();
+	$.ajax({url:'php/reporteCajaPorAlmacen.php', type: 'POST', data: {fechaIni:iniciofecha, fechaFin:finFecha}}).done(function (resp) {
+		var maxElem=JSON.parse(resp).length;
+		if(maxElem>0){
+			$.each(JSON.parse(resp), function (i, elem) {
+			sumConjunto+=parseFloat(elem.dineroIngeso);
+			$('#tabVerPorAlmacen tbody').append(`<tr>
+					<td class="mayuscula">${elem.prodDescripcion}</td>
+					<td class="mayuscula">${elem.tpDescripcion}</td>
+					<td>${elem.Qproduct}</td>
+				  </tr>`);
+			});
+		}else{
+			$('#tabVerPorAlmacen tbody').append(`<tr><td class="">No se encontraron datos para ésta fecha</td></tr>`);
+		}
+	});
+}
+function cajaPorKardex() {
+	var sumConjunto=0;
+	var iniciofecha = $('#inputFechaInicio').val();
+	var finFecha= $('#inputFechaFin').val();
+	$('#tabVerPorKardexProdu tbody').children().remove();
+	$.ajax({url:'php/reporteKardex.php', type: 'POST', data: {fechaIni:iniciofecha, fechaFin:finFecha}}).done(function (resp) {
+		var maxElem=JSON.parse(resp).length;
+		if(maxElem>0){
+			$.each(JSON.parse(resp), function (i, elem) {
+			sumConjunto+=parseFloat(elem.dineroIngeso);
+			$('#tabVerPorKardexProdu tbody').append(`<tr>
+					<td class="mayuscula">${elem.prodDescripcion}</td>
+					<td class="mayuscula">${elem.tpDescripcion}</td>
+					<td>${elem.Qproduct}</td>
+				  </tr>`);
+			});
+		}else{
+			$('#tabVerPorAlmacen tbody').append(`<tr><td class="">No se encontraron datos para ésta fecha</td></tr>`);
 		}
 	});
 }

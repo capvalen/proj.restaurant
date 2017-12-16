@@ -29,6 +29,15 @@ Ver 1.12
 -  modificado SP: insertarPedidoCabecera
 - ALTER TABLE `pedidodetalle` ADD `pedNota` VARCHAR(200) NOT NULL DEFAULT '' AFTER `pedSubtotal`;
 - Agrego notas por producto
+
+
+Ver 1.13
+INSERT INTO `procedencia` (`idProcedencia`, `procDescripcion`) VALUES ('3', 'Almacén');
+
+Change tipoProducto
+UPDATE `tipoproducto` SET `tpDivBebidaCocina` = 'divAlmacen' WHERE `tipoproducto`.`idTipoProducto` = 23;
+change reporteProductosMenosStock
+add reporteCajaPorAlmacen
  */
  ?>
 

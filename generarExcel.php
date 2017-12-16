@@ -364,6 +364,88 @@ while ($row = $resultado5->fetch_array(MYSQLI_ASSOC))
 $consulta5->fetch();
 $consulta5->close();
 
+
+
+
+// agrega una nueva hoja de calculo
+$objPHPExcel->createSheet();
+// asigna a que hoja debe de insertar
+$objPHPExcel->setActiveSheetIndex(5)
+			->setCellValue('A1', 'REPORTE DE ALMACEN')
+			->setCellValue('A2', 'De: '.$_POST['fechaIni'].' hasta '.$_POST['fechaFin'])
+			->setCellValue('A4', 'CANT.')
+			->setCellValue('B4', 'DETALLE')
+			->setCellValue('C4', 'PRODUCTO')
+			->mergeCells('A1:C1')
+			->mergeCells('A2:C2')
+			->setTitle('Almacen');
+$objPHPExcel->getActiveSheet()->getStyle('A1')->getFont()->setSize(20);
+$objPHPExcel->getActiveSheet()->getStyle('A1:C4')->getFont()->setBold(true);
+$objPHPExcel->getActiveSheet()->getStyle('A4:C4')->getFont()->getColor()->setARGB(PHPExcel_Style_Color::COLOR_WHITE);
+$objPHPExcel->getActiveSheet()->getStyle('A1:C4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+$objPHPExcel->getActiveSheet()->getStyle('A4:C4')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
+$objPHPExcel->getActiveSheet()->getStyle('A4:C4')->getFill()->getStartColor()->setARGB('FF404040');
+//Seteando espaciado a columnas
+$objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(13);
+$objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(17);
+$objPHPExcel->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
+
+$consulta6 = $conection->prepare("call reporteCajaPorAlmacen('".$_POST['fechaIni']."', '".$_POST['fechaFin']."');");
+$consulta6->execute();
+$resultado6 = $consulta6->get_result();
+$i=5;
+
+while ($row = $resultado6->fetch_array(MYSQLI_ASSOC))
+{
+	$objPHPExcel->setActiveSheetIndex(5)->setCellValue('A'.$i, $row['Qproduct']);
+	$objPHPExcel->setActiveSheetIndex(5)->setCellValue('B'.$i, $row['tpDescripcion']);
+	$objPHPExcel->setActiveSheetIndex(5)->setCellValue('C'.$i, ucwords($row['prodDescripcion']));
+	$i++;
+}
+$consulta6->fetch();
+$consulta6->close();
+
+
+
+// agrega una nueva hoja de calculo
+$objPHPExcel->createSheet();
+// asigna a que hoja debe de insertar
+$objPHPExcel->setActiveSheetIndex(6)
+			->setCellValue('A1', 'KARDEX')
+			->setCellValue('A2', 'De: '.$_POST['fechaIni'].' hasta '.$_POST['fechaFin'])
+			->setCellValue('A4', 'CANT.')
+			->setCellValue('B4', 'DETALLE')
+			->setCellValue('C4', 'PRODUCTO')
+			->mergeCells('A1:C1')
+			->mergeCells('A2:C2')
+			->setTitle('Kardex');
+$objPHPExcel->getActiveSheet()->getStyle('A1')->getFont()->setSize(20);
+$objPHPExcel->getActiveSheet()->getStyle('A1:C4')->getFont()->setBold(true);
+$objPHPExcel->getActiveSheet()->getStyle('A4:C4')->getFont()->getColor()->setARGB(PHPExcel_Style_Color::COLOR_WHITE);
+$objPHPExcel->getActiveSheet()->getStyle('A1:C4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+$objPHPExcel->getActiveSheet()->getStyle('A4:C4')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
+$objPHPExcel->getActiveSheet()->getStyle('A4:C4')->getFill()->getStartColor()->setARGB('FF404040');
+//Seteando espaciado a columnas
+$objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(13);
+$objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(17);
+$objPHPExcel->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
+
+$consulta6 = $conection->prepare("call reporteKardex('".$_POST['fechaIni']."', '".$_POST['fechaFin']."');");
+$consulta6->execute();
+$resultado6 = $consulta6->get_result();
+$i=5;
+
+while ($row = $resultado6->fetch_array(MYSQLI_ASSOC))
+{
+	$objPHPExcel->setActiveSheetIndex(6)->setCellValue('A'.$i, $row['Qproduct']);
+	$objPHPExcel->setActiveSheetIndex(6)->setCellValue('B'.$i, $row['tpDescripcion']);
+	$objPHPExcel->setActiveSheetIndex(6)->setCellValue('C'.$i, ucwords($row['prodDescripcion']));
+	$i++;
+}
+$consulta6->fetch();
+$consulta6->close();
+
+
 // elije cual hoja sera la que se habra por defecto
 $objPHPExcel->setActiveSheetIndex(0);
 
