@@ -159,7 +159,7 @@ ondragstart="return false" onMouseOver="window.status='..mensaje personal .. '; 
 					
 				</div>
 		</div>
-</div>
+
 <!-- /#page-content-wrapper -->
 </div><!-- /#wrapper -->
 

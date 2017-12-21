@@ -1,5 +1,6 @@
 <?php
 session_start();
+require 'php/licence.php';
 if (@!$_SESSION['Atiende']){//sino existe enviar a index
 	header("Location:index.php");
 }
@@ -25,9 +26,11 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 </style>
 
 <div class="container-fluid divPrincipal noselect" >
-	
 
-	<div class="row" id="divMesas">
+	<?php 
+	if ($_SESSION['licencia']=='Ok'){ ?>
+		<!-- Contenido para licenciar -->
+		<div class="row" id="divMesas">
 		<div class="container-fluid  text-center" ><h2 style="color: #442e9e; display: inline-block;"><i class="icofont icofont-waiter-alt"></i> Pedidos en Casa de Barro <small class="mayuscula">- <?php echo $_SESSION['Atiende']; ?></small></h2>
 		</div>
 		<div class=" container-fluid ">
@@ -142,6 +145,8 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 	</div>
 	<hr>
 		<p><?php include 'php/version.php' ?>. Desarrollado por: <a href="https://www.facebook.com/infocat.soluciones/"> Infocat Soluciones SAC</a> para <strong>Casa de barro</strong></p>
+	<?php 
+	}else{ include 'php/licenciaDemo.php'; } ?>
 
 
 </div>

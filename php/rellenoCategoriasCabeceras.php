@@ -4,7 +4,7 @@ require("conectkarl.php");
 $info = array('bs-callout-primary', 'bs-callout-success', 'bs-callout-warning');
 $i=0; $color='';
 $sql = mysqli_query($conection,"select tipDescripcion, tpNombreWeb from tipoproducto
-where tpActivo=1 and tpDivBebidaCocina<>'divProdBebida'
+where tpActivo=1 and tpDivBebidaCocina<>'divProdBebida' and tpDivBebidaCocina<>'divAlmacen'
 group by tpdivbebidacocina
 order by tipDescripcion asc");
 

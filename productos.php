@@ -1,5 +1,6 @@
 <?php
 session_start();
+require 'php/licence.php';
 if (@!$_SESSION['Atiende']){//sino existe enviar a index
 	header("Location:index.php");
 }else{
@@ -125,7 +126,9 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 			<div class="row">
 				<div class="col-lg-12 contenedorDeslizable">
 				<!-- Empieza a meter contenido principal dentro de estas etiquetas -->
-				 <h2 class="purple-text text-lighten-1"><i class="icofont icofont-options"></i> Panel de configuraciones generales</h2>
+				 <?php 
+					if ($_SESSION['licencia']=='Ok'){ ?>
+					<h2 class="purple-text text-lighten-1"><i class="icofont icofont-options"></i> Panel de configuraciones generales</h2>
 
 					<ul class="nav nav-tabs">
 					<li class="active"><a href="#tabAgregarLabo" data-toggle="tab">Listado de productos</a></li>
@@ -172,6 +175,8 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 						</div>
 						
 					</div>
+					<?php 
+					}else{ include 'php/licenciaDemo.php'; } ?>
 					<!-- Fin de meter contenido principal -->
 					</div>
 					

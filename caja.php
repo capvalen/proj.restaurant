@@ -1,5 +1,6 @@
 <?php
 session_start();
+require 'php/licence.php';
 if (@!$_SESSION['Atiende']){//sino existe enviar a index
 	header("Location:index.php");
 }else{
@@ -131,7 +132,10 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 			<div class="row">
 				<div class="col-lg-12 contenedorDeslizable">
 				<!-- Empieza a meter contenido principal dentro de estas etiquetas -->
-				 <div class="row container-fluid">
+				 <?php 
+			if ($_SESSION['licencia']=='Ok'){ ?>
+				<!-- Contenido para licenciar -->
+				<div class="row container-fluid">
 				 	<h2 class="purple-text text-lighten-1" style=" display: inline-block;"><i class="icofont icofont-lens"></i> Cobro en caja - Casa de Barro <small class="deep-purple-text text-darken-4"><i class="icofont icofont-cube"></i> Libre</small> <small class="red-text text-darken-2"><i class="icofont icofont-cube"></i> Ocupado</small></h2> <button class="btn btn-success btn-lg btn-outline pull-right" id="btnObtenerEstadoMesas"><i class="icofont icofont-spoon-and-fork"></i> Actualizar mesas</button> <button class="btn btn-success btn-lg btn-outline pull-right hidden" id="btnRegresarAMesas"><i class="icofont icofont-spoon-and-fork"></i> Regresar a mesas</button>
 				 	<button class="btn btn-warning btn-lg btn-outline pull-right" id="btnVerTickets" style="margin-right: 10px"><i class="icofont icofont-ui-copy"></i> Ver últimos tickets</button>
 				 </div>
@@ -217,6 +221,8 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 				<button class="btn btn-primary btn-lg btn-outline btn-block" id="btnMoverPedido"><i class="icofont icofont-paper"></i> Mover mesa</button>
 			</div>
 		</div>
+			<?php 
+			}else{ include 'php/licenciaDemo.php'; } ?>
 					<!-- Fin de meter contenido principal -->
 				</div>
 					
