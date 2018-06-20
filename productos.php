@@ -25,6 +25,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 		<link href="css/bootstrap.css" rel="stylesheet">
 
 		<!-- Custom CSS -->
+		<link rel="shortcut icon" href="images/peto.png?version=1.0" />
 		<link href="css/estilosElementosv2.css?version=1.0.3" rel="stylesheet">
 		<link href="css/sidebarDeslizable.css?version=1.0.1" rel="stylesheet">
 		<link rel="stylesheet" href="css/cssBarraTop.css?version=1.0.1">
@@ -243,7 +244,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 				<div class="row"><span class="hidden" id="spanStockUpd"></span><span class="hidden" id="spanPrecioUpd"></span><span class="hidden" id="spanCategStock"></span><span class="hidden" id="spanMaxStockLess"></span>
 					<label for="">Producto: </label> <span id="lessStockNomProducto"></span> <br>
 					<label for="">Cantidad a reducir:</label> <input type="number" class="form-control text-center" id="txtLessStockCantidad" step=1 min=0>
-					<label for="">Detalle:</label> <input type="text" class="form-control text-center mayuscula" id="txtLessStockDetalle">
+					<label for="">Detalle:</label> <input type="text" class="form-control text-center mayuscula" id="txtLessStockDetalle" autocomplete="off">
 				</div>
 			</div>
 			<label class="text-danger labelError hidden" for=""><i class="icofont icofont-animal-squirrel"></i> Lo siento! <span class=mensaje></span></label>

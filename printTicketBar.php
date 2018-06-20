@@ -30,7 +30,7 @@ try {
     $printer -> text("   ".$_POST['hora']."\n\n");
     $printer -> text("Cant.  Producto\n");
     $printer -> text("".$_POST['texto']." \n\n");
-    if($_POST['obsBar']<>''){
+    if($_POST['obsBarra']<>''){
         $printer -> text("Obs.: ".$_POST['obsBarra']." \n\n");
     }
     $printer -> text("*  Usuario: ".$_POST['usuario']."  *\n");
@@ -41,3 +41,4 @@ try {
 } catch (Exception $e) {
     echo "No se pudo imprimir en la impresora: " . $e -> getMessage() . "\n";
 }
+

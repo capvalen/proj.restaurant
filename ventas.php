@@ -23,6 +23,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 		<link href="css/bootstrap.css" rel="stylesheet">
 
 		<!-- Custom CSS -->
+		<link rel="shortcut icon" href="images/peto.png?version=1.0" />
 		<link href="css/estilosElementosv2.css?version=1.0.2" rel="stylesheet">
 		<link href="css/sidebarDeslizable.css?version=1.0.1" rel="stylesheet">
 		<link rel="stylesheet" href="css/cssBarraTop.css?version=1.0.1">
@@ -219,8 +220,8 @@ $('input').keypress(function (e) {
 $('#btnImprimirCuadreCaja').click(function () {
 	$.ajax({url:'php/solicitarSumaMesasOcupadas.php', type:'POST'}).done(function (resp) { console.log(resp)
 	if(resp!=-1){
-		if(resp==0){
-			$('.modal-faltaCompletar #lblFalta').text('Lo sentimos tiene mesas pendientes por cerrar. Ud podrá cerrar caja una vez que haya finalizado todas las mensas.');
+		if(resp>0){
+			$('.modal-faltaCompletar #lblFalta').text('Lo sentimos tiene mesas pendientes por cerrar. Ud podrá cerrar caja una vez que haya finalizado todas las mesas.');
 			$('.modal-faltaCompletar').modal('show');
 		}else{
 			var vConEgresos= parseFloat($('#spanGastosFinal').text());

@@ -25,6 +25,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 		<link href="css/bootstrap.css" rel="stylesheet">
 
 		<!-- Custom CSS -->
+		<link rel="shortcut icon" href="images/peto.png?version=1.0" />
 		<link href="css/estilosElementosv2.css?version=1.0.6" rel="stylesheet">
 		<link href="css/sidebarDeslizable.css?version=1.0.1" rel="stylesheet">
 		<link rel="stylesheet" href="css/cssBarraTop.css?version=1.0.4">
@@ -34,7 +35,6 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 
 		<link href="css/bootstrap-select.min.css" rel="stylesheet"> <!-- extraido de: https://silviomoreto.github.io/bootstrap-select/-->
 		<link rel="stylesheet" href="css/icofont.css"> <!-- iconos extraidos de: http://icofont.com/-->
-		<link rel="shortcut icon" href="images/peto.png" />
 		<link rel="stylesheet" href="css/awesome-bootstrap-checkbox.css"> <!-- extraido de: http://flatlogic.github.io/awesome-bootstrap-checkbox/demo/-->
 		<link rel="stylesheet" href="css/bootstrap-datepicker3.css"> <!-- extraído de: https://uxsolutions.github.io/bootstrap-datepicker/-->
 		<link rel="stylesheet" href="css/toastr.min.css?version=1.0.1"> <!-- extraído de: http://codeseven.github.io/toastr/demo.html-->
@@ -386,7 +386,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 			<h4 class="modal-title" id="myModalLabel"><i class="icofont icofont-help-robot"></i> Mover pedido</h4>
 		</div>
 		<div class="modal-body">
-			<label for="">Ingrese ¿a qué mesa debe ir el pedido?</label>
+			<label for="">Ingrese ¿A qué mesa debe ir el pedido?</label>
 			<input type="number" class="form-control text-center" id="txtDestinoDeMesa">
 			<label class="text-danger text-center labelError hidden" for=""><i class="icofont icofont-animal-squirrel"></i> Lo siento! <span class=mensaje></span></label>
 		</div>
@@ -523,7 +523,7 @@ $('.btnMesa').click(function () {
 				if(dato.observacCocina==''){$('#pDetCocina').parent().addClass('hidden');}else{$('#pDetCocina').text(dato.observacCocina).parent().removeClass('hidden');}
 				if(dato.observacBar==''){$('#pDetBar').parent().addClass('hidden');}else{$('#pDetBar').text(dato.observacBar).parent().removeClass('hidden');}
 				$('#idPedidoMesa').text(dato.idPedido);
-				$('.contanedorDivsProductos').append(`<div class="divUnSoloProducto row"><div class="col-xs-7"><button class="btn btn-danger btn-circle btn-NoLine btn-outline btnRemoverProducto" id="${dato.idProducto}"><i class="icofont icofont-close"></i></button> <h4 class="h4NombreProducto mayuscula" id="${dato.idProducto}">${dato.prodDescripcion}</h4> <span class="notaPed">${dato.pedNota}</span></div><div class="col-xs-3"><button class="btn btn-warning btn-circle btn-NoLine btnRestarProducto"><i class="icofont icofont-minus-circle"></i></button> <span class="cantidadProducto">${dato.pedCantidad}</span> <button class="btn btn-warning btn-circle btn-NoLine btnSumarProducto"><i class="icofont icofont-plus-circle"></i></button></div><div class="col-xs-2"><h5 class="h4precioProducto"><span class="valorUndProducto sr-only">${dato.prodPrecio}</span>S/. <span class="valorTotalProducto">${parseFloat(dato.subTotal).toFixed(2)}</span></h5></div></div>`);
+				$('.contanedorDivsProductos').append(`<div class="divUnSoloProducto row"><div class="col-xs-6"><button class="btn btn-danger btn-circle btn-NoLine btn-outline btnRemoverProducto" id="${dato.idProducto}"><i class="icofont icofont-close"></i></button> <h4 class="h4NombreProducto mayuscula" id="${dato.idProducto}">${dato.prodDescripcion}</h4> <span class="notaPed">${dato.pedNota}</span></div><div class="col-xs-3"><button class="btn btn-warning btn-circle btn-NoLine btnRestarProducto"><i class="icofont icofont-minus-circle"></i></button> <span class="cantidadProducto">${dato.pedCantidad}</span> <button class="btn btn-warning btn-circle btn-NoLine btnSumarProducto"><i class="icofont icofont-plus-circle"></i></button></div><div class="col-xs-2"><h5 class="h4precioProducto"><span class="valorUndProducto sr-only">${dato.prodPrecio}</span>S/. <span class="valorTotalProducto">${parseFloat(dato.subTotal).toFixed(2)}</span></h5></div> <div><button class="btn btn-success btn-outline btn-sm btnPrintHot" data-quees="${dato.tpDivBebidaCocina}" ><i class="icofont icofont-print"></i></button></div></div>`);
 				
 				if(dato.idProcedencia==2){
 					cantRes=parseInt($(`.todasBebidas`).find('.platoResValor').text())+1;
@@ -798,10 +798,13 @@ $('#txtCuantPagaClienteTarjet').keyup(function (e) {
 });
 $('.modal-buscarProducto').on('click', '.btnAgregarProducto', function () {
 	var contenedor=$(this).parent().parent();
-	var idProd=contenedor.attr('id');
+	var idProd=contenedor.attr('id'); 
+	var padreMayor=contenedor.parent().parent().attr('id'); 
+	var platoProd='';
+	if(padreMayor=='RegTodosBebidas'){platoProd='divProdBebida'}else{platoProd='divFondos';}
 	var preccio=parseFloat(contenedor.find('.valorProducto').text());
 	if($('.contanedorDivsProductos').find('#'+idProd).html()==null){
-		$('.contanedorDivsProductos').append(`<div class="divUnSoloProducto row"><div class="col-xs-7"><button class="btn btn-danger btn-circle btn-NoLine btn-outline btnRemoverProducto" id="${idProd}"><i class="icofont icofont-close"></i></button> <h4 class="h4NombreProducto mayuscula" id="${idProd}">${contenedor.find('.h4NombreProducto').text()}</h4> </div><div class="col-xs-3"><button class="btn btn-warning btn-circle btn-NoLine btnRestarProducto"><i class="icofont icofont-minus-circle"></i></button> <span class="cantidadProducto">1</span> <button class="btn btn-warning btn-circle btn-NoLine btnSumarProducto"><i class="icofont icofont-plus-circle"></i></button></div><div class="col-xs-2"><h5 class="h4precioProducto"><span class="valorUndProducto sr-only">${preccio.toFixed(2)}</span>S/. <span class="valorTotalProducto">${preccio.toFixed(2)}</span></h5></div></div>`);
+		$('.contanedorDivsProductos').append(`<div class="divUnSoloProducto row"><div class="col-xs-6"><button class="btn btn-danger btn-circle btn-NoLine btn-outline btnRemoverProducto" id="${idProd}"><i class="icofont icofont-close"></i></button> <h4 class="h4NombreProducto mayuscula" id="${idProd}">${contenedor.find('.h4NombreProducto').text()}</h4> </div><div class="col-xs-3"><button class="btn btn-warning btn-circle btn-NoLine btnRestarProducto"><i class="icofont icofont-minus-circle"></i></button> <span class="cantidadProducto">1</span> <button class="btn btn-warning btn-circle btn-NoLine btnSumarProducto"><i class="icofont icofont-plus-circle"></i></button></div><div class="col-xs-2"><h5 class="h4precioProducto"><span class="valorUndProducto sr-only">${preccio.toFixed(2)}</span>S/. <span class="valorTotalProducto">${preccio.toFixed(2)}</span></h5></div> <div><button class="btn btn-success btn-outline btn-sm btnPrintHot"  data-quees="${platoProd}" ><i class="icofont icofont-print"></i></button></div></div>`);
 		$.ajax({url: 'php/insertarPedidoDetalle.php', type:'POST', data:{idProd:idProd ,  precio:preccio, cantidad:1,  idPedido: $('#idPedidoMesa').text(), nota: '' }}).done(function (resp) { console.log(resp)
 				var response=JSON.parse(resp)[0];
 				if(response.respuesta=='Y'){
@@ -885,7 +888,25 @@ $('.btnReImprimirTicket').click(function () {
 			}
 		});
 	});
-})
+});
+$('.DetalleMesa').on('click', '.btnPrintHot', function() {
+	//console.log($('#idPedidoMesa').text());
+	var mesa = $('#idMesaSpan').text();
+	var quees= $(this).attr('data-quees');
+	var contenedor = $(this).parent().parent();
+	var cantidad = contenedor.find('.cantidadProducto').text();
+	var producto = contenedor.find('.h4NombreProducto').text()
+	var itemsBar= ' '+cantidad +' '+producto+'. '+"\n";
+	if( quees == 'divProdBebida'){
+		$.ajax({url:'printTicketBar.php', type:'POST', data: {hora:moment().format('DD [de] MMMM [de] YYYY h:mm a'), numMesa: mesa, texto:itemsBar, usuario: $.JsonUsuario.usuNombres, obsBarra: '' }}).done(function (resp) {
+			console.log(resp)
+		});
+	}else{
+		$.ajax({url:'printTicketCocina.php', type:'POST', data: {hora:moment().format('DD [de] MMMM [de] YYYY h:mm a'), numMesa: mesa, texto:itemsBar, usuario: $.JsonUsuario.usuNombres, obsBarra: '' }}).done(function (resp) {
+			console.log(resp)
+		});
+	}
+});
 // SELECT DATE_FORMAT(`cajaFechaRegistro`,'%d/%m/%Y') FROM `caja`
 </script>
 

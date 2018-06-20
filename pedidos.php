@@ -10,6 +10,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 <head>
 	<meta charset="UTF-8">
 	<title>Pedidos - Infocat Snack</title>
+	<link rel="shortcut icon" href="images/peto.png?version=1.0" />
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/estilosElementosv2.css?version=1.0.5">
 	<link rel="stylesheet" href="css/snack.css?version=1.0.4">
@@ -23,6 +24,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 	.divUnSoloProducto:hover,.divUnSoloProductoDisponible:hover{background-color: #f3f3f3; transition: all 0.4s ease-in-out;}
 	/*.divUnSoloProducto:hover{background-color: transparent!important;}*/
 	.divPrincipal{margin-top:0px!important;}
+	.badge{background-color: #874cea;}
 </style>
 
 <div class="container-fluid divPrincipal noselect" >
@@ -134,8 +136,11 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 		</div>
 
 		<div class="col-xs-12 col-sm-6 noselect">
-			<div><h3 class="text-center" style="display: inline-block;"><i class="icofont icofont-food-cart"></i> Productos disponibles</h3> <button class="btn btn-default btn-outline btn-NoLine btn-lg pull-right" id="btnRefreshProducts"><i class="icofont icofont-refresh"></i></button></div>
+			<div><h3 class="text-center" style="display: inline-block;"><i class="icofont icofont-restaurant-menu"></i> Carta</h3> <button class="btn btn-default btn-outline btn-NoLine btn-lg pull-right" id="btnRefreshProducts"><i class="icofont icofont-refresh"></i></button></div>
 			<div class="panel-body">
+				<div class="panel-group panelBusqueda">
+					<input type="text" class="form-control input-lg" placeholder="Filtro de productos" id="txtBuscarProductoPedido">
+				</div>
 				<div class="panel-group panelProductosColecc" id="accordion" role="tablist" aria-multiselectable="true">
 					<?php include 'php/rellenoCategoriasCabeceras.php'; ?>
 				</div>
@@ -192,6 +197,8 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 	</div>
 </div>
 </div>
+
+
 
 	
 <script type="text/javascript" src="js/jquery-2.2.4.min.js"></script>
@@ -260,7 +267,7 @@ function listarProductos() {
 	$('.panelProductosColecc .panel-body').children().remove();
 	$.ajax({url:'php/listarProductos.php', type:'POST'}).done(function (resp) {
 		$.each(JSON.parse(resp), function (i, dato) { //console.log(dato)
-			if(dato.idProcedencia==2){
+			if(dato.idProcedencia==2){ //tragos
 				if($('#RegTodosBebidas .tipTrago:contains("'+dato.tipDescripcion+'")').length==0){
 					$(`#RegTodosBebidas .panel-body`).append(`<p class="tipTrago mayuscula">${dato.tipDescripcion}</p>`);
 				}
@@ -287,7 +294,8 @@ $('#btnCancelarPedido').click(function () {// console.log('cli')
 // $('body').on('click', '.divUnSoloProductoDisponible', function () { $(this).find('.btnAgregarProducto').click(); });
 $('body').on('click', '.h4NombreProducto', function () { $(this).parent().parent().find('.btnAgregarProducto').click(); });
 $('body').on('click', '.h4precioProducto', function () { $(this).parent().parent().find('.btnAgregarProducto').click(); });
-$('body').on('click', '.btnAgregarProducto',function () {		
+$('body').on('click', '.btnAgregarProducto',function () {
+	$('#pnlObsOcult').addClass('hidden');
 	var contenedor=$(this).parent().parent();
 	var elementoProducto='';
 	$('#btnGuardarPedido').removeClass('disabled');
@@ -549,6 +557,24 @@ $('#regMesaCliente').on('click','.divUnSoloProducto',function () {
 });
 $('#txtObsNotaEscrita').keyup(function () {
 	$('#listMesaCliente #'+$('#notaIdProviene').text()).find('.prodNota').text($('#txtObsNotaEscrita').val());
+});
+$('#txtBuscarProductoPedido').keypress(function (e) {
+	var texto = $('#txtBuscarProductoPedido').val();
+	if(texto ==''){$('.divUnSoloProductoDisponible').removeClass('hidden');}else{
+		$('.divUnSoloProductoDisponible').addClass('hidden');}
+		if (e.keyCode == 13){
+			$.each( $('.panelProductosColecc .panel'), function (i, dato) {
+				$.each($(dato).find('.h4NombreProducto'), function (j, prod) {
+					if( $(prod).text().toLowerCase().indexOf(texto)!=-1){
+						//console.log($(prod).text())
+						$(prod).parent().parent().removeClass('hidden');
+					}
+				$('.panelProductosColecc .panel .badge').eq(i).text($(dato).find('.h4NombreProducto').length-$(dato).find('.hidden').filter('.hidden').length);
+	
+				});
+				
+			});
+		}
 });
 </script>
 	
