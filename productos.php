@@ -425,17 +425,17 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 	<div class="modal-content">
 		<div class="modal-header-danger">
 			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			<h4 class="modal-title" id="myModalLabel"><i class="icofont icofont-help-robot"></i> Eliminar Producto</h4>
+			<h4 class="modal-title" id="myModalLabel"><i class="icofont icofont-help-robot"></i> Deshabilitar Producto</h4>
 		</div>
 		<div class="modal-body">
-			<p>Desea eliminar el producto <strong>«<span id="remoProdNombre"></span>»</strong><span class="hidden" id="remoProdId"></span>. </p>
+			<p>Desea deshabilitar el producto <strong>«<span id="remoProdNombre"></span>»</strong><span class="hidden" id="remoProdId"></span>. </p>
 			<p>Confirme con su contraseña por favor.</p>
 			<input type="password" id="txtPassRemover" class="form-control text-center" >
 			<label class="text-danger labelError hidden" for=""><i class="icofont icofont-animal-squirrel"></i> Lo siento! <span class=mensaje></span></label>
 		</div>
 		<div class="modal-footer">
 			<button class="btn btn-danger btn-outline" data-dismiss="modal"><i class="icofont icofont-close"></i> Cerrar</button>
-			<button class="btn btn-danger btn-outline" id="btnEliminarProdModal"><i class="icofont icofont-alarm"></i> Ok, eliminar</button>
+			<button class="btn btn-danger btn-outline" id="btnEliminarProdModal"><i class="icofont icofont-alarm"></i> Ok, deshabilitar</button>
 		</div>
 	</div>
 </div>
@@ -470,15 +470,22 @@ $('input').keypress(function (e) {
 	} 
 });
 
-$.ajax({url:'php/listarProductos.php', data: 'POST'}).done(function (resp) { //console.log(resp)
+$.ajax({url:'php/listarProductosAdmin.php', data: 'POST'}).done(function (resp) { //console.log(resp)
 	$.each(JSON.parse(resp), function (i, dato) { //console.log(dato)
 		var cant= $('#'+dato.tpDivBebidaCocina+' .row').length;
-		$('#'+dato.tpDivBebidaCocina).append(`<div class="row">  `+
-			`<div class="col-xs-2 mayuscula"><button class="btn btn-danger btn-circle btn-NoLine btn-outline btnRemoverProducto" id="${dato.idProducto}"><i class="icofont icofont-close"></i></button> ${cant}. <span class="spanCategoria">${dato.tipDescripcion}</span><span class="hidden spanIdCategoria" >${dato.idTipoProducto}</span></div> `+
+		if(dato.prodActivo==0){
+			$('#'+dato.tpDivBebidaCocina).append(`<div class="row">  `+
+			`<div class="col-xs-2 mayuscula"><button class="btn btn-success btn-circle btn-NoLine btn-outline btnActivarProducto text-muted" id="${dato.idProducto}"><i class="icofont icofont-check"></i></button> ${cant}. <span class="spanCategoria">${dato.tipDescripcion}</span><span class="hidden spanIdCategoria" >${dato.idTipoProducto}</span></div> `+
 			`<div class="col-xs-5 mayuscula divNombrProd">${dato.prodDescripcion}</div> `+
 			`<div class="col-xs-2 divPrecPro">${parseFloat(dato.prodPrecio).toFixed(2)}</div> `+
-			`<div class="col-xs-1 divStockPro">${dato.stockCantidad}</div> `+
-			`<div class="col-xs-2 text-right"><button class="btn btn-danger btn-outline btn-NoLine btnConfigReducirStock" id="${dato.idProducto}"><i class="icofont icofont-minus"></i></button><button class="btn btn-success btn-outline btn-NoLine btnConfigProducto" id="${dato.idProducto}"><i class="icofont icofont-options"></i></button></div></div>`);
+			`<div class="col-xs-1 divStockPro">${dato.stockCantidad}</div> </div>`);
+		}
+		else{$('#'+dato.tpDivBebidaCocina).append(`<div class="row">  `+
+				`<div class="col-xs-2 mayuscula"><button class="btn btn-danger btn-circle btn-NoLine btn-outline btnRemoverProducto" id="${dato.idProducto}"><i class="icofont icofont-close"></i></button> ${cant}. <span class="spanCategoria">${dato.tipDescripcion}</span><span class="hidden spanIdCategoria" >${dato.idTipoProducto}</span></div> `+
+				`<div class="col-xs-5 mayuscula divNombrProd">${dato.prodDescripcion}</div> `+
+				`<div class="col-xs-2 divPrecPro">${parseFloat(dato.prodPrecio).toFixed(2)}</div> `+
+				`<div class="col-xs-1 divStockPro">${dato.stockCantidad}</div> `+
+				`<div class="col-xs-2 text-right"><button class="btn btn-danger btn-outline btn-NoLine btnConfigReducirStock" id="${dato.idProducto}"><i class="icofont icofont-minus"></i></button><button class="btn btn-success btn-outline btn-NoLine btnConfigProducto" id="${dato.idProducto}"><i class="icofont icofont-options"></i></button></div></div>`);}
 	});
 });
 }); //Fin de document ready
@@ -531,7 +538,7 @@ $('#btnEliminarCatModal').click(function () {
 });
 $('#btnEliminarProdModal').click(function () {
 	$.ajax({url: 'php/eliminarProductoBD.php', type: 'POST', data: {idProd:$('#remoProdId').text(), idUser: $.JsonUsuario.idUsuario, pass: $('#txtPassRemover').val()  }}).done(function (resp) { //console.log(resp);
-		if(resp=='Y'){window.location.href = 'productos.php';}
+		if(resp=='Y'){location.reload(); /*window.location.href = 'productos.php';*/}
 		else{$('.modal-removerProducto .labelError').removeClass('hidden').find('.mensaje').text('Su contraseña no es la correcta.');}
 	});
 });
@@ -632,7 +639,12 @@ $('#btnUpdLessStock').click(function () {
 		});
 	}
 });
-
+$('#tabAgregarLabo').on('click', '.btnActivarProducto',function () {
+	var id=$(this).attr('id');
+	$.ajax({url: 'php/activarProducto.php', type: 'POST', data: {idProd: id}}).done(function (resp) {
+		location.reload();
+	});
+});
 </script>
 </body>
 </html>

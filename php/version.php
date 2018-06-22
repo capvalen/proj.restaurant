@@ -1,5 +1,5 @@
 <?php 
-echo "Ver. 1.18 Compilación 18.06.19";
+echo "Ver. 1.19 Compilación 18.06.22";
 /*Cambios
 
 
