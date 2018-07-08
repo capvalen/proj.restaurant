@@ -15,7 +15,7 @@ use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
  */
 
  
-    $connector_caja = new WindowsPrintConnector("smb://127.0.0.1/CAJA");
+    $connector_caja = new WindowsPrintConnector("smb://127.0.0.1/XP-58");
 try {
     
     // A FilePrintConnector will also work, but on non-Windows systems, writes
@@ -24,13 +24,13 @@ try {
 
     /* Print a "Hello world" receipt" */
     $printer = new Printer($connector_caja);
-    $printer -> text("            La Casa de Barro \n");
+    $printer -> text("           Casa de Barro \n");
     $printer -> text("   Nota de Pedido « Caja ». Mesa # ".$_POST['numMesa']."\n");
-    $printer -> text("----------------------------------------");
+    $printer -> text("-----------------------------");
     $printer -> text("   ".$_POST['hora']."\n\n");
     $printer -> text("Cant.  Producto\n");
     $printer -> text("".$_POST['texto']." \n");
-    $printer -> text("----------------------------------------");
+    $printer -> text("-----------------------------");
     $printer -> text("     Total: S/. ".$_POST['cuentaTotal']." \n\n");
     $printer -> text("*  Usuario: ".$_POST['usuario']."  *\n");
     $printer -> cut();

@@ -1,7 +1,7 @@
 <?php 
 $hoy=date('Y-m-d');
-$fechaInicial = date('Y-m-d', strtotime("2017-11-16"));
-$fechaFinal = date('Y-m-d', strtotime("2018-01-04"));
+$fechaInicial = date('Y-m-d', strtotime("2018-06-19"));
+$fechaFinal = date('Y-m-d', strtotime("2018-07-27"));
 
 if (($hoy >= $fechaInicial) && ( $hoy <= $fechaFinal))
 {

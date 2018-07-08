@@ -15,7 +15,7 @@ use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
  */
 
  
-    $connector_cocina = new WindowsPrintConnector("smb://127.0.0.1/COCINA");
+    $connector_cocina = new WindowsPrintConnector("smb://127.0.0.1/BIXOLON_COCINA");
 try {
     
     // A FilePrintConnector will also work, but on non-Windows systems, writes
@@ -30,9 +30,6 @@ try {
     $printer -> text("   ".$_POST['hora']."\n\n");
     $printer -> text("Cant.  Producto\n");
     $printer -> text("".$_POST['texto']." \n\n");
-    if($_POST['obsCocina']<>''){
-        $printer -> text("Obs.: ".$_POST['obsCocina']." \n\n");
-    }
     $printer -> text("*  Usuario: ".$_POST['usuario']."  *\n");
     $printer -> cut();
 

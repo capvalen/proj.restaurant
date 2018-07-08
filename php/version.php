@@ -1,6 +1,24 @@
 <?php 
-echo "Ver. 1.19 Compilación 18.06.22";
+echo "Ver. 1.20 Compilación 18.07.07";
 /*Cambios
+
+Ver 1.20
+- Agregado descuentos por promociones en cada producto.
+
+Ver 1.19
+- revisar  `observacBar`, `observacCocina`
+
+CREATE TABLE IF NOT EXISTS `promociones` 
+(`idPromocion` int(11) NOT NULL,
+  `idProducto` int(11) NOT NULL,
+ `promoCantidad` int(11) NOT NULL,
+  `promoDescuento` float NOT NULL,
+ `promoActivo` bit(1) NOT NULL DEFAULT b'1' COMMENT '1 para activo') 
+ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+ALTER TABLE `promociones` ADD PRIMARY KEY (`idPromocion`);
+ALTER TABLE `promociones` MODIFY `idPromocion` int(11) NOT NULL AUTO_INCREMENT;
+
+DROP PROCEDURE `listarProductosAdmin`; CREATE DEFINER=`root`@`localhost` PROCEDURE `listarProductosAdmin`() NOT DETERMINISTIC NO SQL SQL SECURITY DEFINER SELECT p.`idProducto`, tp.tipDescripcion, `prodDescripcion`, `prodPrecio`, p.`idTipoProducto`, `prodActivo`, tpNombreWeb,tpDivBebidaCocina, s.stockCantidad, idProcedencia FROM `producto` p inner JOIN tipoproducto tp on tp.idTipoProducto= p.idtipoProducto inner join stock s on p.idProducto=s.idProducto order by prodActivo desc, tp.tipDescripcion, `prodDescripcion` asc;
 
 
 Ver 1.9

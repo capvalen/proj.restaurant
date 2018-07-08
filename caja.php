@@ -516,7 +516,7 @@ $('.btnMesa').click(function () {
 		$('#btnObtenerEstadoMesas').addClass('hidden');
 		var iddeMesa=$(this).attr('id');
 		$('#idMesaSpan').text(iddeMesa);
-		var sumaTotales=0, cantRes=0;
+		var sumaTotales=0, cantRes=0,  descontar=0;
 		$('.contanedorDivsProductos').children().remove();
 		$.ajax({url:'php/listarPedidoMesaOcupada.php', type: 'POST', data: {mesa: iddeMesa}}).done(function (resp) { //console.log(resp)
 			$.each(JSON.parse(resp), function (i, dato) { //console.log(dato)
@@ -525,6 +525,8 @@ $('.btnMesa').click(function () {
 				$('#idPedidoMesa').text(dato.idPedido);
 				$('.contanedorDivsProductos').append(`<div class="divUnSoloProducto row"><div class="col-xs-6"><button class="btn btn-danger btn-circle btn-NoLine btn-outline btnRemoverProducto" id="${dato.idProducto}"><i class="icofont icofont-close"></i></button> <h4 class="h4NombreProducto mayuscula" id="${dato.idProducto}">${dato.prodDescripcion}</h4> <span class="notaPed">${dato.pedNota}</span></div><div class="col-xs-3"><button class="btn btn-warning btn-circle btn-NoLine btnRestarProducto"><i class="icofont icofont-minus-circle"></i></button> <span class="cantidadProducto">${dato.pedCantidad}</span> <button class="btn btn-warning btn-circle btn-NoLine btnSumarProducto"><i class="icofont icofont-plus-circle"></i></button></div><div class="col-xs-2"><h5 class="h4precioProducto"><span class="valorUndProducto sr-only">${dato.prodPrecio}</span>S/. <span class="valorTotalProducto">${parseFloat(dato.subTotal).toFixed(2)}</span></h5></div> <div><button class="btn btn-success btn-outline btn-sm btnPrintHot" data-quees="${dato.tpDivBebidaCocina}" ><i class="icofont icofont-print"></i></button></div></div>`);
 				
+				var promos= listarPromos(dato.idProducto, dato.pedCantidad);
+				
 				if(dato.idProcedencia==2){
 					cantRes=parseInt($(`.todasBebidas`).find('.platoResValor').text())+1;
 					$(`.todasBebidas`).find('.platoResValor').text(cantRes);}
@@ -532,11 +534,14 @@ $('.btnMesa').click(function () {
 					cantRes=parseInt($(`.${dato.tpNombreWeb}`).find('.platoResValor').text())+1;
 					$(`.${dato.tpNombreWeb}`).find('.platoResValor').text(cantRes);}
 				
-
-				sumaTotales+=parseFloat(dato.subTotal);
-				$('#idTotalSpan').text(parseFloat(sumaTotales).toFixed(2));
+				promos.done(function () {
+					sumaTotales+=parseFloat(dato.subTotal);
+					$('#idTotalSpan').text(parseFloat(sumaTotales-$.sumaDscto).toFixed(2));
+				});
+				
 			});
 		});
+
 	}else{
 		toastr.options={'positionClass': "toast-bottom-center"}
 		toastr.warning('Ésta mesa aún no tiene pedidos.');
@@ -665,7 +670,12 @@ function imprimirCuentaCliente() {
 	$.ticket=[];
 	var cantidadRowTicket=$('.contanedorDivsProductos .divUnSoloProducto').length; //console.log(cantidadRowTicket)
 	$.each($('.contanedorDivsProductos .divUnSoloProducto'), function (i, dato) {
-		$.ticket.push({'id': $(dato).find('.h4NombreProducto').attr('id'), 'nomProducto': $(dato).find('.cantidadProducto').text() +' Und. '+ $(dato).find('.h4NombreProducto').text() , 'cant': $(dato).find('.cantidadProducto').text(), 'sub': $(dato).find('.valorTotalProducto').text() });
+		if($(dato).hasClass('soyDscto')){
+			$.ticket.push({'id': $(dato).find('.h4NombreProducto').attr('id'), 'nomProducto': $(dato).find('.cantidadProducto').text() +' Comb. '+ $(dato).find('.h4NombreProducto').text() , 'cant': $(dato).find('.cantidadProducto').text(), 'sub': '-'+$(dato).find('.montoDescontar').text() });
+		}else{
+			$.ticket.push({'id': $(dato).find('.h4NombreProducto').attr('id'), 'nomProducto': $(dato).find('.cantidadProducto').text() +' Und. '+ $(dato).find('.h4NombreProducto').text() , 'cant': $(dato).find('.cantidadProducto').text(), 'sub': $(dato).find('.valorTotalProducto').text() });
+		}
+		
 
 		if( cantidadRowTicket-1==i){
 			var fecha=moment().format('DD/MM/YYYY H:mm a');
@@ -678,7 +688,7 @@ function imprimirCuentaCliente() {
 }
 
 function retornarCadenaImprimir(){
-var totalImprimir=40;
+var totalImprimir=40; //40 defecto
 var funProducto = '';
 var funPrecio = '';
 var lineaImpr='';
@@ -907,6 +917,18 @@ $('.DetalleMesa').on('click', '.btnPrintHot', function() {
 		});
 	}
 });
+function listarPromos(idProduc, cantidad) {
+	return $.ajax({url: 'php/listarPromociones.php', type: 'POST', data: {idProd:idProduc, debe: cantidad }}).done(function (resp) {
+		// console.log(resp);
+		$('.contanedorDivsProductos').append(resp);
+		$.sumaDscto = 0;
+		$.each($('.contanedorDivsProductos').find('.montoDescontar'), function (i, ele) {
+			$.sumaDscto+= parseFloat($(ele).text());
+			//console.log($(ele).text());
+		});
+
+	});
+}
 // SELECT DATE_FORMAT(`cajaFechaRegistro`,'%d/%m/%Y') FROM `caja`
 </script>
 

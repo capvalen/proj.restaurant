@@ -25,7 +25,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 
 		<!-- Custom CSS -->
 		<link href="css/estilosElementosv2.css?version=1.0.1" rel="stylesheet">
-		<link href="css/sidebarDeslizable.css?version=1.0.1" rel="stylesheet">
+		<link href="css/sidebarDeslizable.css?version=1.0.2" rel="stylesheet">
 		<link rel="stylesheet" href="css/cssBarraTop.css?version=1.0.1">
 		<link rel="stylesheet" href="css/icofont.css">
 		<link rel="stylesheet" href="css/animate.css">
