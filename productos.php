@@ -26,8 +26,8 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 
 		<!-- Custom CSS -->
 		<link rel="shortcut icon" href="images/peto.png?version=1.0" />
-		<link href="css/estilosElementosv2.css?version=1.0.3" rel="stylesheet">
-		<link href="css/sidebarDeslizable.css?version=1.0.2" rel="stylesheet">
+		<link href="css/estilosElementosv2.css?version=1.1.0" rel="stylesheet">
+		<link href="css/sidebarDeslizable.css?version=1.0.3" rel="stylesheet">
 		<link rel="stylesheet" href="css/cssBarraTop.css?version=1.0.1">
 		<link rel="stylesheet" href="css/icofont.css">
 		<link rel="stylesheet" href="css/snack.css?version=1.0.6">
@@ -38,6 +38,15 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 </head>
 
 <body>
+
+<style type="text/css">
+.tab-pane {
+	display: none;
+}
+.tab-pane .active {
+	display: block;
+}
+</style>
 
 <div id="wrapper">
 
@@ -86,6 +95,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 			<nav class="navbar navbar-fixed-top encoger">
 				<div class="container">
 					<div class="navbar-header ">
+					<a href="#!" class="btn btn-infocat ocultar-mostrar-menu"><i class="icofont icofont-navigation-menu"></i></a>
 					<a class="navbar-brand ocultar-mostrar-menu" href="#"><img id="imgLogoInfocat" class="img-responsive" src="images/logo.png" alt=""></a>
 						<button type="button" class="navbar-toggle collapsed" id="btnColapsador" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
 						<span class="sr-only">Toggle navigation</span>
@@ -346,6 +356,42 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 	</div>
 </div>
 
+<!-- Modal para administrar descuentos -->
+<div class="modal fade modal-adminDsctos" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+<div class="modal-dialog modal-sm" role="document">
+	<div class="modal-content">
+		<div class="modal-header-infocat">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<h4 class="modal-title" id="myModalLabel"><i class="icofont icofont-help-robot"></i> Administrar descuentos</h4>
+		</div>
+		<div class="modal-body">
+			<div class="panel panel-default">
+				<label style="padding-left: 10px;">Nuevo Descuento</label>
+				<div class="panel-body" style="padding: 10px!important;">
+					<label>Cantidad:</label>
+					<input type="text" id="txtCantDscto" class="form-control text-center" autocomplete="off">
+					<label>Descuento S/:</label>
+					<input type="numberic" id="txtMontoDscto" class="form-control text-center txtNumeroDecimal" autocomplete="off"><br>
+					<button class="btn btn-default btn-block" id="btn-agregarDscto">Agregar descuento</button>
+				</div>
+			</div>
+			<div class="container-fluid">
+			<div class="row">
+				<p>Éste artículo tiene <span id="spanCantDsctos">0</span> descuentos</p>
+				<div id="divListaDescuentos"></div>
+			</div>
+
+			</div>
+			<label class="text-danger labelError hidden" for=""><i class="icofont icofont-animal-squirrel"></i> Lo siento! <span class=mensaje></span></label>
+		</div>
+		
+		<div class="modal-footer">
+			<button class="btn btn-default btn-outline" data-dismiss="modal" ><i class="icofont icofont-close"></i> Cerrar</button>
+		</div>
+	</div>
+	</div>
+</div>
+
 <!-- Modal para agregar categoria nueva -->
 <div class="modal fade modal-nuevaCategoria" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
 <div class="modal-dialog modal-sm" role="document">
@@ -473,19 +519,36 @@ $('input').keypress(function (e) {
 $.ajax({url:'php/listarProductosAdmin.php', data: 'POST'}).done(function (resp) { //console.log(resp)
 	$.each(JSON.parse(resp), function (i, dato) { //console.log(dato)
 		var cant= $('#'+dato.tpDivBebidaCocina+' .row').length;
-		if(dato.prodActivo==0){
-			$('#'+dato.tpDivBebidaCocina).append(`<div class="row">  `+
-			`<div class="col-xs-2 mayuscula"><button class="btn btn-success btn-circle btn-NoLine btn-outline btnActivarProducto text-muted" id="${dato.idProducto}"><i class="icofont icofont-check"></i></button> ${cant}. <span class="spanCategoria">${dato.tipDescripcion}</span><span class="hidden spanIdCategoria" >${dato.idTipoProducto}</span></div> `+
-			`<div class="col-xs-5 mayuscula divNombrProd">${dato.prodDescripcion}</div> `+
-			`<div class="col-xs-2 divPrecPro">${parseFloat(dato.prodPrecio).toFixed(2)}</div> `+
-			`<div class="col-xs-1 divStockPro">${dato.stockCantidad}</div> </div>`);
-		}
-		else{$('#'+dato.tpDivBebidaCocina).append(`<div class="row">  `+
-				`<div class="col-xs-2 mayuscula"><button class="btn btn-danger btn-circle btn-NoLine btn-outline btnRemoverProducto" id="${dato.idProducto}"><i class="icofont icofont-close"></i></button> ${cant}. <span class="spanCategoria">${dato.tipDescripcion}</span><span class="hidden spanIdCategoria" >${dato.idTipoProducto}</span></div> `+
-				`<div class="col-xs-5 mayuscula divNombrProd">${dato.prodDescripcion}</div> `+
+		//console.log(dato.tpDivBebidaCocina)
+		if(dato.tpDivBebidaCocina=='divProdBebida'){ //console.log(dato)
+			if(dato.prodActivo==0){
+				$('#'+dato.tpNombreWeb).append(`<div class="row">  `+
+				`<div class="col-xs-3 mayuscula"><button class="btn btn-success btn-circle btn-NoLine btn-outline btnActivarProducto text-muted" id="${dato.idProducto}"><i class="icofont icofont-check"></i></button> ${cant}. <span class="spanCategoria">${dato.tipDescripcion}</span><span class="hidden spanIdCategoria" >${dato.idTipoProducto}</span></div> `+
+				`<div class="col-xs-4 mayuscula divNombrProd">${dato.prodDescripcion}</div> `+
+				`<div class="col-xs-2 divPrecPro">${parseFloat(dato.prodPrecio).toFixed(2)}</div> `+
+				`<div class="col-xs-1 divStockPro">${dato.stockCantidad}</div> </div>`);
+			}
+			else{$('#'+dato.tpNombreWeb).append(`<div class="row">  `+
+				`<div class="col-xs-3 mayuscula"><button class="btn btn-danger btn-circle btn-NoLine btn-outline btnRemoverProducto" id="${dato.idProducto}"><i class="icofont icofont-close"></i></button> ${cant}. <span class="spanCategoria">${dato.tipDescripcion}</span><span class="hidden spanIdCategoria" >${dato.idTipoProducto}</span></div> `+
+				`<div class="col-xs-4 mayuscula divNombrProd">${dato.prodDescripcion}</div> `+
 				`<div class="col-xs-2 divPrecPro">${parseFloat(dato.prodPrecio).toFixed(2)}</div> `+
 				`<div class="col-xs-1 divStockPro">${dato.stockCantidad}</div> `+
-				`<div class="col-xs-2 text-right"><button class="btn btn-danger btn-outline btn-NoLine btnConfigReducirStock" id="${dato.idProducto}"><i class="icofont icofont-minus"></i></button><button class="btn btn-success btn-outline btn-NoLine btnConfigProducto" id="${dato.idProducto}"><i class="icofont icofont-options"></i></button></div></div>`);}
+				`<div class="col-xs-2 text-right"><button class="btn btn-infocat btn-outline btn-NoLine btn-sm btnListarDsctos" data-id="${dato.idProducto}"><i class="icofont icofont-swoosh-down"></i></button><button class="btn btn-danger btn-outline btn-NoLine btn-sm btnConfigReducirStock" id="${dato.idProducto}"><i class="icofont icofont-minus"></i></button><button class="btn btn-success btn-outline btn-NoLine btn-sm btnConfigProducto" id="${dato.idProducto}"><i class="icofont icofont-options"></i></button></div></div>`);}
+		}else{ 
+			if(dato.prodActivo==0){
+				$('#'+dato.tpDivBebidaCocina).append(`<div class="row">  `+
+				`<div class="col-xs-3 mayuscula"><button class="btn btn-success btn-circle btn-NoLine btn-outline btnActivarProducto text-muted" id="${dato.idProducto}"><i class="icofont icofont-check"></i></button> ${cant}. <span class="spanCategoria">${dato.tipDescripcion}</span><span class="hidden spanIdCategoria" >${dato.idTipoProducto}</span></div> `+
+				`<div class="col-xs-4 mayuscula divNombrProd">${dato.prodDescripcion}</div> `+
+				`<div class="col-xs-2 divPrecPro">${parseFloat(dato.prodPrecio).toFixed(2)}</div> `+
+				`<div class="col-xs-1 divStockPro">${dato.stockCantidad}</div> </div>`);
+			}
+			else{$('#'+dato.tpDivBebidaCocina).append(`<div class="row">  `+
+				`<div class="col-xs-3 mayuscula"><button class="btn btn-danger btn-circle btn-NoLine btn-outline btnRemoverProducto" id="${dato.idProducto}"><i class="icofont icofont-close"></i></button> ${cant}. <span class="spanCategoria">${dato.tipDescripcion}</span><span class="hidden spanIdCategoria" >${dato.idTipoProducto}</span></div> `+
+				`<div class="col-xs-4 mayuscula divNombrProd">${dato.prodDescripcion}</div> `+
+				`<div class="col-xs-2 divPrecPro">${parseFloat(dato.prodPrecio).toFixed(2)}</div> `+
+				`<div class="col-xs-1 divStockPro">${dato.stockCantidad}</div> `+
+				`<div class="col-xs-2 text-right"><button class="btn btn-infocat btn-outline btn-NoLine btn-sm btnListarDsctos" data-id="${dato.idProducto}"><i class="icofont icofont-swoosh-down"></i></button><button class="btn btn-danger btn-outline btn-NoLine btn-sm btnConfigReducirStock" id="${dato.idProducto}"><i class="icofont icofont-minus"></i></button><button class="btn btn-success btn-outline btn-NoLine btn-sm btnConfigProducto" id="${dato.idProducto}"><i class="icofont icofont-options"></i></button></div></div>`);}
+		}
 	});
 });
 }); //Fin de document ready
@@ -644,6 +707,35 @@ $('#tabAgregarLabo').on('click', '.btnActivarProducto',function () {
 	$.ajax({url: 'php/activarProducto.php', type: 'POST', data: {idProd: id}}).done(function (resp) {
 		location.reload();
 	});
+});
+$('#tabAgregarLabo').on('click', '.btnListarDsctos', function () {
+	$('#btn-agregarDscto').attr('data-id', $(this).attr('data-id') );
+	$('#divListaDescuentos').children().remove();
+	$.ajax({url: 'php/listarPromos.php', type:'POST', data: {idProd:$(this).attr('data-id')}}).done(function (resp) {
+		var cant= JSON.parse(resp).length;
+		$('#spanCantDsctos').text(cant);
+		$.each(JSON.parse(resp), function (i, data) {
+			$('#divListaDescuentos').append(`<p><button class="btn btn-danger btn-NoLine btn-sm btn-outline btnRemoverPromo" data-id="${data.idPromocion}"><i class="icofont icofont-close"></i></button> Combo de ${data.promoCantidad} = S/ -${data.promoDescuento}</p>`)
+		});
+	})
+	$('.modal-adminDsctos').modal('show');
+});
+$('#btn-agregarDscto').click(function () {
+	var idProd = $(this).attr('data-id')
+	$.ajax({url: 'php/insertarPromocion.php', type: 'POST', data: {
+		idProd: idProd,
+		cant: $('#txtCantDscto').val(),
+		descto: $('#txtMontoDscto').val()
+	}}).done(function (resp) {
+		location.reload();
+//		console.log(resp)
+	});
+});
+$('#divListaDescuentos').on('click', '.btnRemoverPromo', function () {
+
+	$.ajax({url: 'php/eliminarPromo.php', type: 'POST', data: {idProd: $(this).attr('data-id') }}).done(function (resp) {
+		location.reload();
+	})
 });
 </script>
 </body>

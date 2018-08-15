@@ -78,6 +78,7 @@ margin-left: -25px; opacity: 0.5}
 			</div>
 		</div>
 	</div>
+    </div>
 </main>
 </body>
 

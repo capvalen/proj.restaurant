@@ -26,14 +26,14 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 
 		<!-- Custom CSS -->
 		<link rel="shortcut icon" href="images/peto.png?version=1.0" />
-		<link href="css/estilosElementosv2.css?version=1.0.6" rel="stylesheet">
+		<link href="css/estilosElementosv2.css?version=1.0.7" rel="stylesheet">
 		<link href="css/sidebarDeslizable.css?version=1.0.1" rel="stylesheet">
 		<link rel="stylesheet" href="css/cssBarraTop.css?version=1.0.4">
 		<link rel="stylesheet" href="css/icofont.css">
 		<link rel="stylesheet" href="css/animate.css">
 		<link rel="stylesheet" href="css/snack.css?version=1.0.5">
 
-		<link href="css/bootstrap-select.min.css" rel="stylesheet"> <!-- extraido de: https://silviomoreto.github.io/bootstrap-select/-->
+		<link rel="stylesheet" href="css/bootstrap-select.min.css"> <!-- extraido de: https://silviomoreto.github.io/bootstrap-select/-->
 		<link rel="stylesheet" href="css/icofont.css"> <!-- iconos extraidos de: http://icofont.com/-->
 		<link rel="stylesheet" href="css/awesome-bootstrap-checkbox.css"> <!-- extraido de: http://flatlogic.github.io/awesome-bootstrap-checkbox/demo/-->
 		<link rel="stylesheet" href="css/bootstrap-datepicker3.css"> <!-- extraído de: https://uxsolutions.github.io/bootstrap-datepicker/-->
@@ -43,7 +43,11 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 
 <body>
 
-
+<style>
+.divUnSoloProducto{color: #949494!important;}
+.divUnSoloDescuento{color: #f54242!important;}
+.text-danger {color: #d9534f;}
+</style>
 <div id="wrapper">
 
 	<!-- Sidebar -->
@@ -91,7 +95,8 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 			<nav class="navbar navbar-fixed-top encoger">
 				<div class="container">
 					<div class="navbar-header ">
-					<a class="navbar-brand ocultar-mostrar-menu" href="#"><img id="imgLogoInfocat" class="img-responsive" src="images/logo.png" alt=""></a>
+						<a href="#!" class="btn btn-infocat ocultar-mostrar-menu"><i class="icofont icofont-navigation-menu"></i></a>
+						<a class="navbar-brand ocultar-mostrar-menu" href="#"><img id="imgLogoInfocat" class="img-responsive" src="images/logo.png" alt=""></a>
 							<button type="button" class="navbar-toggle collapsed" id="btnColapsador" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
 							<span class="sr-only">Toggle navigation</span>
 							<span class="icon-bar"></span>
@@ -136,53 +141,53 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 			if ($_SESSION['licencia']=='Ok'){ ?>
 				<!-- Contenido para licenciar -->
 				<div class="row container-fluid">
-				 	<h2 class="purple-text text-lighten-1" style=" display: inline-block;"><i class="icofont icofont-lens"></i> Cobro en caja - Casa de Barro <small class="deep-purple-text text-darken-4"><i class="icofont icofont-cube"></i> Libre</small> <small class="red-text text-darken-2"><i class="icofont icofont-cube"></i> Ocupado</small></h2> <button class="btn btn-success btn-lg btn-outline pull-right" id="btnObtenerEstadoMesas"><i class="icofont icofont-spoon-and-fork"></i> Actualizar mesas</button> <button class="btn btn-success btn-lg btn-outline pull-right hidden" id="btnRegresarAMesas"><i class="icofont icofont-spoon-and-fork"></i> Regresar a mesas</button>
+				 	<h2 class="purple-text text-lighten-1" style=" display: inline-block;"><i class="icofont icofont-lens"></i> Cobro en caja - Casa de Barro <small class="purple-text text-lighten-1"><i class="icofont icofont-cube"></i> Libre</small> <small class="red-text text-darken-2"><i class="icofont icofont-cube"></i> Ocupado</small></h2> <button class="btn btn-success btn-lg btn-outline pull-right" id="btnObtenerEstadoMesas"><i class="icofont icofont-spoon-and-fork"></i> Actualizar mesas</button> <button class="btn btn-success btn-lg btn-outline pull-right hidden" id="btnRegresarAMesas"><i class="icofont icofont-spoon-and-fork"></i> Regresar a mesas</button>
 				 	<button class="btn btn-warning btn-lg btn-outline pull-right" id="btnVerTickets" style="margin-right: 10px"><i class="icofont icofont-ui-copy"></i> Ver últimos tickets</button>
 				 </div>
 				<div class="row divMesas "> <span class="hidden" id="spanTipoCliente"></span>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="1"><i class="icofont icofont-food-cart"></i> Mesa 1</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="2"><i class="icofont icofont-food-cart"></i> Mesa 2</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="3"><i class="icofont icofont-food-cart"></i> Mesa 3</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="4"><i class="icofont icofont-food-cart"></i> Mesa 4</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="5"><i class="icofont icofont-food-cart"></i> Mesa 5</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="6"><i class="icofont icofont-food-cart"></i> Mesa 6</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="7"><i class="icofont icofont-food-cart"></i> Mesa 7</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="8"><i class="icofont icofont-food-cart"></i> Mesa 8</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="9"><i class="icofont icofont-food-cart"></i> Mesa 9</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="10"><i class="icofont icofont-food-cart"></i> Mesa 10</button></div>
+				<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="1"><i class="icofont icofont-food-cart"></i> Mesa 1</button></div>
+				<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="2"><i class="icofont icofont-restaurant-menu"></i> Mesa 2</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="3"><i class="icofont icofont-restaurant-menu"></i> Mesa 3</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="4"><i class="icofont icofont-restaurant-menu"></i> Mesa 4</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="5"><i class="icofont icofont-restaurant-menu"></i> Mesa 5</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="6"><i class="icofont icofont-restaurant-menu"></i> Mesa 6</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="7"><i class="icofont icofont-restaurant-menu"></i> Mesa 7</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="8"><i class="icofont icofont-restaurant-menu"></i> Mesa 8</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="9"><i class="icofont icofont-restaurant-menu"></i> Mesa 9</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="10"><i class="icofont icofont-restaurant-menu"></i> Mesa 10</button></div>
 					
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="11"><i class="icofont icofont-food-cart"></i> Mesa 11</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="12"><i class="icofont icofont-food-cart"></i> Mesa 12</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="13"><i class="icofont icofont-food-cart"></i> Mesa 13</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="14"><i class="icofont icofont-food-cart"></i> Mesa 14</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="15"><i class="icofont icofont-food-cart"></i> Mesa 15</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="16"><i class="icofont icofont-food-cart"></i> Mesa 16</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="17"><i class="icofont icofont-food-cart"></i> Mesa 17</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="18"><i class="icofont icofont-food-cart"></i> Mesa 18</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="19"><i class="icofont icofont-food-cart"></i> Mesa 19</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="20"><i class="icofont icofont-food-cart"></i> Mesa 20</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="11"><i class="icofont icofont-restaurant-menu"></i> Mesa 11</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="12"><i class="icofont icofont-restaurant-menu"></i> Mesa 12</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="13"><i class="icofont icofont-restaurant-menu"></i> Mesa 13</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="14"><i class="icofont icofont-restaurant-menu"></i> Mesa 14</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="15"><i class="icofont icofont-restaurant-menu"></i> Mesa 15</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="16"><i class="icofont icofont-restaurant-menu"></i> Mesa 16</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="17"><i class="icofont icofont-restaurant-menu"></i> Mesa 17</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="18"><i class="icofont icofont-restaurant-menu"></i> Mesa 18</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="19"><i class="icofont icofont-restaurant-menu"></i> Mesa 19</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="20"><i class="icofont icofont-restaurant-menu"></i> Mesa 20</button></div>
 
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="21"><i class="icofont icofont-food-cart"></i> Mesa 21</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="22"><i class="icofont icofont-food-cart"></i> Mesa 22</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="23"><i class="icofont icofont-food-cart"></i> Mesa 23</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="24"><i class="icofont icofont-food-cart"></i> Mesa 24</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="25"><i class="icofont icofont-food-cart"></i> Mesa 25</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="26"><i class="icofont icofont-food-cart"></i> Mesa 26</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="27"><i class="icofont icofont-food-cart"></i> Mesa 27</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="28"><i class="icofont icofont-food-cart"></i> Mesa 28</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="29"><i class="icofont icofont-food-cart"></i> Mesa 29</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="30"><i class="icofont icofont-food-cart"></i> Mesa 30</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="21"><i class="icofont icofont-restaurant-menu"></i> Mesa 21</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="22"><i class="icofont icofont-restaurant-menu"></i> Mesa 22</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="23"><i class="icofont icofont-restaurant-menu"></i> Mesa 23</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="24"><i class="icofont icofont-restaurant-menu"></i> Mesa 24</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="25"><i class="icofont icofont-restaurant-menu"></i> Mesa 25</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="26"><i class="icofont icofont-restaurant-menu"></i> Mesa 26</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="27"><i class="icofont icofont-restaurant-menu"></i> Mesa 27</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="28"><i class="icofont icofont-restaurant-menu"></i> Mesa 28</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="29"><i class="icofont icofont-restaurant-menu"></i> Mesa 29</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="30"><i class="icofont icofont-restaurant-menu"></i> Mesa 30</button></div>
 
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="31"><i class="icofont icofont-food-cart"></i> Mesa 31</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="32"><i class="icofont icofont-food-cart"></i> Mesa 32</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="33"><i class="icofont icofont-food-cart"></i> Mesa 33</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="34"><i class="icofont icofont-food-cart"></i> Mesa 34</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="35"><i class="icofont icofont-food-cart"></i> Mesa 35</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="36"><i class="icofont icofont-food-cart"></i> Mesa 36</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="37"><i class="icofont icofont-food-cart"></i> Mesa 37</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="38"><i class="icofont icofont-food-cart"></i> Mesa 38</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="39"><i class="icofont icofont-food-cart"></i> Mesa 39</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="40"><i class="icofont icofont-food-cart"></i> Mesa 40</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="31"><i class="icofont icofont-restaurant-menu"></i> Mesa 31</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="32"><i class="icofont icofont-restaurant-menu"></i> Mesa 32</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="33"><i class="icofont icofont-restaurant-menu"></i> Mesa 33</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="34"><i class="icofont icofont-restaurant-menu"></i> Mesa 34</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="35"><i class="icofont icofont-restaurant-menu"></i> Mesa 35</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="36"><i class="icofont icofont-restaurant-menu"></i> Mesa 36</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="37"><i class="icofont icofont-restaurant-menu"></i> Mesa 37</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="38"><i class="icofont icofont-restaurant-menu"></i> Mesa 38</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="39"><i class="icofont icofont-restaurant-menu"></i> Mesa 39</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="40"><i class="icofont icofont-restaurant-menu"></i> Mesa 40</button></div>
 				</div>
 
 		<div class="row DetalleMesa hidden">
@@ -219,6 +224,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 				<button class="btn btn-warning btn-lg btn-outline btn-block" id="btnCajaAgregarProducto"><i class="icofont icofont-bbq"></i> Agregar producto</button>
 				<button class="btn btn-danger btn-lg btn-outline btn-block" id="btnCancelarPedido"><i class="icofont icofont-close-circled"></i> Cancelar pedido</button>
 				<button class="btn btn-primary btn-lg btn-outline btn-block" id="btnMoverPedido"><i class="icofont icofont-paper"></i> Mover mesa</button>
+				<!-- <button class="btn btn-danger btn-lg btn-outline btn-block" id="btnDsctoOcasional"><i class="icofont icofont-paper"></i> Agregar descuento</button> -->
 			</div>
 		</div>
 			<?php 
@@ -427,7 +433,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 		<div class="modal-body">
 			<p class="text-center">Estas por anular el pedido, deseamos saber: ¿Por qué deseas anular?</p>
 			<div class="container-fluid">
-				<div class="col-xs-8 col-xs-offset-2"><input type="text" class="form-control mayuscula" id="txtRazonAnular"></div>
+				<div class="col-xs-8 col-xs-offset-2"><input type="text" class="form-control mayuscula" id="txtRazonAnular" autocomplete="off"></div>
 			</div>
 			<div class="checkbox checkbox-success text-center">
 						<input id="chkReglas" class="styled" type="checkbox" value="">
@@ -443,6 +449,29 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 	</div>
 </div>
 
+<!-- Modal para: -->
+<div class='modal fade modalDescuentoEspecial' tabindex='-1' role='dialog' aria-hidden='true'>
+	<div class='modal-dialog modal-sm' >
+	<div class='modal-content '>
+		<div class='modal-header-danger'>
+			<button type='button' class='close' data-dismiss='modal' aria-label='Close' ><span aria-hidden='true'>&times;</span></button>
+			<h4 class='modal-tittle'> Agregar descuento</h4>
+		</div>
+		<div class='modal-body'>
+			<label for="">Descuento para «<span id="spanProdDscto"></span>»</label>
+			<label for="">Monto S/ <small><em>(Máximo 10% = S/. <span id="spanDsctoMaximo2"></span> )</em></small></label>
+			<input type="number" class="form-control input-lg text-center esMoneda" id="txtModalDescuento" autocomplete="off">
+			<label for="">Motivo de descuento:</label>
+			<input type="text" class="form-control input-lg text-center mayuscula" id="txtModalObsDscto" autocomplete="off">
+			<label class="text-danger text-center labelError hidden" for=""><i class="icofont icofont-animal-squirrel"></i> Lo siento! <span class=mensaje></span></label>
+		</div>
+		<div class='modal-footer'>
+			<button type='button' class='btn btn-default' data-dismiss='modal'>Cerrar</button>
+			<button type='button' class='btn btn-danger btn-outline' id="btnAplicarDscto">Agregar descuento</button>
+		</div>
+		</div>
+	</div>
+</div>
 		
 <!-- Modal para indicar que falta completar campos o datos con error -->
 	<div class="modal fade modal-faltaCompletar" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
@@ -501,9 +530,9 @@ $('#btnObtenerEstadoMesas').click(function () {
 		//console.log(resp)
 		$.each(JSON.parse(resp), function (i, dato) {// console.log(dato)
 			if(dato.estadoMesa=='mesaOcupado'){
-				$(`#${dato.idMesa}`).removeClass('mesaLibre').removeClass('btn-morado').addClass(`${dato.estadoMesa}`).addClass('btn-rojoFresa').find('i').removeClass('icofont-food-cart').addClass('icofont-read-book-alt');
+				$(`#${dato.idMesa}`).removeClass('mesaLibre').removeClass('btn-infocat').addClass(`${dato.estadoMesa}`).addClass('btn-rojoFresa').find('i').removeClass('icofont-food-cart').addClass('icofont-spoon-and-fork');
 			}else{
-				$(`#${dato.idMesa}`).removeClass('mesaOcupado').removeClass('btn-rojoFresa').addClass(`${dato.estadoMesa}`).addClass('btn-morado').find('i').removeClass('icofont-read-book-alt').addClass('icofont-food-cart');;
+				$(`#${dato.idMesa}`).removeClass('mesaOcupado').removeClass('btn-rojoFresa').addClass(`${dato.estadoMesa}`).addClass('btn-infocat').find('i').removeClass('icofont-spoon-and-fork').addClass('icofont-food-cart');;
 			}
 		});
 	});
@@ -523,7 +552,11 @@ $('.btnMesa').click(function () {
 				if(dato.observacCocina==''){$('#pDetCocina').parent().addClass('hidden');}else{$('#pDetCocina').text(dato.observacCocina).parent().removeClass('hidden');}
 				if(dato.observacBar==''){$('#pDetBar').parent().addClass('hidden');}else{$('#pDetBar').text(dato.observacBar).parent().removeClass('hidden');}
 				$('#idPedidoMesa').text(dato.idPedido);
-				$('.contanedorDivsProductos').append(`<div class="divUnSoloProducto row"><div class="col-xs-6"><button class="btn btn-danger btn-circle btn-NoLine btn-outline btnRemoverProducto" id="${dato.idProducto}"><i class="icofont icofont-close"></i></button> <h4 class="h4NombreProducto mayuscula" id="${dato.idProducto}">${dato.prodDescripcion}</h4> <span class="notaPed">${dato.pedNota}</span></div><div class="col-xs-3"><button class="btn btn-warning btn-circle btn-NoLine btnRestarProducto"><i class="icofont icofont-minus-circle"></i></button> <span class="cantidadProducto">${dato.pedCantidad}</span> <button class="btn btn-warning btn-circle btn-NoLine btnSumarProducto"><i class="icofont icofont-plus-circle"></i></button></div><div class="col-xs-2"><h5 class="h4precioProducto"><span class="valorUndProducto sr-only">${dato.prodPrecio}</span>S/. <span class="valorTotalProducto">${parseFloat(dato.subTotal).toFixed(2)}</span></h5></div> <div><button class="btn btn-success btn-outline btn-sm btnPrintHot" data-quees="${dato.tpDivBebidaCocina}" ><i class="icofont icofont-print"></i></button></div></div>`);
+				if(dato.prodPrecio>0){
+					$('.contanedorDivsProductos').append(`<div class="divUnSoloProducto row"><div class="col-xs-6"><button class="btn btn-danger btn-circle btn-NoLine btn-outline btnRemoverProducto" id="${dato.idProducto}"><i class="icofont icofont-close"></i></button> <h4 class="h4NombreProducto mayuscula" id="${dato.idProducto}">${dato.prodDescripcion}</h4> <span class="notaPed">${dato.pedNota}</span></div><div class="col-xs-3"><button class="btn btn-warning btn-circle btn-NoLine btnRestarProducto"><i class="icofont icofont-minus-circle"></i></button> <span class="cantidadProducto">${dato.pedCantidad}</span> <button class="btn btn-warning btn-circle btn-NoLine btnSumarProducto"><i class="icofont icofont-plus-circle"></i></button></div><div class="col-xs-2"><h5 class="h4precioProducto"><span class="valorUndProducto sr-only">${dato.prodPrecio}</span>S/. <span class="valorTotalProducto">${parseFloat(dato.subTotal).toFixed(2)}</span></h5></div> <div><button class="btn btn-success btn-outline btn-sm btnSinBorde btnPrintHot" data-quees="${dato.tpDivBebidaCocina}" ><i class="icofont icofont-print"></i></button><button class="btn btn-danger btn-outline btn-sm btnSinBorde btnDsctoHot" ><i class="icofont icofont-swoosh-down"></i></button></div></div>`);
+				}else{
+					$('.contanedorDivsProductos').append(`<div class="divUnSoloProducto divUnSoloDescuento row"><div class="col-xs-6"><button class="btn btn-danger btn-circle btn-NoLine btn-outline btnRemoverProducto" id="${dato.idProducto}"><i class="icofont icofont-close"></i></button> <span class="h4NombreProducto mayuscula " id="${dato.idProducto}">${dato.pedNota}:</span> <em class="mayuscula notaPed">${dato.prodDescripcion}</em></div><div class="col-xs-3"></div><div class="col-xs-2"><h5 class="h4precioProducto"><span class="valorUndProducto sr-only">${dato.prodPrecio}</span>S/. <span class="valorTotalProducto">${parseFloat(dato.subTotal).toFixed(2)}</span></h5></div> </div>`);
+				}
 				
 				var promos= listarPromos(dato.idProducto, dato.pedCantidad);
 				
@@ -561,10 +594,12 @@ $('#txtCuantoPagaCliente').keypress(function (e) {
 })
 $('#btnCancelarPedido').click(function () {
 	$('#txtRazonAnular').val('');
-	$('#chkReglas:checked').val('')
+	//$('#chkReglas:checked').val('');
+	$('#chkReglas').prop('checked', false);
 	$('.modal-deseasAnular').modal('show');
 });
 $('body').on('click', '.btnRemoverProducto',function () {
+	var padre= $(this).parent().parent();
 	var idEliminar=$(this).attr('id');
 	//var contenedor=$(this).parent().parent();
 	var cantDivs=$('.contanedorDivsProductos .divUnSoloProducto ').length;
@@ -572,14 +607,22 @@ $('body').on('click', '.btnRemoverProducto',function () {
 		$('#btnCancelarPedido').click();
 	}
 	else{
-		$.ajax({url:'php/eliminarProductoPedido.php', type:"POST", data:{idProd:idEliminar , mesa:$('#idMesaSpan').text(), idUser:$.JsonUsuario.idUsuario }}).done(function (resp) { console.log(resp)
+		if( padre.hasClass('divUnSoloDescuento') ){
+			$.ajax({url:'php/eliminarDescuentoPedido.php', type:"POST", data:{idPed:$('#idPedidoMesa').text() , idProd:idEliminar, descto: padre.find('.valorUndProducto').text() }}).done(function (resp) {console.log(resp)
+				if(resp==true){
+					padre.remove();
+				}
+			});
+		}
+		else{
+			$.ajax({url:'php/eliminarProductoPedido.php', type:"POST", data:{idProd:idEliminar , mesa:$('#idMesaSpan').text(), idUser:$.JsonUsuario.idUsuario }}).done(function (resp) { console.log(resp)
 			if(parseInt(resp)>0){
 				var vTotalProd=parseFloat($(`.contanedorDivsProductos`).find(`#${idEliminar}`).parent().parent().find('.valorTotalProducto').text());
 				var vTotalPed=parseFloat($('#idTotalSpan').text());
 				$('#idTotalSpan').text(parseFloat(vTotalPed-vTotalProd).toFixed(2));
 				$(`.contanedorDivsProductos`).find(`#${idEliminar}`).parent().parent().remove();
 			}
-		});
+		});}
 	}
 });
 
@@ -612,7 +655,7 @@ $('#btnClienteSimple').click(function(){
 	$('.modal-finalizarPedidoAVenta').modal('show');
 
 });
-function imprimirCajaCuenta() {
+function imprimirCajaCuenta() { console.log('hola')
 	console.log($.ticket.length);
 	$.each($('.divUnSoloProducto'), function (i, dato) {
 		$.ticket.push({'id': $(dato).find('.h4NombreProducto').attr('id'), 'nomProducto': $(dato).find('.cantidadProducto').text() +' Und. '+ $(dato).find('.h4NombreProducto').text() , 'cant': $(dato).find('.cantidadProducto').text(), 'sub': $(dato).find('.valorTotalProducto').text() });
@@ -651,8 +694,8 @@ $('#btbSalvarVenta').click(function () {
 		$('.modal-finalizarPedidoAVenta .labelError').removeClass('hidden').find('.mensaje').text('No se puede guardar un monto menor a la cuenta.');	}
 	else{
 		
-		$.ajax({url:'php/insertarVentaFinal.php', type: 'POST', data: {mesa: $('#idMesaSpan').text(),cuantoCobra: $('#txtCuantoPagaCliente').val(),idUser: $.JsonUsuario.idUsuario, idCli : $('#spanTipoCliente').text(), montoTotal: $('#idTotalSpan').text() }}).done(function (resp) { //console.log(resp)
-			if(parseInt(resp)>0){
+		$.ajax({url:'php/insertarVentaFinal.php', type: 'POST', data: {mesa: $('#idMesaSpan').text(),cuantoCobra: $('#txtCuantoPagaCliente').val(),idUser: $.JsonUsuario.idUsuario, idCli : $('#spanTipoCliente').text(), montoTotal: $('#idTotalSpan').text() }}).done(function (resp) { console.log(resp)
+			if(parseInt(resp)==true){
 				var vuelto= parseFloat($('#txtCuantoPagaCliente').val()-$('#idTotalSpan').text()).toFixed(2);
 
 				$('.modal-finalizarPedidoAVenta').modal('hide');
@@ -670,8 +713,8 @@ function imprimirCuentaCliente() {
 	$.ticket=[];
 	var cantidadRowTicket=$('.contanedorDivsProductos .divUnSoloProducto').length; //console.log(cantidadRowTicket)
 	$.each($('.contanedorDivsProductos .divUnSoloProducto'), function (i, dato) {
-		if($(dato).hasClass('soyDscto')){
-			$.ticket.push({'id': $(dato).find('.h4NombreProducto').attr('id'), 'nomProducto': $(dato).find('.cantidadProducto').text() +' Comb. '+ $(dato).find('.h4NombreProducto').text() , 'cant': $(dato).find('.cantidadProducto').text(), 'sub': '-'+$(dato).find('.montoDescontar').text() });
+		if($(dato).hasClass('divUnSoloDescuento')){
+			$.ticket.push({'id': $(dato).find('.h4NombreProducto').attr('id'), 'nomProducto': $(dato).find('.cantidadProducto').text() +'Dcto. '+ $(dato).find('.h4NombreProducto').text() , 'cant': $(dato).find('.cantidadProducto').text(), 'sub': $(dato).find('.valorTotalProducto').text() }); //montoDescontar
 		}else{
 			$.ticket.push({'id': $(dato).find('.h4NombreProducto').attr('id'), 'nomProducto': $(dato).find('.cantidadProducto').text() +' Und. '+ $(dato).find('.h4NombreProducto').text() , 'cant': $(dato).find('.cantidadProducto').text(), 'sub': $(dato).find('.valorTotalProducto').text() });
 		}
@@ -814,7 +857,7 @@ $('.modal-buscarProducto').on('click', '.btnAgregarProducto', function () {
 	if(padreMayor=='RegTodosBebidas'){platoProd='divProdBebida'}else{platoProd='divFondos';}
 	var preccio=parseFloat(contenedor.find('.valorProducto').text());
 	if($('.contanedorDivsProductos').find('#'+idProd).html()==null){
-		$('.contanedorDivsProductos').append(`<div class="divUnSoloProducto row"><div class="col-xs-6"><button class="btn btn-danger btn-circle btn-NoLine btn-outline btnRemoverProducto" id="${idProd}"><i class="icofont icofont-close"></i></button> <h4 class="h4NombreProducto mayuscula" id="${idProd}">${contenedor.find('.h4NombreProducto').text()}</h4> </div><div class="col-xs-3"><button class="btn btn-warning btn-circle btn-NoLine btnRestarProducto"><i class="icofont icofont-minus-circle"></i></button> <span class="cantidadProducto">1</span> <button class="btn btn-warning btn-circle btn-NoLine btnSumarProducto"><i class="icofont icofont-plus-circle"></i></button></div><div class="col-xs-2"><h5 class="h4precioProducto"><span class="valorUndProducto sr-only">${preccio.toFixed(2)}</span>S/. <span class="valorTotalProducto">${preccio.toFixed(2)}</span></h5></div> <div><button class="btn btn-success btn-outline btn-sm btnPrintHot"  data-quees="${platoProd}" ><i class="icofont icofont-print"></i></button></div></div>`);
+		$('.contanedorDivsProductos').append(`<div class="divUnSoloProducto row"><div class="col-xs-6"><button class="btn btn-danger btn-circle btn-NoLine btn-outline btnRemoverProducto" id="${idProd}"><i class="icofont icofont-close"></i></button> <h4 class="h4NombreProducto mayuscula" id="${idProd}">${contenedor.find('.h4NombreProducto').text()}</h4> </div><div class="col-xs-3"><button class="btn btn-warning btn-circle btn-NoLine btnRestarProducto"><i class="icofont icofont-minus-circle"></i></button> <span class="cantidadProducto">1</span> <button class="btn btn-warning btn-circle btn-NoLine btnSumarProducto"><i class="icofont icofont-plus-circle"></i></button></div><div class="col-xs-2"><h5 class="h4precioProducto"><span class="valorUndProducto sr-only">${preccio.toFixed(2)}</span>S/. <span class="valorTotalProducto">${preccio.toFixed(2)}</span></h5></div> <div><button class="btn btn-success btn-outline btn-sm btnPrintHot"  data-quees="${platoProd}" ><i class="icofont icofont-print"></i></button><button class="btn btn-danger btn-outline btn-sm btnSinBorde btnDsctoHot" ><i class="icofont icofont-swoosh-down"></i></button></div></div>`);
 		$.ajax({url: 'php/insertarPedidoDetalle.php', type:'POST', data:{idProd:idProd ,  precio:preccio, cantidad:1,  idPedido: $('#idPedidoMesa').text(), nota: '' }}).done(function (resp) { console.log(resp)
 				var response=JSON.parse(resp)[0];
 				if(response.respuesta=='Y'){
@@ -831,7 +874,7 @@ $('.modal-buscarProducto').on('click', '.btnAgregarProducto', function () {
 });
 $('#btnAnularPedidov2').click(function () {
 	if( $('#txtRazonAnular').val()=='' ){$('.modal-deseasAnular .labelError').removeClass('hidden').find('.mensaje').text('Debe incluir una razón breve para guardar');}
-	else if( !($('#chkReglas:checked').val()=='')){
+	else if( !( $('#chkReglas').prop('checked') )){ //$('#chkReglas:checked').val()==''
 		$('.modal-deseasAnular .labelError').removeClass('hidden').find('.mensaje').text('Tiene que aceptar los cambios que se harán.');
 	}else{
 		$('.modal-deseasAnular .labelError').addClass('hidden');
@@ -929,6 +972,37 @@ function listarPromos(idProduc, cantidad) {
 
 	});
 }
+$('.modalDescuentoEspecial').on('shown.bs.modal', function () {
+	$('#txtModalDescuento').val('').focus();
+	var maximo= parseFloat($('#idTotalSpan').text())*0.1;
+	$('#spanDsctoMaximo2').text( maximo.toFixed(2));
+});
+$('.contanedorDivsProductos').on('click', '.btnDsctoHot', function (e) {
+	$('#spanProdDscto').text( $(this).parent().parent().find('.h4NombreProducto').text() );
+	$('#spanProdDscto').attr('data-idPro', $(this).parent().parent().find('.h4NombreProducto').attr('id') );
+	$('#spanProdDscto').attr('data-nomPro', $(this).parent().parent().find('.h4NombreProducto').text() );
+	$('.modalDescuentoEspecial').modal('show');
+});
+$('#btnAplicarDscto').click(function() {
+	var maximo= parseFloat($('#idTotalSpan').text())*0.1;
+	if( $('#txtModalDescuento').val()<= maximo ){
+		$.ajax({url: 'php/insertarPromocionEspecial.php', type: 'POST', data: {
+			pedid: $('#idPedidoMesa').text(),
+			idProd: $('#spanProdDscto').attr('data-idPro'),
+			montoDscto: $('#txtModalDescuento').val(),
+			obsDscto: $('#txtModalObsDscto').val()
+		 }}).done(function(resp) {
+			$('.modalDescuentoEspecial').modal('hide');
+
+			$('.contanedorDivsProductos').append(`<div class="divUnSoloProducto divUnSoloDescuento row"><div class="col-xs-6"><button class="btn btn-danger btn-circle btn-NoLine btn-outline btnRemoverProducto" id="${$('#spanProdDscto').attr('data-idPro')}"><i class="icofont icofont-close"></i></button> <span class="h4NombreProducto mayuscula " id="${$('#spanProdDscto').attr('data-idPro')}">${$('#txtModalObsDscto').val()}:</span> <em class="mayuscula notaPed">${$('#spanProdDscto').attr('data-nomPro')}</em></div><div class="col-xs-3"></div><div class="col-xs-2"><h5 class="h4precioProducto"><span class="valorUndProducto sr-only">-${$('#txtModalDescuento').val()}</span>S/. <span class="valorTotalProducto">-${$('#txtModalDescuento').val()}</span></h5></div> </div>`);
+			var total=parseFloat(parseFloat($('#idTotalSpan').text())-$('#txtModalDescuento').val());
+			$('#idTotalSpan').text(total.toFixed(2));
+
+		});
+	}else{
+		$('.modalDescuentoEspecial .labelError').removeClass('hidden').find('.mensaje').text('Valor máximo para descontar es de S/ ' + maximo.toFixed(2));
+	}
+});
 // SELECT DATE_FORMAT(`cajaFechaRegistro`,'%d/%m/%Y') FROM `caja`
 </script>
 

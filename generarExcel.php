@@ -264,17 +264,18 @@ $objPHPExcel->setActiveSheetIndex(4)
 			->setCellValue('B4', 'CANT.')
 			->setCellValue('C4', 'DETALLE')
 			->setCellValue('D4', 'PRECIO')
-			->setCellValue('E4', 'HORA')
-			->setCellValue('F4', 'TOTAL')
-			->mergeCells('A1:F1')
-			->mergeCells('A2:F2')
+			->setCellValue('E4', 'PRECIO')
+			->setCellValue('F4', 'HORA')
+			->setCellValue('G4', 'TOTAL')
+			->mergeCells('A1:G1')
+			->mergeCells('A2:G2')
 			->setTitle('Detallado');
 $objPHPExcel->getActiveSheet()->getStyle('A1')->getFont()->setSize(20);
-$objPHPExcel->getActiveSheet()->getStyle('A1:F4')->getFont()->setBold(true);
-$objPHPExcel->getActiveSheet()->getStyle('A4:F4')->getFont()->getColor()->setARGB(PHPExcel_Style_Color::COLOR_WHITE);
-$objPHPExcel->getActiveSheet()->getStyle('A1:F4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-$objPHPExcel->getActiveSheet()->getStyle('A4:F4')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
-$objPHPExcel->getActiveSheet()->getStyle('A4:F4')->getFill()->getStartColor()->setARGB('FF404040');
+$objPHPExcel->getActiveSheet()->getStyle('A1:G4')->getFont()->setBold(true);
+$objPHPExcel->getActiveSheet()->getStyle('A4:G4')->getFont()->getColor()->setARGB(PHPExcel_Style_Color::COLOR_WHITE);
+$objPHPExcel->getActiveSheet()->getStyle('A1:G4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+$objPHPExcel->getActiveSheet()->getStyle('A4:G4')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
+$objPHPExcel->getActiveSheet()->getStyle('A4:G4')->getFill()->getStartColor()->setARGB('FF404040');
 //Seteando espaciado a columnas
 $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(13);
 $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(7);
@@ -282,6 +283,7 @@ $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
 $objPHPExcel->getActiveSheet()->getColumnDimension('D')->setWidth(17);
 $objPHPExcel->getActiveSheet()->getColumnDimension('E')->setWidth(12);
 $objPHPExcel->getActiveSheet()->getColumnDimension('F')->setWidth(17);
+$objPHPExcel->getActiveSheet()->getColumnDimension('G')->setWidth(17);
 
 
 $consulta5 = $conection->prepare("call reporteCajaPorDetalle('".$_POST['fechaIni']."', '".$_POST['fechaFin']."');");
@@ -290,49 +292,61 @@ $resultado5 = $consulta5->get_result();
 $i=5;
 $numLineas=$resultado5->num_rows; $sumaCant=0;
 $repetido=0;
-while ($row = $resultado5->fetch_array(MYSQLI_ASSOC))
-{
+while ($row = $resultado5->fetch_array(MYSQLI_ASSOC)){
 	if($i==5){
+		$idAnterior=$row['idPedido'];
 		$objPHPExcel->setActiveSheetIndex(4)->setCellValue('A'.$i, 'Mesa '.$row['idMesa']);
+		$objPHPExcel->getActiveSheet()->getStyle('A'.$i)->getFont()->getColor()->applyFromArray(array('rgb' => 'E26B0A'));
 		$objPHPExcel->setActiveSheetIndex(4)->setCellValue('B'.$i, $row['pedCantidad']);
 		$objPHPExcel->setActiveSheetIndex(4)->setCellValue('C'.$i, ucwords($row['prodDescripcion']));
 		$objPHPExcel->setActiveSheetIndex(4)->setCellValue('D'.$i, $row['pedPrecio']);
-		$objPHPExcel->setActiveSheetIndex(4)->setCellValue('E'.$i, $row['Hora']);
-		$objPHPExcel->setActiveSheetIndex(4)->setCellValue('F'.$i, $row['cajaMontoTotal']);
+		$objPHPExcel->setActiveSheetIndex(4)->setCellValue('E'.$i, $row['pedSubtotal']);
+		$objPHPExcel->setActiveSheetIndex(4)->setCellValue('F'.$i, $row['Hora']);
+		$objPHPExcel->setActiveSheetIndex(4)->setCellValue('G'.$i, $row['cajaMontoTotal']);
 	}else{
-
-		if($row['idPedido']==$idAnterior){
+		$nuevo=$row['idPedido'];
+		if($idAnterior==$nuevo){
 			$repetido++;
 			$objPHPExcel->setActiveSheetIndex(4)->setCellValue('B'.$i, $row['pedCantidad']);
-			$objPHPExcel->setActiveSheetIndex(4)->setCellValue('C'.$i, ucwords($row['prodDescripcion']));
+			$objPHPExcel->setActiveSheetIndex(4)->setCellValue('C'.$i, ucwords($row['prodDescripcion']) );
 			$objPHPExcel->setActiveSheetIndex(4)->setCellValue('D'.$i, $row['pedPrecio']);
-			$objPHPExcel->setActiveSheetIndex(4)->setCellValue('E'.$i, $row['Hora']);
+			$objPHPExcel->setActiveSheetIndex(4)->setCellValue('E'.$i, $row['pedSubtotal']);
+			$objPHPExcel->setActiveSheetIndex(4)->setCellValue('F'.$i, $row['Hora']);
 		}
 		else{
+
+			// if($repetido>0){
+			// 	$mezclar1='A'.($i-$repetido).':A'.$i;
+			// 	$mezclar2='F'.($i-$repetido).':F'.$i;
+			// 	$mezclar3='E'.($i-$repetido).':E'.$i;
+			// 	$objPHPExcel->setActiveSheetIndex(4)->setCellValue('A'.($i-$repetido), 'Mesa '.$row['idMesa']);
+			// 	$objPHPExcel->setActiveSheetIndex(4)->setCellValue('F'.($i-$repetido), $row['cajaMontoTotal']);
+			// 	$objPHPExcel->setActiveSheetIndex(4)->setCellValue('F'.($i), '');
+			// 	$objPHPExcel->getActiveSheet()->mergeCells($mezclar1);
+			// 	$objPHPExcel->getActiveSheet()->mergeCells($mezclar2);
+			// 	$objPHPExcel->getActiveSheet()->mergeCells($mezclar3);
+			// }
+
+			$idAnterior=$nuevo;
+			$repetido =0;
 			$objPHPExcel->setActiveSheetIndex(4)->setCellValue('A'.$i, 'Mesa '.$row['idMesa']);
+			$objPHPExcel->getActiveSheet()->getStyle('A'.$i)->getFont()->getColor()->applyFromArray(array('rgb' => 'E26B0A'));
 			$objPHPExcel->setActiveSheetIndex(4)->setCellValue('B'.$i, $row['pedCantidad']);
-			$objPHPExcel->setActiveSheetIndex(4)->setCellValue('C'.$i, ucwords($row['prodDescripcion']));
+			$objPHPExcel->setActiveSheetIndex(4)->setCellValue('C'.$i, ucwords($row['prodDescripcion']) );
 			$objPHPExcel->setActiveSheetIndex(4)->setCellValue('D'.$i, $row['pedPrecio']);
-			$objPHPExcel->setActiveSheetIndex(4)->setCellValue('E'.$i, $row['Hora']);
-			$objPHPExcel->setActiveSheetIndex(4)->setCellValue('F'.$i, $row['cajaMontoTotal']);
-
-			if($repetido<>0){
-				$mezclar1='A'.($i-$repetido).':A'.$i;
-				$mezclar2='F'.($i-$repetido).':F'.$i;
-				$mezclar3='E'.($i-$repetido).':E'.$i;
-				$objPHPExcel->setActiveSheetIndex(4)->setCellValue('A'.($i-$repetido), 'Mesa '.$row['idMesa']);
-				$objPHPExcel->setActiveSheetIndex(4)->setCellValue('F'.($i-$repetido), $row['cajaMontoTotal']);
-				$objPHPExcel->setActiveSheetIndex(4)->setCellValue('F'.($i), '');
-				$objPHPExcel->getActiveSheet()->mergeCells($mezclar1);
-				$objPHPExcel->getActiveSheet()->mergeCells($mezclar2);
-				$objPHPExcel->getActiveSheet()->mergeCells($mezclar3);
-			}
-			$repetido=0;
-			
+			$objPHPExcel->setActiveSheetIndex(4)->setCellValue('E'.$i, $row['pedSubtotal']);
+			$objPHPExcel->setActiveSheetIndex(4)->setCellValue('F'.$i, $row['Hora']);
+			$objPHPExcel->setActiveSheetIndex(4)->setCellValue('G'.$i, $row['cajaMontoTotal']);	
 		}
-
-
 	}
+	if($row['pedSubtotal']>0){
+		$objPHPExcel->getActiveSheet()->getStyle('D'.$i)->getFont()->getColor()->applyFromArray(array('rgb' => '03229D'));
+		$objPHPExcel->getActiveSheet()->getStyle('E'.$i)->getFont()->getColor()->applyFromArray(array('rgb' => '03229D'));
+	}else{
+		$objPHPExcel->getActiveSheet()->getStyle('D'.$i)->getFont()->getColor()->applyFromArray(array('rgb' => 'E10531'));
+		$objPHPExcel->getActiveSheet()->getStyle('E'.$i)->getFont()->getColor()->applyFromArray(array('rgb' => 'E10531'));
+	}
+	
 	$objPHPExcel->getActiveSheet()->getStyle('A'.$i)->applyFromArray($styleThinBlackBorderOutline);
 	$objPHPExcel->getActiveSheet()->getStyle('B'.$i)->applyFromArray($styleThinBlackBorderOutline);
 	
@@ -341,25 +355,32 @@ while ($row = $resultado5->fetch_array(MYSQLI_ASSOC))
 	$objPHPExcel->getActiveSheet()->getStyle('C'.$i)->getAlignment()->setIndent(1);
 	$objPHPExcel->getActiveSheet()->getStyle('D'.$i)->getNumberFormat()->setFormatCode('_("$"* #,##0.00_);_("$"* \(#,##0.00\);_("$"* "-"??_);_(@_)');
 	$objPHPExcel->getActiveSheet()->getStyle('D'.$i)->applyFromArray($styleThinBlackBorderOutline);
-	$objPHPExcel->getActiveSheet()->getStyle('E'.$i)->getAlignment()->setIndent(1);
+	$objPHPExcel->getActiveSheet()->getStyle('E'.$i)->getNumberFormat()->setFormatCode('_("$"* #,##0.00_);_("$"* \(#,##0.00\);_("$"* "-"??_);_(@_)');
 	$objPHPExcel->getActiveSheet()->getStyle('E'.$i)->applyFromArray($styleThinBlackBorderOutline);
-	$objPHPExcel->getActiveSheet()->getStyle('F'.$i)->getNumberFormat()->setFormatCode('_("$"* #,##0.00_);_("$"* \(#,##0.00\);_("$"* "-"??_);_(@_)');
+	$objPHPExcel->getActiveSheet()->getStyle('F'.$i)->getAlignment()->setIndent(1);
 	$objPHPExcel->getActiveSheet()->getStyle('F'.$i)->applyFromArray($styleThinBlackBorderOutline);
+	$objPHPExcel->getActiveSheet()->getStyle('G'.$i)->getNumberFormat()->setFormatCode('_("$"* #,##0.00_);_("$"* \(#,##0.00\);_("$"* "-"??_);_(@_)');
+	$objPHPExcel->getActiveSheet()->getStyle('G'.$i)->applyFromArray($styleThinBlackBorderOutline);
 	$objPHPExcel->getActiveSheet()->getStyle('A')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
-	$objPHPExcel->getActiveSheet()->getStyle('E')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
 	$objPHPExcel->getActiveSheet()->getStyle('F')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+	$objPHPExcel->getActiveSheet()->getStyle('G')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
 
 	$sumaCant+=$row['cajaMontoTotal'];
+	
 	if($numLineas==$i-4){
-		$objPHPExcel->getActiveSheet()->setCellValue('F'.($i+1), '=SUM(F5:F'.$i.')');
-		$objPHPExcel->getActiveSheet()->getStyle('F'.($i+1))->applyFromArray($styleThinBlackBorderOutline);
-		$objPHPExcel->getActiveSheet()->getStyle('F'.($i+1))->getFont()->setBold(true);
-		$objPHPExcel->getActiveSheet()->getStyle('F'.($i+1))->getNumberFormat()->setFormatCode('_("$"* #,##0.00_);_("$"* \(#,##0.00\);_("$"* "-"??_);_(@_)');
+	
+
+
+		$objPHPExcel->getActiveSheet()->setCellValue('G'.($i+1), '=SUM(G5:F'.$i.')');
+		$objPHPExcel->getActiveSheet()->getStyle('G'.($i+1))->applyFromArray($styleThinBlackBorderOutline);
+		$objPHPExcel->getActiveSheet()->getStyle('G'.($i+1))->getFont()->setBold(true);
+		$objPHPExcel->getActiveSheet()->getStyle('G'.($i+1))->getNumberFormat()->setFormatCode('_("$"* #,##0.00_);_("$"* \(#,##0.00\);_("$"* "-"??_);_(@_)');
 		$objPHPExcel->getActiveSheet()->setCellValue('A'.($i+3), 'Emitido el '. $_POST['hoy']);
 		$objPHPExcel->getActiveSheet()->getStyle('A'.($i+3))->getFont()->setSize(9);
 	}
-	$idAnterior=$row['idPedido'];
+//	$idAnterior=$row['idPedido'];
 	$i++;
+	
 }
 $consulta5->fetch();
 $consulta5->close();

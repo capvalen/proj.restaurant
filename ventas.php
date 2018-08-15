@@ -95,6 +95,7 @@ ondragstart="return false" onMouseOver="window.status='..mensaje personal .. '; 
 			<nav class="navbar navbar-fixed-top encoger">
 				<div class="container">
 					<div class="navbar-header ">
+					<a href="#!" class="btn btn-infocat ocultar-mostrar-menu"><i class="icofont icofont-navigation-menu"></i></a>
 					<a class="navbar-brand ocultar-mostrar-menu" href="#"><img id="imgLogoInfocat" class="img-responsive" src="images/logo.png" alt=""></a>
 							<button type="button" class="navbar-toggle collapsed" id="btnColapsador" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
 							<span class="sr-only">Toggle navigation</span>

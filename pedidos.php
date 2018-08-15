@@ -12,80 +12,100 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 	<title>Pedidos - Infocat Snack</title>
 	<link rel="shortcut icon" href="images/peto.png?version=1.0" />
 	<link rel="stylesheet" href="css/bootstrap.min.css">
-	<link rel="stylesheet" href="css/estilosElementosv2.css?version=1.0.5">
-	<link rel="stylesheet" href="css/snack.css?version=1.0.4">
+	<link rel="stylesheet" href="css/estilosElementosv2.css?version=1.0.7">
+	<link rel="stylesheet" href="css/snack.css?version=1.0.5">
 	<link rel="stylesheet" href="css/icofont.css">
 	<link rel="stylesheet" href="css/toastr.css?version=1.0.2"> <!-- extraído de: http://codeseven.github.io/toastr/demo.html-->
-
 </head>
 <body>
 <style>
 	.divUnSoloProducto, .divUnSoloProductoDisponible{padding-top: 5px; padding-bottom: 5px; margin-right: 0px; margin-left: 0px;}
 	.divUnSoloProducto:hover,.divUnSoloProductoDisponible:hover{background-color: #f3f3f3; transition: all 0.4s ease-in-out;}
 	/*.divUnSoloProducto:hover{background-color: transparent!important;}*/
-	.divPrincipal{margin-top:0px!important;}
+	.divPrincipal{margin-top:0px!important;
+		background: #e6e6e6;
+    border-radius: 0;}
 	.badge{background-color: #874cea;}
+	#divMesas, #divPedido{
+		margin-right: -15px;
+    margin-left: -15px;
+    background: white;
+    border: 1px solid #bdbdbd;
+    border-radius: 10px;
+    margin: 10px 1px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+	}
+	h2{color: #636363;}
+	h3{color: #828282;}
+	.btnMesa{border-radius: 3px;}
+	
+	.smallMozo{font-size: 51%;color: #afadad}
+	footer{padding: 10px;
+		color: white;
+    background-color: #A35BB4;}
+	footer a{color: white;}
 </style>
 
 <div class="container-fluid divPrincipal noselect" >
-
+<!-- <button class="btn btn-block btn-success" onclick="mobileConsole.init();"><i class="fa fa-caret-square-o-right" aria-hidden="true"></i> open mobileConsole</button> -->
 	<?php 
 	if ($_SESSION['licencia']=='Ok'){ ?>
 		<!-- Contenido para licenciar -->
 		<div class="row" id="divMesas">
-		<div class="container-fluid  text-center" ><h2 style="color: #442e9e; display: inline-block;"><i class="icofont icofont-waiter-alt"></i> Pedidos en Casa de Barro <small class="mayuscula">- <?php echo $_SESSION['Atiende']; ?></small></h2>
+		<div class="container-fluid  text-center" ><h2 style="color: #636363; display: inline-block;"><i class="icofont icofont-waiter-alt"></i> Pedidos en Casa de Barro 1<small class="mayuscula smallMozo" id='smallAtiende'><br><?php echo $_SESSION['Atiende']; ?></small></h2>
 		</div>
 		<div class=" container-fluid ">
-			<button style="margin-top: 20px; margin-right: 10px;" class="btn btn-success btn-outline pull-left" id="btnActualizarMesas2"><i class="icofont icofont-refresh"></i> Actualizar mesas</button>
-			<button style="margin-top: 20px; margin-right: 10px;" class="btn btn-danger btn-outline pull-right" id="btnCerrarSesion"><i class="icofont icofont-external-link"></i> Cerrar sesión</button>
+			<button style="margin-top: 20px; margin-right: 10px;" class="btn btn-success btn-outline pull-left btn-lg btnSinBorde" id="btnActualizarMesas2"><i class="icofont icofont-refresh"></i> Actualizar mesas</button>
+			<button style="margin-top: 20px; margin-right: 10px;" class="btn btn-danger btn-outline pull-right btn-lg btnSinBorde" id="btnCerrarSesion"><i class="icofont icofont-external-link"></i> Cerrar sesión</button>
 		</div>
-		<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="1"><i class="icofont icofont-food-cart"></i> Mesa 1</button></div>
-		<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="2"><i class="icofont icofont-food-cart"></i> Mesa 2</button></div>
-		<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="3"><i class="icofont icofont-food-cart"></i> Mesa 3</button></div>
-		<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="4"><i class="icofont icofont-food-cart"></i> Mesa 4</button></div>
-		<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="5"><i class="icofont icofont-food-cart"></i> Mesa 5</button></div>
-		<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="6"><i class="icofont icofont-food-cart"></i> Mesa 6</button></div>
-		<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="7"><i class="icofont icofont-food-cart"></i> Mesa 7</button></div>
-		<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="8"><i class="icofont icofont-food-cart"></i> Mesa 8</button></div>
-		<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="9"><i class="icofont icofont-food-cart"></i> Mesa 9</button></div>
-		<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="10"><i class="icofont icofont-food-cart"></i> Mesa 10</button></div>
+		<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="1"><i class="icofont icofont-food-cart"></i> Mesa 1</button></div>
+		<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="2"><i class="icofont icofont-food-cart"></i> Mesa 2</button></div>
+		<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="3"><i class="icofont icofont-food-cart"></i> Mesa 3</button></div>
+		<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="4"><i class="icofont icofont-food-cart"></i> Mesa 4</button></div>
+		<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="5"><i class="icofont icofont-food-cart"></i> Mesa 5</button></div>
+		<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="6"><i class="icofont icofont-food-cart"></i> Mesa 6</button></div>
+		<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="7"><i class="icofont icofont-food-cart"></i> Mesa 7</button></div>
+		<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="8"><i class="icofont icofont-food-cart"></i> Mesa 8</button></div>
+		<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="9"><i class="icofont icofont-food-cart"></i> Mesa 9</button></div>
+		<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="10"><i class="icofont icofont-food-cart"></i> Mesa 10</button></div>
 		
-		<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="11"><i class="icofont icofont-food-cart"></i> Mesa 11</button></div>
-		<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="12"><i class="icofont icofont-food-cart"></i> Mesa 12</button></div>
-		<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="13"><i class="icofont icofont-food-cart"></i> Mesa 13</button></div>
-		<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="14"><i class="icofont icofont-food-cart"></i> Mesa 14</button></div>
-		<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="15"><i class="icofont icofont-food-cart"></i> Mesa 15</button></div>
-		<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="16"><i class="icofont icofont-food-cart"></i> Mesa 16</button></div>
-		<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="17"><i class="icofont icofont-food-cart"></i> Mesa 17</button></div>
-		<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="18"><i class="icofont icofont-food-cart"></i> Mesa 18</button></div>
-		<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="19"><i class="icofont icofont-food-cart"></i> Mesa 19</button></div>
-		<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="20"><i class="icofont icofont-food-cart"></i> Mesa 20</button></div>
+		<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="11"><i class="icofont icofont-food-cart"></i> Mesa 11</button></div>
+		<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="12"><i class="icofont icofont-food-cart"></i> Mesa 12</button></div>
+		<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="13"><i class="icofont icofont-food-cart"></i> Mesa 13</button></div>
+		<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="14"><i class="icofont icofont-food-cart"></i> Mesa 14</button></div>
+		<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="15"><i class="icofont icofont-food-cart"></i> Mesa 15</button></div>
+		<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="16"><i class="icofont icofont-food-cart"></i> Mesa 16</button></div>
+		<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="17"><i class="icofont icofont-food-cart"></i> Mesa 17</button></div>
+		<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="18"><i class="icofont icofont-food-cart"></i> Mesa 18</button></div>
+		<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="19"><i class="icofont icofont-food-cart"></i> Mesa 19</button></div>
+		<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="20"><i class="icofont icofont-food-cart"></i> Mesa 20</button></div>
 
-		<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="21"><i class="icofont icofont-food-cart"></i> Mesa 21</button></div>
-		<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="22"><i class="icofont icofont-food-cart"></i> Mesa 22</button></div>
-		<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="23"><i class="icofont icofont-food-cart"></i> Mesa 23</button></div>
-		<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="24"><i class="icofont icofont-food-cart"></i> Mesa 24</button></div>
-		<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="25"><i class="icofont icofont-food-cart"></i> Mesa 25</button></div>
-		<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="26"><i class="icofont icofont-food-cart"></i> Mesa 26</button></div>
-		<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="27"><i class="icofont icofont-food-cart"></i> Mesa 27</button></div>
-		<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="28"><i class="icofont icofont-food-cart"></i> Mesa 28</button></div>
-		<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="29"><i class="icofont icofont-food-cart"></i> Mesa 29</button></div>
-		<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="30"><i class="icofont icofont-food-cart"></i> Mesa 30</button></div>
+		<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="21"><i class="icofont icofont-food-cart"></i> Mesa 21</button></div>
+		<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="22"><i class="icofont icofont-food-cart"></i> Mesa 22</button></div>
+		<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="23"><i class="icofont icofont-food-cart"></i> Mesa 23</button></div>
+		<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="24"><i class="icofont icofont-food-cart"></i> Mesa 24</button></div>
+		<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="25"><i class="icofont icofont-food-cart"></i> Mesa 25</button></div>
+		<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="26"><i class="icofont icofont-food-cart"></i> Mesa 26</button></div>
+		<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="27"><i class="icofont icofont-food-cart"></i> Mesa 27</button></div>
+		<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="28"><i class="icofont icofont-food-cart"></i> Mesa 28</button></div>
+		<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="29"><i class="icofont icofont-food-cart"></i> Mesa 29</button></div>
+		<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="30"><i class="icofont icofont-food-cart"></i> Mesa 30</button></div>
 
-		<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="31"><i class="icofont icofont-food-cart"></i> Mesa 31</button></div>
-		<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="32"><i class="icofont icofont-food-cart"></i> Mesa 32</button></div>
-		<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="33"><i class="icofont icofont-food-cart"></i> Mesa 33</button></div>
-		<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="34"><i class="icofont icofont-food-cart"></i> Mesa 34</button></div>
-		<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="35"><i class="icofont icofont-food-cart"></i> Mesa 35</button></div>
-		<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="36"><i class="icofont icofont-food-cart"></i> Mesa 36</button></div>
-		<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="37"><i class="icofont icofont-food-cart"></i> Mesa 37</button></div>
-		<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="38"><i class="icofont icofont-food-cart"></i> Mesa 38</button></div>
-		<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="39"><i class="icofont icofont-food-cart"></i> Mesa 39</button></div>
-		<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="40"><i class="icofont icofont-food-cart"></i> Mesa 40</button></div>
+		<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="31"><i class="icofont icofont-food-cart"></i> Mesa 31</button></div>
+		<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="32"><i class="icofont icofont-food-cart"></i> Mesa 32</button></div>
+		<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="33"><i class="icofont icofont-food-cart"></i> Mesa 33</button></div>
+		<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="34"><i class="icofont icofont-food-cart"></i> Mesa 34</button></div>
+		<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="35"><i class="icofont icofont-food-cart"></i> Mesa 35</button></div>
+		<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="36"><i class="icofont icofont-food-cart"></i> Mesa 36</button></div>
+		<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="37"><i class="icofont icofont-food-cart"></i> Mesa 37</button></div>
+		<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="38"><i class="icofont icofont-food-cart"></i> Mesa 38</button></div>
+		<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="39"><i class="icofont icofont-food-cart"></i> Mesa 39</button></div>
+		<div class="col-xs-6 col-sm-3"><button class="btn btn-infocat btn-lg btn-block btn-outline btnMesa" id="40"><i class="icofont icofont-food-cart"></i> Mesa 40</button></div>
 
 	</div>
 	<div class="row sr-only noselect" id="divPedido">
-		<h1 class="text-center" style="color: #442e9e"><i class="icofont icofont-bbq"></i> Pedido de mesa <small class="mayuscula"># <span id="spanNumMesa"></span> - <?php echo $_SESSION['Atiende']; ?></small></h1> <span class="hidden" id="spanIdPedidoAct"></span>
+		<h2 class="text-center"><i class="icofont icofont-bbq"></i><span id="spanPedidoMTitulo"> Pedido de mesa </span> <small class="mayuscula"># <span id="spanNumMesa"></span><br> <span class='smallMozo' style="font-size: 71%;"><?php echo $_SESSION['Atiende']; ?></span></small></h2> <span class="hidden" id="spanIdPedidoAct"></span>
 		<div class="col-xs-12 col-sm-6">
 			<h3 class="text-center"><i class="icofont icofont-users"></i> Pedido del cliente</h3>
 			<div class="panel-body">
@@ -136,10 +156,12 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 		</div>
 
 		<div class="col-xs-12 col-sm-6 noselect">
-			<div><h3 class="text-center" style="display: inline-block;"><i class="icofont icofont-restaurant-menu"></i> Carta</h3> <button class="btn btn-default btn-outline btn-NoLine btn-lg pull-right" id="btnRefreshProducts"><i class="icofont icofont-refresh"></i></button></div>
+			<div><h3 class="text-center" style="display: inline-block;"><i class="icofont icofont-restaurant-menu"></i> Carta productos</h3> <button class="btn btn-default btn-outline btn-NoLine btn-lg pull-right" id="btnRefreshProducts"><i class="icofont icofont-refresh"></i></button></div>
 			<div class="panel-body">
 				<div class="panel-group panelBusqueda">
-					<input type="text" class="form-control input-lg" placeholder="Filtro de productos" id="txtBuscarProductoPedido">
+					<div class="row"><div class="col-xs-11"><input type="text" class="form-control input-lg" placeholder="&#xeded; Filtro de productos" id="txtBuscarProductoPedido" style="font-family:Arial, IcoFont"></div>
+					<div class="col-xs-1" style="padding-left: 0px;"><button class="btn btn-danger btn-outline btnSinBorde btn-circle" id="cancelarBusqueda"><i class="icofont icofont-close"></i></button></div></div>
+					
 				</div>
 				<div class="panel-group panelProductosColecc" id="accordion" role="tablist" aria-multiselectable="true">
 					<?php include 'php/rellenoCategoriasCabeceras.php'; ?>
@@ -148,13 +170,14 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 
 		</div>
 	</div>
-	<hr>
-		<p><?php include 'php/version.php' ?>. Desarrollado por: <a href="https://www.facebook.com/infocat.soluciones/"> Infocat Soluciones SAC</a> para <strong>Casa de barro</strong></p>
 	<?php 
 	}else{ include 'php/licenciaDemo.php'; } ?>
 
 
 </div>
+<footer>
+		<p class="text-center"><strong>Casa de barro 2017 - <?= date('Y'); ?></strong><br> Desarrollado por: <a href="https://www.facebook.com/infocat.soluciones/">© Infocat Soluciones </a><br><span>Consultas: 977692108 - servidor@infocatsoluciones.com </span> </p>
+</footer>
 
 
 <!-- Modal para indicar que se guardó con éxito -->
@@ -216,9 +239,11 @@ function listarMesasEstado() {
 	$.each(JSON.parse(resp), function (i, dato) {
 		//$('#divMesas #'+dato.idMesa).addClass(dato.estadoMesa);
 		if(dato.estadoMesa=='mesaOcupado'){
-				$(`#${dato.idMesa}`).removeClass('mesaLibre').removeClass('btn-morado').addClass(`${dato.estadoMesa}`).addClass('btn-rojoFresa');
+				$(`#${dato.idMesa}`).removeClass('mesaLibre').removeClass('btn-infocat').addClass(`${dato.estadoMesa}`).addClass('btn-rojoFresa').find('i').remove();
+				$(`#${dato.idMesa}`).prepend('<i class="icofont icofont-spoon-and-fork"></i>');
 			}else{
-				$(`#${dato.idMesa}`).removeClass('mesaOcupado').removeClass('btn-rojoFresa').addClass(`${dato.estadoMesa}`).addClass('btn-morado');
+				$(`#${dato.idMesa}`).removeClass('mesaOcupado').removeClass('btn-rojoFresa').addClass(`${dato.estadoMesa}`).addClass('btn-infocat').find('i').remove();
+				$(`#${dato.idMesa}`).prepend('<i class="icofont icofont-restaurant-menu"></i>');
 			}
 	})
 	});
@@ -434,7 +459,7 @@ $('#btnGuardarPedido').click(function () {
 		console.log('guardados '+cantDivPedidosGuardados)
 		console.log('actualizado '+cantDivPedidosActualizados)
 		$.ajax({url:'php/insertarPedidoCabecera.php', type:'POST', data:{mesa: $('#spanNumMesa').text(), idUser: $.JsonUsuario.idUsuario, obsCocina: $('#txtObsCocina').val(), obsBarra:$('#txtObsbarra').val()}}).done(function (resp) {
-			console.log(resp)
+			//console.log(resp)
 		if(parseInt(resp)>0){
 			$('#spanIdPedidoAct').text(resp);
 			$('#btnCancelarPedido').html('<i class="icofont icofont-check"></i> Volver a mesas');/*$('#btnGuardarPedido').removeClass('disabled');*/
@@ -453,7 +478,7 @@ $('#btnGuardarPedido').click(function () {
 					if(!$(dato).hasClass('actualizar') && !$(dato).hasClass('guardado') ){
 						//datosPedido.push({idProd: idProducto,cantidad: cantPedido, producto: prodRowNombre} );
 						$.ajax({url:'php/insertarPedidoDetalle.php', type: 'POST', data:{idProd: idProducto, precio:precPro ,cantidad: cantPedido, producto: prodRowNombre, idPedido: resp, nota: laNota  }}).done(function (resp) {
-							//console.log(resp);
+							console.log(resp);
 							$.each(JSON.parse(resp), function (ii, dato2) {
 								if(dato2.respuesta=='Y'){
 									$(`#regMesaCliente #${dato2.idProducto}`).addClass('guardado').find('.btnRemoverProducto').html('<i class="icofont icofont-check"></i>').removeClass('btn-danger').addClass('btn-success').removeClass('btnRemoverProducto').addClass('btn-outline');
@@ -558,26 +583,43 @@ $('#regMesaCliente').on('click','.divUnSoloProducto',function () {
 $('#txtObsNotaEscrita').keyup(function () {
 	$('#listMesaCliente #'+$('#notaIdProviene').text()).find('.prodNota').text($('#txtObsNotaEscrita').val());
 });
-$('#txtBuscarProductoPedido').keypress(function (e) {
-	var texto = $('#txtBuscarProductoPedido').val();
+$('#txtBuscarProductoPedido').keyup(function (e) {
+	//$('.panelProductosColecc .bs-callout').addClass('hidden');
+	var texto = $('#txtBuscarProductoPedido').val().toLowerCase();
 	if(texto ==''){$('.divUnSoloProductoDisponible').removeClass('hidden');}else{
-		$('.divUnSoloProductoDisponible').addClass('hidden');}
-		if (e.keyCode == 13){
-			$.each( $('.panelProductosColecc .panel'), function (i, dato) {
-				$.each($(dato).find('.h4NombreProducto'), function (j, prod) {
-					if( $(prod).text().toLowerCase().indexOf(texto)!=-1){
-						//console.log($(prod).text())
-						$(prod).parent().parent().removeClass('hidden');
-					}
-				$('.panelProductosColecc .panel .badge').eq(i).text($(dato).find('.h4NombreProducto').length-$(dato).find('.hidden').filter('.hidden').length);
-	
-				});
-				
-			});
+		$('.divUnSoloProductoDisponible').addClass('hidden');
 		}
+		$('.panelProductosColecc .panel').addClass('hidden');
+		// if (e.keyCode == 13){
+			//$.each( $('.panelProductosColecc .panel'), function (i, dato) {
+				$.each($('.panelProductosColecc .h4NombreProducto'), function (j, prod) {
+					//console.log( $(prod).text().toLowerCase().indexOf(texto) );
+					if( $(prod).text().toLowerCase().indexOf(texto)!=-1){
+						
+						$(prod).parent().parent().removeClass('hidden');
+						$(prod).parent().parent().parent().parent().parent().removeClass('hidden');
+					}
+					dato=$(prod).parent().parent().parent().parent().parent();
+				//$('.panelProductosColecc .panel .badge').eq(i).text($(dato).find('.h4NombreProducto').length-$(dato).find('.hidden').filter('.hidden').length);
+			$(dato).find('.badge').text($(dato).find('.h4NombreProducto').length-$(dato).find('.hidden').filter('.hidden').length);
+				});
+
+		//	});
+		// }
+});
+
+$('#txtBuscarProductoPedido').keypress(function (e) {
+	
+});
+$('#cancelarBusqueda').click(function() {
+	$('#txtBuscarProductoPedido').val('');
+	//$("#txtBuscarProductoPedido").trigger({type: 'keypress', which: 13, keyCode: 13});
+	$("#txtBuscarProductoPedido").trigger({type: 'keyup', which: 13, keyCode: 13});
+	$('#divPedido').focus();
+
 });
 </script>
-	
-	
+<!-- script para mostrar consola -->
+<!-- <script src="js/hnl.mobileConsole.js"></script> -->
 </body>
 </html>	
