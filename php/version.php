@@ -1,6 +1,15 @@
 <?php 
-echo "Ver. 1.21 Compilación 18.08.08";
+echo "Ver. 1.22 Compilación 18.08.15";
 /*Cambios
+Ver 1.21
+CREATE TABLE IF NOT EXISTS `promociones` (
+`idPromocion` int(11) NOT NULL,
+  `idProducto` int(11) NOT NULL,
+  `promoCantidad` int(11) NOT NULL,
+  `promoDescuento` float NOT NULL,
+  `promoActivo` bit(1) NOT NULL DEFAULT b'1' COMMENT '1 para activo'
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=28 ;
+ALTER TABLE `promociones`  ADD PRIMARY KEY (`idPromocion`);
 
 Ver 1.20
 - Agregado descuentos por promociones en cada producto.
