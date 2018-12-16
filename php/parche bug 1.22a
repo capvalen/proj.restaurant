@@ -1,0 +1,37 @@
+
+DROP PROCEDURE `insertarVentaFinalEfectivo`;
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insertarVentaFinalEfectivo`(IN `mesa` INT, IN `cuantoCobra` FLOAT, IN `idUser` INT, IN `idCli` INT, IN `montoTotal` FLOAT)
+    NO SQL
+BEGIN
+SET @@session.time_zone='-05:00';
+set @idPed=(select idPedido from pedido where idMesa=mesa and `idEstadoMesa`=2 limit 1 );
+
+INSERT INTO `caja`(`idCaja`, `idCliente`, `idPedido`, `cajaFechaRegistro`, `cajaMontoTotal`, `idTipoProceso`, `idUsuario`, `cajaDescripcion`, `cajaCobraMonto`, `idModalidad`) VALUES
+(null,idCli,@idPed,now(),montoTotal,5,iduser,'',montoTotal, 1);
+
+UPDATE `pedido` SET `idEstadoMesa`=3 WHERE `idEstadoMesa`=2 and `idMesa`=mesa;
+
+UPDATE mesa set  `idEstadoMesa`=1 WHERE `idMesa`=mesa;
+
+select mesa;
+END$$
+DELIMITER ;
+DROP PROCEDURE `insertarVentaFinalTarjeta`;
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insertarVentaFinalTarjeta`(IN `mesa` INT, IN `idUser` INT, IN `idCli` INT, IN `montoTotal` FLOAT, IN `idModo` INT, IN `pagaTarj` FLOAT, IN `pagaEfe` FLOAT)
+    NO SQL
+BEGIN
+SET @@session.time_zone='-05:00';
+set @idPed=(select idPedido from pedido where idMesa=mesa and `idEstadoMesa`=2  limit 1 );
+
+INSERT INTO `caja`(`idCaja`, `idCliente`, `idPedido`, `cajaFechaRegistro`, `cajaMontoTotal`, `idTipoProceso`, `idUsuario`, `cajaDescripcion`, `cajaCobraMonto`, `cobraMontoTarjeta`, `idModalidad`) VALUES
+(null,idCli,@idPed,now(),montoTotal,5,iduser,'',pagaEfe, pagaTarj, idModo);
+
+UPDATE `pedido` SET `idEstadoMesa`=3 WHERE `idEstadoMesa`=2 and `idMesa`=mesa;
+
+UPDATE mesa set  `idEstadoMesa`=1 WHERE `idMesa`=mesa;
+
+select mesa;
+END$$
+DELIMITER ;
