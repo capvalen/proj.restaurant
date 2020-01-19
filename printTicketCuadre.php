@@ -27,14 +27,14 @@ try {
     $printer -> text("             Casa de Barro \n");
     $printer -> text("             Cierre de Caja\n");
     $printer -> text("   ".$_POST['hora']."\n\n");
-    $printer -> text("Gastos del día: S/. "$_POST['conEgresos']"\n");
-    $printer -> text("Ingresos del día: S/. "$_POST['conIngresos']"\n");
+    $printer -> text("Gastos del día: S/. ".$_POST['conEgresos']."\n");
+    $printer -> text("Ingresos del día: S/. ".$_POST['conIngresos']."\n");
     $printer -> text("----------------------------------------");
-    $printer -> text("Venta con Visa: S/. "$_POST['conVisa']"\n");
-    $printer -> text("Venta con MasterCard: S/. "$_POST['conMaster']"\n");
-    $printer -> text("Venta en efectivo: S/. "$_POST['conEfe']"\n");
+    $printer -> text("Venta con Visa: S/. ".$_POST['conVisa']."\n");
+    $printer -> text("Venta con MasterCard: S/. ".$_POST['conMaster']."\n");
+    $printer -> text("Venta en efectivo: S/. ".$_POST['conEfe']."\n");
     $printer -> text("----------------------------------------");
-    $printer -> text("Total: S/. "$_POST['conTotal']"\n");
+    $printer -> text("Total: S/. ".$_POST['conTotal']."\n");
     $printer -> text("*Usuario: ".$_POST['usuario']."*\n");
     $printer -> cut();
 

@@ -26,11 +26,13 @@ try {
     $printer = new Printer($connector_bar);
     $printer -> text("            La Casa de Barro \n");
     $printer -> text("       Pedido « Bar ». Mesa # ".$_POST['numMesa']."\n");
-    $printer -> text("----------------------------------------");
-    $printer -> text("   ".$_POST['hora']."\n\n");
+    $printer -> text("    -----------------------------\n");
+		$printer -> text("        ".$_POST['hora']."\n\n");
+		$printer -> setEmphasis(true);
     $printer -> text("Cant.  Producto\n");
+		$printer -> setEmphasis(false);
     $printer -> text("".$_POST['texto']." \n\n");
-    $printer -> text("*  Usuario: ".$_POST['usuario']."  *\n");
+    $printer -> text("*  Usuario: ".ucfirst($_POST['usuario'])."  *\n\n");
     $printer -> cut();
 
     /* Close printer */

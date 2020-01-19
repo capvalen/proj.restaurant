@@ -26,9 +26,9 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 
 		<!-- Custom CSS -->
 		<link rel="shortcut icon" href="images/peto.png?version=1.0" />
-		<link href="css/estilosElementosv2.css?version=1.0.7" rel="stylesheet">
-		<link href="css/sidebarDeslizable.css?version=1.0.2" rel="stylesheet">
-		<link rel="stylesheet" href="css/cssBarraTop.css?version=1.0.4">
+		<link href="css/estilosElementosv2.css?version=1.0.8" rel="stylesheet">
+		<link href="css/sidebarDeslizable.css?version=1.0.5" rel="stylesheet">
+		<link rel="stylesheet" href="css/cssBarraTop.css?version=1.0.5">
 		<link rel="stylesheet" href="css/icofont.css">
 		<link rel="stylesheet" href="css/animate.css">
 		<link rel="stylesheet" href="css/snack.css?version=1.0.5">
@@ -57,7 +57,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 		<ul class="sidebar-nav">
 				
 				<div class="logoEmpresa ocultar-mostrar-menu">
-					<img class="img-responsive" src="images/empresa.png" alt="">
+					<img class="img-responsive" src="images/empresa.png?version=1.0.png" alt="">
 				</div>
 				<li>
 						<a href="principal.php"><i class="icofont icofont-space-shuttle"></i> Inicio</a>
@@ -98,7 +98,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 				<div class="container">
 					<div class="navbar-header ">
 						<a href="#!" class="btn btn-infocat ocultar-mostrar-menu"><i class="icofont icofont-navigation-menu"></i></a>
-						<a class="navbar-brand ocultar-mostrar-menu" href="#"><img id="imgLogoInfocat" class="img-responsive" src="images/logo.png" alt=""></a>
+						<a class="navbar-brand ocultar-mostrar-menu" href="#"><img id="imgLogoInfocat" class="img-responsive" src="images/logo.png?version=1.3" alt=""></a>
 							<button type="button" class="navbar-toggle collapsed" id="btnColapsador" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
 							<span class="sr-only">Toggle navigation</span>
 							<span class="icon-bar"></span>
@@ -147,49 +147,49 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 				 	<button class="btn btn-warning btn-lg btn-outline pull-right" id="btnVerTickets" style="margin-right: 10px"><i class="icofont icofont-ui-copy"></i> Ver últimos tickets</button>
 				 </div>
 				<div class="row divMesas "> <span class="hidden" id="spanTipoCliente"></span>
-				<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="1"><i class="icofont icofont-food-cart"></i> Mesa 1</button></div>
-				<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="2"><i class="icofont icofont-restaurant-menu"></i> Mesa 2</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="3"><i class="icofont icofont-restaurant-menu"></i> Mesa 3</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="4"><i class="icofont icofont-restaurant-menu"></i> Mesa 4</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="5"><i class="icofont icofont-restaurant-menu"></i> Mesa 5</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="6"><i class="icofont icofont-restaurant-menu"></i> Mesa 6</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="7"><i class="icofont icofont-restaurant-menu"></i> Mesa 7</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="8"><i class="icofont icofont-restaurant-menu"></i> Mesa 8</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="9"><i class="icofont icofont-restaurant-menu"></i> Mesa 9</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="10"><i class="icofont icofont-restaurant-menu"></i> Mesa 10</button></div>
+				<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="1"><i class="icofont icofont-food-cart"></i> Mesa 1</button></div>
+				<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="2"><i class="icofont icofont-restaurant-menu"></i> Mesa 2</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="3"><i class="icofont icofont-restaurant-menu"></i> Mesa 3</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="4"><i class="icofont icofont-restaurant-menu"></i> Mesa 4</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="5"><i class="icofont icofont-restaurant-menu"></i> Mesa 5</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="6"><i class="icofont icofont-restaurant-menu"></i> Mesa 6</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="7"><i class="icofont icofont-restaurant-menu"></i> Mesa 7</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="8"><i class="icofont icofont-restaurant-menu"></i> Mesa 8</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="9"><i class="icofont icofont-restaurant-menu"></i> Mesa 9</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="10"><i class="icofont icofont-restaurant-menu"></i> Mesa 10</button></div>
 					
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="11"><i class="icofont icofont-restaurant-menu"></i> Mesa 11</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="12"><i class="icofont icofont-restaurant-menu"></i> Mesa 12</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="13"><i class="icofont icofont-restaurant-menu"></i> Mesa 13</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="14"><i class="icofont icofont-restaurant-menu"></i> Mesa 14</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="15"><i class="icofont icofont-restaurant-menu"></i> Mesa 15</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="16"><i class="icofont icofont-restaurant-menu"></i> Mesa 16</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="17"><i class="icofont icofont-restaurant-menu"></i> Mesa 17</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="18"><i class="icofont icofont-restaurant-menu"></i> Mesa 18</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="19"><i class="icofont icofont-restaurant-menu"></i> Mesa 19</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="20"><i class="icofont icofont-restaurant-menu"></i> Mesa 20</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="11"><i class="icofont icofont-restaurant-menu"></i> Mesa 11</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="12"><i class="icofont icofont-restaurant-menu"></i> Mesa 12</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="13"><i class="icofont icofont-restaurant-menu"></i> Mesa 13</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="14"><i class="icofont icofont-restaurant-menu"></i> Mesa 14</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="15"><i class="icofont icofont-restaurant-menu"></i> Mesa 15</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="16"><i class="icofont icofont-restaurant-menu"></i> Mesa 16</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="17"><i class="icofont icofont-restaurant-menu"></i> Mesa 17</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="18"><i class="icofont icofont-restaurant-menu"></i> Mesa 18</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="19"><i class="icofont icofont-restaurant-menu"></i> Mesa 19</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="20"><i class="icofont icofont-restaurant-menu"></i> Mesa 20</button></div>
 
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="21"><i class="icofont icofont-restaurant-menu"></i> Mesa 21</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="22"><i class="icofont icofont-restaurant-menu"></i> Mesa 22</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="23"><i class="icofont icofont-restaurant-menu"></i> Mesa 23</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="24"><i class="icofont icofont-restaurant-menu"></i> Mesa 24</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="25"><i class="icofont icofont-restaurant-menu"></i> Mesa 25</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="26"><i class="icofont icofont-restaurant-menu"></i> Mesa 26</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="27"><i class="icofont icofont-restaurant-menu"></i> Mesa 27</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="28"><i class="icofont icofont-restaurant-menu"></i> Mesa 28</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="29"><i class="icofont icofont-restaurant-menu"></i> Mesa 29</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="30"><i class="icofont icofont-restaurant-menu"></i> Mesa 30</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="21"><i class="icofont icofont-restaurant-menu"></i> Mesa 21</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="22"><i class="icofont icofont-restaurant-menu"></i> Mesa 22</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="23"><i class="icofont icofont-restaurant-menu"></i> Mesa 23</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="24"><i class="icofont icofont-restaurant-menu"></i> Mesa 24</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="25"><i class="icofont icofont-restaurant-menu"></i> Mesa 25</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="26"><i class="icofont icofont-restaurant-menu"></i> Mesa 26</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="27"><i class="icofont icofont-restaurant-menu"></i> Mesa 27</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="28"><i class="icofont icofont-restaurant-menu"></i> Mesa 28</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="29"><i class="icofont icofont-restaurant-menu"></i> Mesa 29</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="30"><i class="icofont icofont-restaurant-menu"></i> Mesa 30</button></div>
 
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="31"><i class="icofont icofont-restaurant-menu"></i> Mesa 31</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="32"><i class="icofont icofont-restaurant-menu"></i> Mesa 32</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="33"><i class="icofont icofont-restaurant-menu"></i> Mesa 33</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="34"><i class="icofont icofont-restaurant-menu"></i> Mesa 34</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="35"><i class="icofont icofont-restaurant-menu"></i> Mesa 35</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="36"><i class="icofont icofont-restaurant-menu"></i> Mesa 36</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="37"><i class="icofont icofont-restaurant-menu"></i> Mesa 37</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="38"><i class="icofont icofont-restaurant-menu"></i> Mesa 38</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="39"><i class="icofont icofont-restaurant-menu"></i> Mesa 39</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="40"><i class="icofont icofont-restaurant-menu"></i> Mesa 40</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="31"><i class="icofont icofont-restaurant-menu"></i> Mesa 31</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="32"><i class="icofont icofont-restaurant-menu"></i> Mesa 32</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="33"><i class="icofont icofont-restaurant-menu"></i> Mesa 33</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="34"><i class="icofont icofont-restaurant-menu"></i> Mesa 34</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="35"><i class="icofont icofont-restaurant-menu"></i> Mesa 35</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="36"><i class="icofont icofont-restaurant-menu"></i> Mesa 36</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="37"><i class="icofont icofont-restaurant-menu"></i> Mesa 37</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="38"><i class="icofont icofont-restaurant-menu"></i> Mesa 38</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="39"><i class="icofont icofont-restaurant-menu"></i> Mesa 39</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="40"><i class="icofont icofont-restaurant-menu"></i> Mesa 40</button></div>
 				</div>
 
 		<div class="row DetalleMesa hidden">
@@ -636,7 +636,7 @@ $('#btnCobrarCliente').click(function () {
 	$('.modal-preguntarCliente').modal('show');
 	$('#txtCuantoPagaCliente').val('0.00');
 	$('#txtCuantPagaClienteTarjet').val('0.00');
-	$('#txtCuantPagaClienteTarjet').val('0.00');
+	$('#txtCuantPagaClienteEfect').val('0.00');
 });
 $('.modal-finalizarPedidoAVenta').on('shown.bs.modal', function() {
 	$('#txtCuantoPagaCliente').focus();
@@ -722,10 +722,9 @@ function imprimirCuentaCliente() {
 			$.ticket.push({'id': $(dato).find('.h4NombreProducto').attr('id'), 'nomProducto': $(dato).find('.cantidadProducto').text() +' Und. '+ $(dato).find('.h4NombreProducto').text() , 'cant': $(dato).find('.cantidadProducto').text(), 'sub': $(dato).find('.valorTotalProducto').text() });
 		}
 		
-
 		if( cantidadRowTicket-1==i){
 			var fecha=moment().format('DD/MM/YYYY H:mm a');
-			$.ajax({url: 'printTicketCaja.php', type: 'POST', data: {numMesa: $('#idMesaSpan').text(), hora: fecha, texto: retornarCadenaImprimir() , usuario: $.JsonUsuario.usuNombres, cuentaTotal: $('#idTotalSpan').text(), } });
+			$.ajax({url: 'printTicketCaja.php', type: 'POST', data: {numMesa: $('#idMesaSpan').text(), hora: fecha, texto: retornarCadenaImprimir() , usuario: $.JsonUsuario.usuNombres, cuentaTotal: $('#idTotalSpan').text(), } }).done(function(resp){ console.log( resp );});
 		}
 		/*console.log($(dato).find('.h4NombreProducto').text() );*/
 	
@@ -954,11 +953,11 @@ $('.DetalleMesa').on('click', '.btnPrintHot', function() {
 	var producto = contenedor.find('.h4NombreProducto').text()
 	var itemsBar= ' '+cantidad +' '+producto+'. '+"\n";
 	if( quees == 'divProdBebida'){
-		$.ajax({url:'printTicketBar.php', type:'POST', data: {hora:moment().format('DD [de] MMMM [de] YYYY h:mm a'), numMesa: mesa, texto:itemsBar, usuario: $.JsonUsuario.usuNombres, obsBarra: '' }}).done(function (resp) {
+		$.ajax({url:'printTicketBar.php', type:'POST', data: {hora:moment().format('DD/MM/YYYY h:mm a'), numMesa: mesa, texto:itemsBar, usuario: $.JsonUsuario.usuNombres, obsBarra: '' }}).done(function (resp) {
 			console.log(resp)
 		});
 	}else{
-		$.ajax({url:'printTicketCocina.php', type:'POST', data: {hora:moment().format('DD [de] MMMM [de] YYYY h:mm a'), numMesa: mesa, texto:itemsBar, usuario: $.JsonUsuario.usuNombres, obsBarra: '' }}).done(function (resp) {
+		$.ajax({url:'printTicketCocina.php', type:'POST', data: {hora:moment().format('DD/MM/YYYY h:mm a'), numMesa: mesa, texto:itemsBar, usuario: $.JsonUsuario.usuNombres, obsBarra: '' }}).done(function (resp) {
 			console.log(resp)
 		});
 	}

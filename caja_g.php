@@ -13,7 +13,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 	<title>Caja - Infocat Snack</title>
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/snack.css?version=1.0.4">
-	<link rel="stylesheet" href="css/estilosElementosv2.css?version=1.0.3">
+	<link rel="stylesheet" href="css/estilosElementosv2.css?version=1.0.8">
 	<link rel="stylesheet" href="css/icofont.css">
 </head>
 <body>

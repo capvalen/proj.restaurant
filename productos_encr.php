@@ -24,9 +24,9 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 		<link href="css/bootstrap.css" rel="stylesheet">
 
 		<!-- Custom CSS -->
-		<link href="css/estilosElementosv2.css?version=1.0.3" rel="stylesheet">
-		<link href="css/sidebarDeslizable.css?version=1.0.1" rel="stylesheet">
-		<link rel="stylesheet" href="css/cssBarraTop.css?version=1.0.1">
+		<link href="css/estilosElementosv2.css?version=1.0.8" rel="stylesheet">
+		<link href="css/sidebarDeslizable.css?version=1.0.5" rel="stylesheet">
+		<link rel="stylesheet" href="css/cssBarraTop.css?version=1.0.5">
 		<link rel="stylesheet" href="css/icofont.css">
 		<link rel="stylesheet" href="css/snack.css?version=1.0.6">
 		<link href="css/bootstrap-select.min.css" rel="stylesheet"> <!-- extraido de: https://silviomoreto.github.io/bootstrap-select/-->
@@ -47,7 +47,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 						</a>
 				</div>
 				<div class="logoEmpresa ocultar-mostrar-menu">
-					<img class="img-responsive" src="images/empresa.png" alt="">
+					<img class="img-responsive" src="images/empresa.png?version=1.0.png" alt="">
 				</div>
 				<li>
 						<a href="principal.php"><i class="icofont icofont-space-shuttle"></i> Inicio</a>
@@ -87,7 +87,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 			<nav class="navbar navbar-fixed-top encoger">
 				<div class="container">
 					<div class="navbar-header ">
-					<a class="navbar-brand ocultar-mostrar-menu" href="#"><img id="imgLogoInfocat" class="img-responsive" src="images/logo.png" alt=""></a>
+					<a class="navbar-brand ocultar-mostrar-menu" href="#"><img id="imgLogoInfocat" class="img-responsive" src="images/logo.png?version=1.3" alt=""></a>
 						<button type="button" class="navbar-toggle collapsed" id="btnColapsador" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
 						<span class="sr-only">Toggle navigation</span>
 						<span class="icon-bar"></span>

@@ -68,7 +68,7 @@
 	list-style: none; 
 }
 
-.sidebar-nav li {font-size: 16px;
+.sidebar-nav li {font-size: 14px;
 	text-indent: 20px;
 	line-height: 50px;
 }
@@ -81,9 +81,9 @@
 
 .sidebar-nav li a:hover {
 	text-decoration: none;
-	color: #fff;
+	color: #ffe69f;
 	/*background: rgba(255,255,255,0.2);*/
-	border-bottom: solid #F7FDCA  3px;
+	border-bottom: solid #fff39f 3px;
 	padding: 0 5px;  margin-left: 5px;
 	margin-right: 30px;
 }

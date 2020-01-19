@@ -201,7 +201,7 @@ h2{margin-top: 0px; } .breadcrumb{margin-bottom: 10px; }
 }
 .bs-callout>.panel-footer{background-color: #fff}
 .btnSinBorde{border: none;}
-.btnMesa.mesaLibre{box-shadow: 6px 5px 10px 0 rgba(126, 59, 216, 0.2);}
+.btnMesa.mesaLibre{box-shadow: 0px 1px 8px 0 rgba(59, 115, 216, 0.21);/* box-shadow: 6px 5px 10px 0 rgba(126, 59, 216, 0.2); */}
 .btnMesa.mesaOcupado{box-shadow: 6px 5px 10px 0 rgba(216, 59, 117, 0.2);}
 
 .materialize-red{background-color:#e51c23 !important}.materialize-red-text{color:#e51c23 !important}.materialize-red.lighten-5{background-color:#fdeaeb !important}.materialize-red-text.text-lighten-5{color:#fdeaeb !important}.materialize-red.lighten-4{background-color:#f8c1c3 !important}.materialize-red-text.text-lighten-4{color:#f8c1c3 !important}

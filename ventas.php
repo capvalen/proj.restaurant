@@ -24,9 +24,9 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 
 		<!-- Custom CSS -->
 		<link rel="shortcut icon" href="images/peto.png?version=1.0" />
-		<link href="css/estilosElementosv2.css?version=1.0.2" rel="stylesheet">
-		<link href="css/sidebarDeslizable.css?version=1.0.2" rel="stylesheet">
-		<link rel="stylesheet" href="css/cssBarraTop.css?version=1.0.1">
+		<link href="css/estilosElementosv2.css?version=1.0.8" rel="stylesheet">
+		<link href="css/sidebarDeslizable.css?version=1.0.5" rel="stylesheet">
+		<link rel="stylesheet" href="css/cssBarraTop.css?version=1.0.5">
 		<link rel="stylesheet" href="css/icofont.css">
 		<link rel="stylesheet" href="css/animate.css">
 		<link rel="stylesheet" href="css/snack.css?version=1.0.4">
@@ -55,7 +55,7 @@ ondragstart="return false" onMouseOver="window.status='..mensaje personal .. '; 
 		<ul class="sidebar-nav">
 				
 				<div class="logoEmpresa ocultar-mostrar-menu">
-					<img class="img-responsive" src="images/empresa.png" alt="">
+					<img class="img-responsive" src="images/empresa.png?version=1.0.png" alt="">
 				</div>
 				<li>
 						<a href="principal.php"><i class="icofont icofont-space-shuttle"></i> Inicio</a>
@@ -96,7 +96,7 @@ ondragstart="return false" onMouseOver="window.status='..mensaje personal .. '; 
 				<div class="container">
 					<div class="navbar-header ">
 					<a href="#!" class="btn btn-infocat ocultar-mostrar-menu"><i class="icofont icofont-navigation-menu"></i></a>
-					<a class="navbar-brand ocultar-mostrar-menu" href="#"><img id="imgLogoInfocat" class="img-responsive" src="images/logo.png" alt=""></a>
+					<a class="navbar-brand ocultar-mostrar-menu" href="#"><img id="imgLogoInfocat" class="img-responsive" src="images/logo.png?version=1.3" alt=""></a>
 							<button type="button" class="navbar-toggle collapsed" id="btnColapsador" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
 							<span class="sr-only">Toggle navigation</span>
 							<span class="icon-bar"></span>
@@ -220,16 +220,16 @@ $('input').keypress(function (e) {
 
 $('#btnImprimirCuadreCaja').click(function () {
 	$.ajax({url:'php/solicitarSumaMesasOcupadas.php', type:'POST'}).done(function (resp) { console.log(resp)
-	if(resp!=-1){
+	if(resp!=-1){ 
 		if(resp>0){
 			$('.modal-faltaCompletar #lblFalta').text('Lo sentimos tiene mesas pendientes por cerrar. Ud podrá cerrar caja una vez que haya finalizado todas las mesas.');
 			$('.modal-faltaCompletar').modal('show');
 		}else{
-			var vConEgresos= parseFloat($('#spanGastosFinal').text());
-			var vConIngresos= parseFloat($('#spanEntradasFinal').text());
-			var vConVisa= parseFloat($('#spanCuadreVisa').text());
-			var vConMaster= parseFloat($('#spanCuadreMaster').text());
-			var vConEfe= parseFloat($('#spanCuadreEfec').text());
+			var vConEgresos= parseFloat($('#spanGastosFinal').text().replace(',', ''));
+			var vConIngresos= parseFloat($('#spanEntradasFinal').text().replace(',', ''));
+			var vConVisa= parseFloat($('#spanCuadreVisa').text().replace(',', ''));
+			var vConMaster= parseFloat($('#spanCuadreMaster').text().replace(',', ''));
+			var vConEfe= parseFloat($('#spanCuadreEfec').text().replace(',', ''));
 			var vConTotal= vConIngresos+ vConVisa + vConMaster +vConEfe-vConEgresos;
 			
 			moment.locale('es');
@@ -243,7 +243,7 @@ $('#btnImprimirCuadreCaja').click(function () {
 				conEfe: vConEfe.toFixed(2),
 				conTotal: vConTotal.toFixed(2),
 				usuario: $.JsonUsuario.usuNombres
-			} });
+			} }).done(function(resp){console.log(resp)});
 		}
 	}
 });
