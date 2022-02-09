@@ -51,12 +51,15 @@ margin-left: -25px; opacity: 0.5}
 <main class="noselect">
 	<div class="container-fluid">
 		<div class="col-md-12">
-			<div class="wello login-box" style="color:#7956C1" >
+			<div class="wello login-box" style="margin-top:10rem;color:#7956C1" >
 				<div class="row">
-					<div class="col-xs-4"><img src="images/VirtualCorto.png" class="img-responsive" alt=""></div>
-					<div class="col-xs-8"><h3 class="text-center" style="margin-bottom: 0px;">Info-Cat </h3>
-						<div class="text-center"><span >App para «Casa de Barro»</span></div>
-						<legend  style="color:#7956C1"><small style=" font-size: 70%;"></small></legend></div>
+					<div class="col-xs-12"><img src="images/empresa.png" class="img-responsive" alt=""></div>
+					<div class="col-xs-4" style=""><img src="images/VirtualCorto.png" class="img-responsive" alt=""></div>
+					<div class="col-xs-8">
+						
+						<div class="text-center" style="margin:1rem 0;"><span >Desarrollado por: <br/>«Infocat Soluciones»</span></div>
+						<legend  style="color:#7956C1"><small style=" font-size: 70%;"></small></legend>
+					</div>
 				</div>
 				
 			<div class="form-group">
@@ -74,7 +77,7 @@ margin-left: -25px; opacity: 0.5}
 			</div>
 			<div class="form-group text-center text-danger hidden" id="divError">Error en alguno de los datos, complételos todos cuidadosamente.</div>
 			
-			<div class="pull-right" ><small><?php include 'php/version.php' ?> | <?php echo date("Y"); ?> <a href="https://info-cat.com/casadebarro">®  Info-cat</a></small></div>
+			<div class="pull-right" ><small><?php include 'php/version.php' ?> | <?php echo date("Y"); ?> <a href="https://infocatsoluciones.com/portafolio">®  Infocat Soluciones</a></small></div>
 			</div>
 		</div>
 	</div>

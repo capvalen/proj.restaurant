@@ -49,6 +49,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 .text-danger {color: #d9534f;}
 .btn-azul{color: #0078D7;}
 #smallLibre, #smallOcupado{cursor:pointer;}
+.btnMesa:focus{color: #484848!important;}
 </style>
 <div id="wrapper">
 
@@ -202,7 +203,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 					<p class="mayuscula" id="pDetBar"></p></div>
 				</div>
 				<div class="row">
-						<div class="col-xs-7 text" style="padding-left: 45px;"><h4>Producto</h4></div>
+						<div class="col-xs-6 text" style="padding-left: 45px;"><h4>Producto</h4></div>
 						<div class="col-xs-3 text"><h4>Cantidad</h4></div>
 						<div class="col-xs-2 text"><h4>SubTotal</h4></div>
 					
@@ -292,6 +293,43 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 		</div>
 		<div class="modal-footer"> <button class="btn btn-danger btn-outline" data-dismiss="modal"><i class="icofont icofont-close"></i> Cancelar</button>
 			<button class="btn btn-primary btn-outline" id="btbSalvarVentaTarjeta"><i class="icofont icofont-save"></i> Guardar</button></div>
+	</div>
+</div>
+</div>
+
+
+
+<!-- Modal para completar datos de facturación -->
+<div class="modal fade " id="modalTipoComprobante" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+<div class="modal-dialog " role="document">
+	<div class="modal-content">
+		<div class="modal-header-success">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<h4 class="modal-title" id="myModalLabel"><i class="icofont icofont-help-robot"></i> Tipo de comprobante</h4>
+		</div>
+		<div class="modal-body">
+			<div class="row">
+				<div class="col-xs-6 col-xs-offset-3">
+					<p >¿Qué comprobante desea?</p>
+					<select class="form-control" id="sltComprobanteEfectivo" >
+						<option value="0">Venta interna</option>
+						<option value="3">Boleta electrónica</option>
+						<option value="1">Factura electrónica</option>
+					</select>
+				</div>
+				<div class="col-xs-6 col-xs-offset-3 hidden" id="divDetalleBoleta">
+					<p id="pRuc">RUC - DNI</p>
+					<input type="text" id="txtRUC" class="form-control input-lg text-center" autocomplete="off">
+					<p id="pRazon">Nombre o Razón social</p>
+					<input type="text" id="txtRazon" class="form-control input-lg text-center" autocomplete="off">
+					<p>Dirección</p>
+					<input type="text" id="txtDireccion" class="form-control input-lg text-center" autocomplete="off">
+					<div class="hidden text-danger" id="divErrorMnj"> <br><i class="icofont icofont-warning"></i> <span class="texto"></span></div>
+				</div>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button class="btn btn-success btn-outline" id="btnSiguientePaso"><i class="icofont icofont-simple-right"></i> Siguiente</button></div>
 	</div>
 </div>
 </div>
@@ -505,6 +543,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 <script src="js/bootstrap-datepicker.min.js"></script>
 <script src="js/bootstrap-datepicker.es.min.js"></script>
 <script src="js/toastr.js"></script>
+<script src="js/axios.min.js"></script>
 
 <style>
 	
@@ -514,6 +553,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 $(document).ready(function(){
 datosUsuario();
 $.ticket = [];
+$.pedido=[];
 $('#btnObtenerEstadoMesas').click();
 $('.selectpicker').selectpicker('refresh');
 $('.mitooltip').tooltip();
@@ -549,7 +589,10 @@ $('.btnMesa').click(function () {
 		$('#idMesaSpan').text(iddeMesa);
 		var sumaTotales=0, cantRes=0,  descontar=0;
 		$('.contanedorDivsProductos').children().remove();
-		$.ajax({url:'php/listarPedidoMesaOcupada.php', type: 'POST', data: {mesa: iddeMesa}}).done(function (resp) { //console.log(resp)
+		
+		$.ajax({url:'php/listarPedidoMesaOcupada.php', type: 'POST', data: {mesa: iddeMesa}}).done(function (resp) { 
+			//console.log(resp);
+			$.pedido=JSON.parse(resp);
 			$.each(JSON.parse(resp), function (i, dato) { //console.log(dato)
 				if(dato.observacCocina==''){$('#pDetCocina').parent().addClass('hidden');}else{$('#pDetCocina').text(dato.observacCocina).parent().removeClass('hidden');}
 				if(dato.observacBar==''){$('#pDetBar').parent().addClass('hidden');}else{$('#pDetBar').text(dato.observacBar).parent().removeClass('hidden');}
@@ -582,6 +625,13 @@ $('.btnMesa').click(function () {
 		toastr.warning('Ésta mesa aún no tiene pedidos.');
 	}
 });
+
+function verPedidoPorMesa(iddeMesa){
+	$.ajax({url:'php/listarPedidoMesaOcupada.php', type: 'POST', data: {mesa: iddeMesa}}).done(function (resp) { 
+		//console.log(resp);
+		$.pedido=JSON.parse(resp);
+	});
+}
 $('#btnRegresarAMesas').click(function () {
 	$('.divMesas').removeClass('hidden');
 	$('.DetalleMesa').addClass('hidden');
@@ -630,13 +680,16 @@ $('body').on('click', '.btnRemoverProducto',function () {
 });
 
 $('#btnCobrarCliente').click(function () {
+	verPedidoPorMesa($('#idMesaSpan').text());
+	$('#sltComprobanteEfectivo').val(0).change();
 	$('#queMesaEsSpan').text($('#idMesaSpan').text());
 	$('#queMesaEsSpan2').text($('#idMesaSpan').text());
 	$('#h3CuentaFinal').text($('#idTotalSpan').text());
-	$('.modal-preguntarCliente').modal('show');
 	$('#txtCuantoPagaCliente').val('0.00');
 	$('#txtCuantPagaClienteTarjet').val('0.00');
 	$('#txtCuantPagaClienteEfect').val('0.00');
+	//$('.modal-preguntarCliente').modal('show');
+	$('#modalTipoComprobante').modal('show');
 });
 $('.modal-finalizarPedidoAVenta').on('shown.bs.modal', function() {
 	$('#txtCuantoPagaCliente').focus();
@@ -676,7 +729,19 @@ $('#btbSalvarVentaTarjeta').click(function () {
 		$('.modal-finalizarPedidoAVentaTarjeta .labelError').removeClass('hidden').find('.mensaje').text('El monto de la tarjeta no puede ser superior a la cuenta final.');
 	}
 	else{
-		$.ajax({url:'php/insertarVentaFinalTarjeta.php', type: 'POST', data: {mesa: $('#idMesaSpan').text(), idUser: $.JsonUsuario.idUsuario, idCli : $('#spanTipoCliente').text(), montoTotal: $('#idTotalSpan').text(), idModo: idMod,  pagaTarj: $('#txtCuantPagaClienteTarjet').val(), pagaEfe: $('#txtCuantPagaClienteEfect').val() }}).done(function (resp) { console.log(resp)
+		
+		insertarAlFacturador();
+
+	/* 	$.each(".divUnSoloProducto", (dato)=>{
+			consumo.push({
+				nombre: 
+			});
+		}) */
+
+		$.ajax({url:'php/insertarVentaFinalTarjeta.php', type: 'POST', data: {
+			mesa: $('#idMesaSpan').text(), idUser: $.JsonUsuario.idUsuario, 
+			idCli : 1, //$('#spanTipoCliente').text(), 
+		montoTotal: $('#idTotalSpan').text(), idModo: idMod,  pagaTarj: $('#txtCuantPagaClienteTarjet').val(), pagaEfe: $('#txtCuantPagaClienteEfect').val() }}).done(function (resp) { console.log(resp)
 			if(parseInt(resp)>0){
 				var vuelto= parseFloat($('#txtCuantPagaClienteTarjet').val()-$('#idTotalSpan').text()).toFixed(2);
 
@@ -697,7 +762,18 @@ $('#btbSalvarVenta').click(function () {
 		$('.modal-finalizarPedidoAVenta .labelError').removeClass('hidden').find('.mensaje').text('No se puede guardar un monto menor a la cuenta.');	}
 	else{
 		
-		$.ajax({url:'php/insertarVentaFinal.php', type: 'POST', data: {mesa: $('#idMesaSpan').text(),cuantoCobra: $('#txtCuantoPagaCliente').val(),idUser: $.JsonUsuario.idUsuario, idCli : $('#spanTipoCliente').text(), montoTotal: $('#idTotalSpan').text() }}).done(function (resp) { console.log(resp)
+		insertarAlFacturador();
+
+		/* $.each(".divUnSoloProducto", (dato)=>{
+			consumo.push({
+				nombre: 
+			});
+		}) */
+
+			$.ajax({url:'php/insertarVentaFinal.php', type: 'POST', data: {
+				mesa: $('#idMesaSpan').text(),cuantoCobra: $('#txtCuantoPagaCliente').val(), idUser: $.JsonUsuario.idUsuario, 
+				idCli : 1, //$('#spanTipoCliente').text(),
+				montoTotal: $('#idTotalSpan').text() }}).done(function (resp) { console.log(resp)
 			if(parseInt(resp)==true){
 				var vuelto= parseFloat($('#txtCuantoPagaCliente').val()-$('#idTotalSpan').text()).toFixed(2);
 
@@ -754,13 +830,13 @@ $.each($.ticket, function (i, elem) {
 
 	if (lineaEntera.length/totalImprimir>1){
 		// console.log('dos lineas')
-		cantlibres=40-lineaEntera.length%40;
+		cantlibres=50-lineaEntera.length%50;
 		// console.log('espacios libres para ultima linea '+ cantlibres)
 
 	for (var i = cantlibres - 1; i >= 0; i--) {
 		espacioslibres+=' ';
 	};
-	lineaImpr+=funProducto+ espacioslibres+funPrecio+'\n';
+	lineaImpr+=" "+funProducto+ espacioslibres+funPrecio+'\n';
 	// console.log(lineaImpr)
 	// console.log(lineaImpr.length)
 	}
@@ -771,7 +847,7 @@ $.each($.ticket, function (i, elem) {
 		for (var i = cantlibres - 1; i >= 0; i--) {
 			espacioslibres+=' ';
 		};
-		lineaImpr+=funProducto+ espacioslibres+funPrecio+'\n';
+		lineaImpr+=" "+funProducto+ espacioslibres+funPrecio+'\n';
 		//console.log(lineaImpr)
 		//console.log(lineaImpr.length)
 
@@ -1011,6 +1087,146 @@ $('#smallLibre').click(function() {
 $('#smallOcupado').click(function() {
 	$('.divMesas').find('.mesaLibre').parent().toggleClass('hidden');
 });
+$('#sltComprobanteEfectivo').change(function() {
+	switch($('#sltComprobanteEfectivo').val()){
+		case '0': $('#divDetalleBoleta').addClass('hidden'); break;
+		case '3': 
+			$('#divDetalleBoleta').removeClass('hidden');
+			$('#pRuc').text('D.N.I. o R.U.C.');
+			$('#pRazon').text('Nombre o Razón Social');
+		break;
+		case '1': 
+			$('#divDetalleBoleta').removeClass('hidden');
+			$('#pRuc').text('R.U.C.');
+			$('#pRazon').text('Razón Social');
+		break;
+		default: break;
+	}
+});
+$('#txtRUC').keypress(function (e) { 
+	if(e.keyCode == 13){ 
+		buscarCliente();
+	}
+});
+$('#txtRUC').focusout(function() {
+	buscarCliente();
+});
+function buscarCliente(){
+	if( $('#txtRUC').val()!='' ){
+		axios.post('http://localhost/pluginSunat/php/buscarCliente_padron.php', {texto: $('#txtRUC').val()})
+		.then((response)=>{ console.log( response.data );
+			respuesta = response.data;
+			if(respuesta.length>0){
+				$('#txtRUC').val( respuesta[0].RUC );
+				$('#txtRazon').val( respuesta[0].RAZON );
+				
+			}
+		})
+		.catch((error)=>{ console.log( error );});
+	}
+}
+$('#btnSiguientePaso').click(function() {
+	//console.log( $.pedido );
+	if( $('#sltComprobanteEfectivo').val()=="3" && $('#txtRUC').val().length !=8 ){
+		$('#divErrorMnj .texto').text('El campo de RUC/DNI está vacío o no es correcto');
+		$('#divErrorMnj').removeClass('hidden');
+	}else if( $('#sltComprobanteEfectivo').val()=="1" && $('#txtRUC').val().length !=11 ){
+		$('#divErrorMnj .texto').text('El campo de RUC/DNI está vacío o no es correcto');
+		$('#divErrorMnj').removeClass('hidden');
+	}else if( $('#sltComprobanteEfectivo').val()!="0" && $('#txtRazon').val()=="" ){
+		$('#divErrorMnj .texto').text('Falta rellenar el nombre o razón social, está vacío');
+		$('#divErrorMnj').removeClass('hidden');
+	}else{
+		$('#divErrorMnj').addClass('hidden');
+		$('#modalTipoComprobante').modal('hide');
+		$('.modal-preguntarCliente').modal('show');
+		
+		//console.log( 'Pasa' );
+	}
+});
+function insertarAlFacturador(){
+	var serie='';
+
+	switch( $('#sltComprobanteEfectivo').val() ){
+		case 1: case '1': //Factura
+			serie= 'FE02';
+		break;
+		case 3: case '3': //Boleta
+			serie= 'BE02';
+		break;
+		case 0: case '0': //Otros=Ticket
+			serie = '';
+		break;
+		case -1: case '-1':
+			serie = '';
+		break;
+	}
+	var empresa ={
+		ruc: '<?= $_COOKIE['ruc'];?>',
+		crearArchivo: '<?= $_COOKIE['crearArchivo'];?>',
+		facturador: "<?= $_COOKIE['facturador'];?>",
+		sucursal: "001"
+	};
+	var cliente= {dni: '00000000', razon: 'Cliente simple', idCliente:1, tipo:'persona', direccion:''};
+	var jsonProductos=[];
+	if( $('#txtRuc').val()!='' ){
+		cliente.dni = $('#txtRUC').val() ;
+		cliente.razon = $('#txtRazon').val() ;
+		cliente.direccion = $('#txtDireccion').val() ;
+	}
+	
+	$.each($.pedido, (index, data)=>{
+		console.log( data );
+		jsonProductos.push({
+			id: 1,
+			nombre: data.prodDescripcion,
+			cantidad: data.pedCantidad,
+			unidad: 'Und.',
+			unidadSunat: 'NIU',
+			precio: data.prodPrecio,
+			descuento: 0,
+			afecto: data.pedCantidad,
+			subTotal: data.subTotal
+		})
+	})
+	
+
+	let cabecera = { tipo:$('#sltComprobanteEfectivo').val(), serie, fecha: moment().format('YYYY-MM-DD') }
+	axios.post('http://localhost/pluginSunat/php/insertarBoleta_v4.php', {empresa, cliente, cabecera, jsonProductos })
+	.then((response)=>{ console.log( response.data );
+		var jTicket = response.data;
+		
+		$.ajax({url: "http://localhost/pluginSunat/printComprobante.php", type: 'POST', data: {
+			ticketera: 'TP300',
+			tipoComprobante: jTicket[0].tipoComprobante,
+			rucEmisor: jTicket[0].rucEmisor,
+			queEs: jTicket[0].queSoy,
+			serie: jTicket[0].serie,
+			correlativo: jTicket[0].correlativo,
+			tipoCliente: jTicket[0].tipoCliente,
+			fecha: jTicket[0].fechaEmision,
+			fechaLat: moment(jTicket[0].fechaEmision, 'YYYY-MM-DD').format('DD/MM/YYYY'),
+			cliente: jTicket[0].razonSocial,
+			docClient: jTicket[0].ruc,
+			monedas: jTicket[0].letras,
+			descuento: parseFloat(jTicket[0].descuento).toFixed(2),
+			costoFinal: parseFloat(jTicket[0].costoFinal).toFixed(2),
+			igvFinal: parseFloat(jTicket[0].igvFinal).toFixed(2),
+			totalFinal: parseFloat(jTicket[0].totalFinal).toFixed(2),
+			productos: jTicket[1],
+			direccion:jTicket[0].direccion,
+			exonerado: parseFloat(jTicket[0].exonerado).toFixed(2),
+			/* placa: jTicket[0].placa, */
+		}}).done(function(resp) {
+			console.log(resp)
+			//location.reload();
+		});
+
+	})
+	.catch((error)=>{ console.log( error );
+	});
+	
+}
 // SELECT DATE_FORMAT(`cajaFechaRegistro`,'%d/%m/%Y') FROM `caja`
 </script>
 

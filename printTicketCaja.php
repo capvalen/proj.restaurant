@@ -15,7 +15,7 @@ use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
  */
 
  
-    $connector_caja = new WindowsPrintConnector("smb://127.0.0.1/BIXOLON_CAJA");
+    $connector_caja = new WindowsPrintConnector("smb://127.0.0.1/TP300");
 try {
     
     // A FilePrintConnector will also work, but on non-Windows systems, writes
@@ -24,17 +24,24 @@ try {
 
     /* Print a "Hello world" receipt" */
     $printer = new Printer($connector_caja);
-    $printer -> text("           Casa de Barro \n");
-    $printer -> text("   Nota de Pedido « Caja ». Mesa # ".$_POST['numMesa']."\n");
-    $printer -> text("-----------------------------\n");
-    $printer -> text("   ".$_POST['hora']."\n\n");
-		$printer -> text("Cant. | Producto            | Precio\n");
-    $printer -> text("".$_POST['texto']." \n");
-		$printer -> text("-----------------------------\n");
 		$printer -> setEmphasis(true);
-    $printer -> text("     Total: S/. ".$_POST['cuentaTotal']." \n\n");
+    $printer -> setJustification(Printer::JUSTIFY_CENTER);
+    $printer -> text("Casa de Barro \n");
 		$printer -> setEmphasis(false);
-    $printer -> text("*  Usuario: ".ucfirst($_POST['usuario'])."  *\n");
+    $printer -> text("Nota de Pedido - Mesa N°".$_POST['numMesa']."\n");
+    $printer -> text("------------------------\n");
+    $printer -> text("".$_POST['hora']."\n\n");
+    $printer -> setJustification(Printer::JUSTIFY_LEFT);
+		$printer -> text(" Cant. | Producto             | Precio\n");
+    $printer -> text("".ucwords($_POST['texto'])."");
+    $printer -> setJustification(Printer::JUSTIFY_RIGHT);
+		$printer -> text("------------\n");
+		$printer -> setEmphasis(true);
+    $printer -> text("Total: S/. ".$_POST['cuentaTotal']." \n\n");
+		$printer -> setEmphasis(false);
+    $printer -> setJustification(Printer::JUSTIFY_CENTER);
+    $printer -> text("* Usuario: ".ucfirst($_POST['usuario'])." *\n");
+    $printer -> setJustification(Printer::JUSTIFY_LEFT);
     $printer -> cut();
 
     /* Close printer */

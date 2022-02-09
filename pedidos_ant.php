@@ -10,7 +10,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 	<meta charset="UTF-8">
 	<title>Pedidos - Infocat Snack</title>
 	<link rel="stylesheet" href="css/bootstrap.min.css">
-	<link rel="stylesheet" href="css/estilosElementosv2.css?version=1.0.8">
+	<link rel="stylesheet" href="css/estilosElementosv2.css?version=1.0.5">
 	<link rel="stylesheet" href="css/snack.css?version=1.0.4">
 	<link rel="stylesheet" href="css/icofont.css">
 	<link rel="stylesheet" href="css/toastr.css?version=1.0.2"> <!-- extraído de: http://codeseven.github.io/toastr/demo.html-->

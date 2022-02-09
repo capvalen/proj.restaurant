@@ -1,5 +1,5 @@
 <?php 
-echo "Ver. 1.22 Compilación 18.08.15";
+echo "Ver. 1.32 Compilación 22.0209";
 /*Cambios
 Ver 1.21
 CREATE TABLE IF NOT EXISTS `promociones` (

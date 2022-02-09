@@ -17,7 +17,7 @@ use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
 $_POST['campo']= 'Estamos hechos de fuego 1234567890, y1'; //=> 38 caracteres
 include 'mostrar.php';
  
-    $connector_caja = new WindowsPrintConnector("smb://127.0.0.1/XP-58");//BIXOLON_CAJA
+    $connector_caja = new WindowsPrintConnector("smb://127.0.0.1/TP300");//BIXOLON_CAJA
 try {
     
     // A FilePrintConnector will also work, but on non-Windows systems, writes
