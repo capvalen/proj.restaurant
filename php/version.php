@@ -1,6 +1,10 @@
 <?php 
-echo "Ver. 1.32 Compilación 22.0209";
+echo "Ver. 1.32 Compilación 22.0903";
 /*Cambios
+
+1.32
+Mejoras para la polleria
+
 Ver 1.21
 CREATE TABLE IF NOT EXISTS `promociones` (
 `idPromocion` int(11) NOT NULL,
