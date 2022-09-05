@@ -25,7 +25,7 @@ try {
     /* Print a "Hello world" receipt" */
     $printer = new Printer($connector_cocina);
     $printer -> setJustification(Printer::JUSTIFY_CENTER);
-    $printer -> text("\n\n\nPollería El Doradito");
+    $printer -> text("\n\n\nPollería Doradito");
     title($printer, "Nota de Pedido «Cocina»");
     title($printer, "Mesa # ".$_POST['numMesa']."\n");
     $printer -> text("--------------------\n");
@@ -34,10 +34,13 @@ try {
     $printer -> selectPrintMode(Printer::MODE_FONT_B); */
 		$printer -> text("        ".$_POST['hora']."\n\n");
 		$printer -> setEmphasis(true);
-		$printer -> text("Cant.  Producto\n");
-    $printer -> text("".ucwords($_POST['texto'])." \n");
+		$printer -> text(" Cant.  Producto\n");
+    $printer -> text(" ".ucwords($_POST['texto'])." ");
 		$printer -> setEmphasis(false);
-    $printer -> text("* Usuario: ".ucfirst($_POST['usuario'])." *\n\n");
+    if($_POST['obs']<>''){
+      $printer -> text(" Nota: ".ucwords($_POST['obs'])."\n");
+    }
+    $printer -> text("\n* Usuario: ".ucfirst($_POST['usuario'])." *\n\n");
     $printer -> cut();
 
     /* Close printer */
