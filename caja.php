@@ -144,13 +144,14 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 			if ($_SESSION['licencia']=='Ok'){ ?>
 				<!-- Contenido para licenciar -->
 				<div class="row container-fluid">
-				 	<h2 class="purple-text text-lighten-1" style=" display: inline-block;"><i class="icofont icofont-lens"></i> Cobro en caja - Casa de Barro <small class="purple-text text-lighten-1" id="smallLibre"><i class="icofont icofont-cube"></i> Libres</small> <small class="red-text text-darken-2" id="smallOcupado"><i class="icofont icofont-cube"></i> Ocupadas</small></h2> 
+				 	<h2 class="purple-text text-lighten-1" style=" display: inline-block;"><i class="icofont icofont-lens"></i> Cobro en caja - Doradito <small class="purple-text text-lighten-1" id="smallLibre"><i class="icofont icofont-cube"></i> Libres</small> <small class="red-text text-darken-2" id="smallOcupado"><i class="icofont icofont-cube"></i> Ocupadas</small></h2> 
 				 </div>
 				 <div class="row container-fluid">
 				 	<button class="btn btn-default btn-outline pull-right hidden" id="btnMoverSelecionados" style="margin: 0 10px"><i class="icofont icofont-spoon-and-fork"></i> Mover seleccionados</button>
 					 <button class="btn btn-success btn-outline pull-right" id="btnObtenerEstadoMesas"><i class="icofont icofont-spoon-and-fork"></i> Actualizar mesas</button> 
 					 <button class="btn btn-success btn-outline pull-right hidden" id="btnRegresarAMesas"><i class="icofont icofont-spoon-and-fork"></i> Regresar a mesas</button>
 					 <button class="btn btn-warning btn-outline pull-right" id="btnVerTickets" style="margin: 0 10px"><i class="icofont icofont-ui-copy"></i> Ver últimos tickets</button>
+					 <button class="btn btn-success btn-outline pull-right" onclick="abreCajonClave()" style="margin: 0 10px"><i class="icofont icofont-ui-calendar"></i> Abrir Cajón</button>
 				 </div>
 				<div class="row divMesas "> <span class="hidden" id="spanTipoCliente"></span>
 				<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="1"><i class="icofont icofont-food-cart"></i> Mesa 1</button></div>
@@ -178,8 +179,8 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="21"><i class="icofont icofont-restaurant-menu"></i> Mesa 21</button></div>
 					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="22"><i class="icofont icofont-restaurant-menu"></i> Mesa 22</button></div>
 					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="23"><i class="icofont icofont-restaurant-menu"></i> Mesa 23</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="24"><i class="icofont icofont-restaurant-menu"></i> Mesa 24</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="25"><i class="icofont icofont-restaurant-menu"></i> Mesa 25</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="24"><i class="icofont icofont-restaurant-menu"></i> Extra 1</button></div>
+					<!-- <div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="25"><i class="icofont icofont-restaurant-menu"></i> Mesa 25</button></div>
 					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="26"><i class="icofont icofont-restaurant-menu"></i> Mesa 26</button></div>
 					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="27"><i class="icofont icofont-restaurant-menu"></i> Mesa 27</button></div>
 					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="28"><i class="icofont icofont-restaurant-menu"></i> Mesa 28</button></div>
@@ -195,7 +196,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="37"><i class="icofont icofont-restaurant-menu"></i> Mesa 37</button></div>
 					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="38"><i class="icofont icofont-restaurant-menu"></i> Mesa 38</button></div>
 					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="39"><i class="icofont icofont-restaurant-menu"></i> Mesa 39</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="40"><i class="icofont icofont-restaurant-menu"></i> Mesa 40</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="40"><i class="icofont icofont-restaurant-menu"></i> Mesa 40</button></div> -->
 				</div>
 
 		<div class="row DetalleMesa hidden">
@@ -462,6 +463,8 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 		<div class="modal-body">
 			<!-- <label for="">Ingrese un término para filtrar</label>
 			<input type="text" class="form-control" id="txtParaFiltrarProducto"> -->
+			<label class="text-muted">Nota para el pedido:</label>
+			<input style="margin-bottom:10px;" type="text" class="form-control" id="pNotaExtra" autocomplete="off" placeholder="Nota extra">
 			<?php include 'php/rellenoCategoriasCabeceras.php'; ?>
 	</div>
 	</div>
@@ -982,8 +985,8 @@ $('.modal-buscarProducto').on('click', '.btnAgregarProducto', function () {
 	if(padreMayor=='RegTodosBebidas'){platoProd='divProdBebida'}else{platoProd='divFondos';}
 	var preccio=parseFloat(contenedor.find('.valorProducto').text());
 	if($('.contanedorDivsProductos').find('#'+idProd).html()==null){
-		$('.contanedorDivsProductos').append(`<div class="divUnSoloProducto row"><div class="col-xs-6"><button class="btn btn-danger btn-circle btn-NoLine btn-outline btnRemoverProducto" id="${idProd}"><i class="icofont icofont-close"></i></button> <h4 class="h4NombreProducto mayuscula" id="${idProd}">${contenedor.find('.h4NombreProducto').text()}</h4> </div><div class="col-xs-3"><button class="btn btn-warning btn-circle btn-NoLine btnRestarProducto"><i class="icofont icofont-minus-circle"></i></button> <span class="cantidadProducto">1</span> <button class="btn btn-warning btn-circle btn-NoLine btnSumarProducto"><i class="icofont icofont-plus-circle"></i></button></div><div class="col-xs-2"><h5 class="h4precioProducto"><span class="valorUndProducto sr-only">${preccio.toFixed(2)}</span>S/. <span class="valorTotalProducto">${preccio.toFixed(2)}</span></h5></div> <div><button class="btn btn-success btn-outline btn-sm btnPrintHot"  data-quees="${platoProd}" ><i class="icofont icofont-print"></i></button><button class="btn btn-danger btn-outline btn-sm btnSinBorde btnDsctoHot" ><i class="icofont icofont-swoosh-down"></i></button></div></div>`);
-		$.ajax({url: 'php/insertarPedidoDetalle.php', type:'POST', data:{idProd:idProd ,  precio:preccio, cantidad:1,  idPedido: $('#idPedidoMesa').text(), nota: '' }}).done(function (resp) { console.log(resp)
+		$('.contanedorDivsProductos').append(`<div class="divUnSoloProducto row"><div class="col-xs-6"><button class="btn btn-danger btn-circle btn-NoLine btn-outline btnRemoverProducto" id="${idProd}"><i class="icofont icofont-close"></i></button> <h4 class="h4NombreProducto mayuscula" id="${idProd}">${contenedor.find('.h4NombreProducto').text()}</h4> <span class="notaPed">${$('#pNotaExtra').val()}</span> </div><div class="col-xs-3"><button class="btn btn-warning btn-circle btn-NoLine btnRestarProducto"><i class="icofont icofont-minus-circle"></i></button> <span class="cantidadProducto">1</span> <button class="btn btn-warning btn-circle btn-NoLine btnSumarProducto"><i class="icofont icofont-plus-circle"></i></button></div><div class="col-xs-2"><h5 class="h4precioProducto"><span class="valorUndProducto sr-only">${preccio.toFixed(2)}</span>S/. <span class="valorTotalProducto">${preccio.toFixed(2)}</span></h5></div> <div><button class="btn btn-success btn-outline btn-sm btnPrintHot"  data-quees="${platoProd}" ><i class="icofont icofont-print"></i></button><button class="btn btn-danger btn-outline btn-sm btnSinBorde btnDsctoHot" ><i class="icofont icofont-swoosh-down"></i></button></div></div>`); 
+		$.ajax({url: 'php/insertarPedidoDetalle.php', type:'POST', data:{idProd:idProd ,  precio:preccio, cantidad:1,  idPedido: $('#idPedidoMesa').text(), nota: $('#pNotaExtra').val() }}).done(function (resp) { console.log(resp)
 				var response=JSON.parse(resp)[0];
 				if(response.respuesta=='Y'){
 					var cant=1;
@@ -999,6 +1002,7 @@ $('.modal-buscarProducto').on('click', '.btnAgregarProducto', function () {
 	}else{
 		$('.contanedorDivsProductos').find('#'+idProd).parent().parent().find('.btnSumarProducto').click();
 	}
+	$('#pNotaExtra').val('');
 	$('.modal-buscarProducto').modal('hide');
 });
 $('#btnAnularPedidov2').click(function () {
@@ -1079,12 +1083,13 @@ $('.DetalleMesa').on('click', '.btnPrintHot', function() {
 	var cantidad = contenedor.find('.cantidadProducto').text();
 	var producto = contenedor.find('.h4NombreProducto').text()
 	var itemsBar= ' '+cantidad +' '+producto+'. '+"\n";
+	var observaciones = contenedor.find('.notaPed').text();
 	if( quees == 'divProdBebida'){
-		$.ajax({url:'printTicketBar.php', type:'POST', data: {hora:moment().format('DD/MM/YYYY h:mm a'), numMesa: mesa, texto:itemsBar, usuario: $.JsonUsuario.usuNombres, obsBarra: '' }}).done(function (resp) {
+		$.ajax({url:'printTicketBar.php', type:'POST', data: {hora:moment().format('DD/MM/YYYY h:mm a'), numMesa: mesa, texto:itemsBar, usuario: $.JsonUsuario.usuNombres, obs: observaciones }}).done(function (resp) {
 			console.log(resp)
 		});
 	}else{
-		$.ajax({url:'printTicketCocina.php', type:'POST', data: {hora:moment().format('DD/MM/YYYY h:mm a'), numMesa: mesa, texto:itemsBar, usuario: $.JsonUsuario.usuNombres, obsBarra: '' }}).done(function (resp) {
+		$.ajax({url:'printTicketCocina.php', type:'POST', data: {hora:moment().format('DD/MM/YYYY h:mm a'), numMesa: mesa, texto:itemsBar, usuario: $.JsonUsuario.usuNombres, obs: observaciones }}).done(function (resp) {
 			console.log(resp)
 		});
 	}
@@ -1338,6 +1343,12 @@ function abriCajon(){
 	$.post('http://127.0.0.1/restaurant/soloAbrirCaja.php');
 }
 // SELECT DATE_FORMAT(`cajaFechaRegistro`,'%d/%m/%Y') FROM `caja`
+function abreCajonClave(){
+	let claveTemp = prompt('Clave para abrir cajón')
+	if(claveTemp=='00'){
+		abriCajon();
+	}
+}
 </script>
 
 </body>
