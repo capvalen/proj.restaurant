@@ -179,18 +179,18 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="21"><i class="icofont icofont-restaurant-menu"></i> Mesa 21</button></div>
 					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="22"><i class="icofont icofont-restaurant-menu"></i> Mesa 22</button></div>
 					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="23"><i class="icofont icofont-restaurant-menu"></i> Mesa 23</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="24"><i class="icofont icofont-restaurant-menu"></i> Extra 1</button></div>
-					<!-- <div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="25"><i class="icofont icofont-restaurant-menu"></i> Mesa 25</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="26"><i class="icofont icofont-restaurant-menu"></i> Mesa 26</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="27"><i class="icofont icofont-restaurant-menu"></i> Mesa 27</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="28"><i class="icofont icofont-restaurant-menu"></i> Mesa 28</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="29"><i class="icofont icofont-restaurant-menu"></i> Mesa 29</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="30"><i class="icofont icofont-restaurant-menu"></i> Mesa 30</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="24"><i class="icofont icofont-restaurant-menu"></i> Delivery 1</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="25"><i class="icofont icofont-restaurant-menu"></i> Delivery 2</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="26"><i class="icofont icofont-restaurant-menu"></i> Delivery 3</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="27"><i class="icofont icofont-restaurant-menu"></i> Delivery 4</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="28"><i class="icofont icofont-restaurant-menu"></i> Delivery 5</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="29"><i class="icofont icofont-restaurant-menu"></i> Delivery 6</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="30"><i class="icofont icofont-restaurant-menu"></i> Delivery 7</button></div>
 
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="31"><i class="icofont icofont-restaurant-menu"></i> Mesa 31</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="32"><i class="icofont icofont-restaurant-menu"></i> Mesa 32</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="33"><i class="icofont icofont-restaurant-menu"></i> Mesa 33</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="34"><i class="icofont icofont-restaurant-menu"></i> Mesa 34</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="31"><i class="icofont icofont-restaurant-menu"></i> Delivery 8</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="32"><i class="icofont icofont-restaurant-menu"></i> Delivery 9</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="33"><i class="icofont icofont-restaurant-menu"></i> Delivery 10</button></div>
+					<!-- <div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="34"><i class="icofont icofont-restaurant-menu"></i> Mesa 34</button></div>
 					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="35"><i class="icofont icofont-restaurant-menu"></i> Mesa 35</button></div>
 					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="36"><i class="icofont icofont-restaurant-menu"></i> Mesa 36</button></div>
 					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="37"><i class="icofont icofont-restaurant-menu"></i> Mesa 37</button></div>
@@ -731,6 +731,8 @@ $('#btnCobrarCliente').click(function () {
 	$('#txtCuantoPagaCliente').val('0.00');
 	$('#txtCuantPagaClienteTarjet').val('0.00');
 	$('#txtCuantPagaClienteEfect').val('0.00');
+	$('#txtRUC').val('');
+	$('#txtRazon').val('');
 	//$('.modal-preguntarCliente').modal('show');
 	$('#modalTipoComprobante').modal('show');
 });
@@ -1183,20 +1185,16 @@ function buscarCliente(){
 }
 $('#btnSiguientePaso').click(function() {
 	//console.log( $.pedido );
-	if( $('#sltComprobanteEfectivo').val()=="3" && $('#txtRUC').val().length !=8 ){
+	$('#divErrorMnj').removeClass('hidden');
+
+	if( $('#sltComprobanteEfectivo').val()=="3" && $('#txtRUC').val().length !=8 && parseFloat($('#idTotalSpan').text())>700 ){
 		$('#divErrorMnj .texto').text('El campo de RUC/DNI está vacío o no es correcto');
-		$('#divErrorMnj').removeClass('hidden');
 	}else if( $('#sltComprobanteEfectivo').val()=="1" && $('#txtRUC').val().length !=11 ){
 		$('#divErrorMnj .texto').text('El campo de RUC/DNI está vacío o no es correcto');
-		$('#divErrorMnj').removeClass('hidden');
-	}else if( $('#sltComprobanteEfectivo').val()!="0" && $('#txtRazon').val()=="" ){
-		$('#divErrorMnj .texto').text('Falta rellenar el nombre o razón social, está vacío');
-		$('#divErrorMnj').removeClass('hidden');
 	}else{
 		$('#divErrorMnj').addClass('hidden');
 		$('#modalTipoComprobante').modal('hide');
 		$('.modal-preguntarCliente').modal('show');
-		
 		//console.log( 'Pasa' );
 	}
 });
@@ -1205,10 +1203,10 @@ function insertarAlFacturador(){
 
 	switch( $('#sltComprobanteEfectivo').val() ){
 		case 1: case '1': //Factura
-			serie= 'FE02';
+			serie= 'FE01';
 		break;
 		case 3: case '3': //Boleta
-			serie= 'BE02';
+			serie= 'BE01';
 		break;
 		case 0: case '0': //Otros=Ticket
 			serie = '';
@@ -1225,7 +1223,7 @@ function insertarAlFacturador(){
 	};
 	var cliente= {dni: '00000000', razon: 'Cliente simple', idCliente:1, tipo:'persona', direccion:''};
 	var jsonProductos=[];
-	if( $('#txtRuc').val()!='' ){
+	if( $('#txtRUC').val()!='' ){
 		cliente.dni = $('#txtRUC').val() ;
 		cliente.razon = $('#txtRazon').val() ;
 		cliente.direccion = $('#txtDireccion').val() ;
