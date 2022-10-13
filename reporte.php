@@ -156,9 +156,9 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 								<div class="col-xs-6">
 									<div class="sandbox-container">
 									<div class="input-daterange input-group" id="datepicker">
-									<input type="text" class="input-sm form-control" id="inputFechaInicio" name="start" />
+									<input type="text" class="input-sm form-control" id="inputFechaInicio" autocomplete='off' name="start" />
 									<span class="input-group-addon">hasta</span>
-									<input type="text" class="input-sm form-control" id="inputFechaFin" name="end" />
+									<input type="text" class="input-sm form-control" id="inputFechaFin" autocomplete='off' name="end" />
 									</div>
 									</div>
 									<button class="btn btn-success btn-outline" id="btnGenerarExcel"><i class="icofont icofont-file-text"></i> Generar archivo excel</button>
@@ -414,11 +414,13 @@ if(target=='#tabVerPorDetalle'){ cajaPorDetalle(); }
 if(target=='#tabVerPorAlmacen'){ cajaPorAlmacen(); }
 if(target=='#tabVerPorKardexProdu'){ cajaPorKardex(); }
 });
-
+function fechaFormat(fechita){
+	return moment(fechita, 'DD/MM/YYYY').format('YYYY-MM-DD')
+}
 function cajaPorUser() {
 	var sumConjunto=0;
-	var iniciofecha = $('#inputFechaInicio').val();
-	var finFecha= $('#inputFechaFin').val();
+	var iniciofecha = fechaFormat($('#inputFechaInicio').val());
+	var finFecha = fechaFormat($('#inputFechaFin').val());
 	$('#tabVerPorUsuario tbody').children().remove();
 	$.ajax({url:'php/reporteCajaPorUsuario.php', type: 'POST', data: {fechaIni:iniciofecha, fechaFin:finFecha}}).done(function (resp) {
 		//console.log(resp)
@@ -443,8 +445,8 @@ function cajaPorUser() {
 }
 function cajaPorMesa() {
 	var sumConjunto=0;
-	var iniciofecha = $('#inputFechaInicio').val();
-	var finFecha= $('#inputFechaFin').val();
+	var iniciofecha = fechaFormat($('#inputFechaInicio').val());
+	var finFecha= fechaFormat($('#inputFechaFin').val());
 	$('#tabVerPorMesa tbody').children().remove();
 	$.ajax({url:'php/reporteCajaPorMesa.php', type: 'POST', data: {fechaIni:iniciofecha, fechaFin:finFecha}}).done(function (resp) {
 		var maxElem=JSON.parse(resp).length;
@@ -484,8 +486,8 @@ function cajaPorMesa() {
 }
 function cajaPorProducto() {
 	var sumConjunto=0;
-	var iniciofecha = $('#inputFechaInicio').val();
-	var finFecha= $('#inputFechaFin').val();
+	var iniciofecha = fechaFormat($('#inputFechaInicio').val());
+	var finFecha= fechaFormat($('#inputFechaFin').val());
 	$('#tabVerPorProducto tbody').children().remove();
 	$.ajax({url:'php/reporteCajaPorProducto.php', type: 'POST', data: {fechaIni:iniciofecha, fechaFin:finFecha}}).done(function (resp) {
 		var maxElem=JSON.parse(resp).length;
@@ -523,8 +525,8 @@ function cajaPorProducto() {
 }
 function cajaPorBebidas() {
 	var sumConjunto=0;
-	var iniciofecha = $('#inputFechaInicio').val();
-	var finFecha= $('#inputFechaFin').val();
+	var iniciofecha = fechaFormat($('#inputFechaInicio').val());
+	var finFecha= fechaFormat($('#inputFechaFin').val());
 	$('#tabVerPorBebida tbody').children().remove();
 	$.ajax({url:'php/reporteCajaPorBebidas.php', type: 'POST', data: {fechaIni:iniciofecha, fechaFin:finFecha}}).done(function (resp) {
 		var maxElem=JSON.parse(resp).length;
@@ -549,8 +551,8 @@ function cajaPorBebidas() {
 }
 function cajaPorDetalle() {
 	var sumConjunto=0;
-	var iniciofecha = $('#inputFechaInicio').val();
-	var finFecha= $('#inputFechaFin').val();
+	var iniciofecha = fechaFormat($('#inputFechaInicio').val());
+	var finFecha= fechaFormat($('#inputFechaFin').val());
 	$('#tabVerPorDetalle tbody').children().remove();
 	$.ajax({url:'php/reporteCajaPorDetalle.php', type: 'POST', data: {fechaIni:iniciofecha, fechaFin:finFecha}}).done(function (resp) {
 		var maxElem=JSON.parse(resp).length;
@@ -602,8 +604,8 @@ function cajaPorDetalle() {
 }
 function cajaPorAlmacen() {
 	var sumConjunto=0;
-	var iniciofecha = $('#inputFechaInicio').val();
-	var finFecha= $('#inputFechaFin').val();
+	var iniciofecha = fechaFormat($('#inputFechaInicio').val());
+	var finFecha= fechaFormat($('#inputFechaFin').val());
 	$('#tabVerPorAlmacen tbody').children().remove();
 	$.ajax({url:'php/reporteCajaPorAlmacen.php', type: 'POST', data: {fechaIni:iniciofecha, fechaFin:finFecha}}).done(function (resp) {
 		var maxElem=JSON.parse(resp).length;
@@ -623,8 +625,8 @@ function cajaPorAlmacen() {
 }
 function cajaPorKardex() {
 	var sumConjunto=0;
-	var iniciofecha = $('#inputFechaInicio').val();
-	var finFecha= $('#inputFechaFin').val();
+	var iniciofecha = fechaFormat($('#inputFechaInicio').val());
+	var finFecha= fechaFormat($('#inputFechaFin').val());
 	$('#tabVerPorKardexProdu tbody').children().remove();
 	$.ajax({url:'php/reporteKardex.php', type: 'POST', data: {fechaIni:iniciofecha, fechaFin:finFecha}}).done(function (resp) {
 		var maxElem=JSON.parse(resp).length;
