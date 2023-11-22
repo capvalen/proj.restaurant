@@ -1,7 +1,8 @@
 <?php
 session_start();
 /* Change to the correct path if you copy this example! */
-require __DIR__ . '/vendor/mike42/escpos-php/autoload.php';
+#require __DIR__ . '/vendor/mike42/escpos-php/autoload.php';
+require __DIR__ . '/vendor/autoload.php';
 use Mike42\Escpos\Printer;
 use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
 
@@ -25,7 +26,7 @@ try {
     /* Print a "Hello world" receipt" */
     $printer = new Printer($connector_cocina);
     $printer -> setJustification(Printer::JUSTIFY_CENTER);
-    $printer -> text("\n\n\nPollería Doradito");
+    $printer -> text("\n\n\nPollería El Doradito");
     title($printer, "Nota de Pedido «Cocina»");
     title($printer, "Mesa # ".$_POST['numMesa']."\n");
     $printer -> text("--------------------\n");
@@ -34,13 +35,10 @@ try {
     $printer -> selectPrintMode(Printer::MODE_FONT_B); */
 		$printer -> text("        ".$_POST['hora']."\n\n");
 		$printer -> setEmphasis(true);
-		$printer -> text(" Cant.  Producto\n");
-    $printer -> text(" ".ucwords($_POST['texto'])." ");
+		$printer -> text("Cant.  Producto\n");
+    $printer -> text("".ucwords($_POST['texto'])." \n");
 		$printer -> setEmphasis(false);
-    if($_POST['obs']<>''){
-      $printer -> text(" Nota: ".ucwords($_POST['obs'])."\n");
-    }
-    $printer -> text("\n* Usuario: ".ucfirst($_POST['usuario'])." *\n\n");
+    $printer -> text("* Usuario: ".ucfirst($_POST['usuario'])." *\n\n");
     $printer -> cut();
 
     /* Close printer */

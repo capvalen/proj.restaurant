@@ -12,33 +12,8 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 <html lang="es">
 
 <head>
-
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, shrink-to-fit=no, initial-scale=1">
-		<meta name="description" content="">
-		<meta name="author" content="">
-
-		<title>Caja: Infocat Snack</title>
-
-		<!-- Bootstrap Core CSS -->
-		<link href="css/bootstrap.css" rel="stylesheet">
-
-		<!-- Custom CSS -->
-		<link rel="shortcut icon" href="images/peto.png?version=1.0" />
-		<link href="css/estilosElementosv2.css?version=1.0.8" rel="stylesheet">
-		<link href="css/sidebarDeslizable.css?version=1.0.5" rel="stylesheet">
-		<link rel="stylesheet" href="css/cssBarraTop.css?version=1.0.5">
-		<link rel="stylesheet" href="css/icofont.css">
-		<link rel="stylesheet" href="css/animate.css">
-		<link rel="stylesheet" href="css/snack.css?version=1.0.5">
-
-		<link rel="stylesheet" href="css/bootstrap-select.min.css"> <!-- extraido de: https://silviomoreto.github.io/bootstrap-select/-->
-		<link rel="stylesheet" href="css/icofont.css"> <!-- iconos extraidos de: http://icofont.com/-->
-		<link rel="stylesheet" href="css/awesome-bootstrap-checkbox.css"> <!-- extraido de: http://flatlogic.github.io/awesome-bootstrap-checkbox/demo/-->
-		<link rel="stylesheet" href="css/bootstrap-datepicker3.css"> <!-- extraído de: https://uxsolutions.github.io/bootstrap-datepicker/-->
-		<link rel="stylesheet" href="css/toastr.min.css?version=1.0.1"> <!-- extraído de: http://codeseven.github.io/toastr/demo.html-->
-
+	<title>Caja: Infocat Snack</title>
+	<?php include 'headers.php'; ?>
 </head>
 
 <body>
@@ -58,7 +33,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 		<ul class="sidebar-nav">
 				
 				<div class="logoEmpresa ocultar-mostrar-menu">
-					<img class="img-responsive" src="images/empresa.jpg?version=1.0.jpg" alt="">
+					<img class="img-responsive" src="images/empresa.png?version=1.0" alt="">
 				</div>
 				<li>
 						<a href="principal.php"><i class="icofont icofont-space-shuttle"></i> Inicio</a>
@@ -178,24 +153,25 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="21"><i class="icofont icofont-restaurant-menu"></i> Mesa 21</button></div>
 					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="22"><i class="icofont icofont-restaurant-menu"></i> Mesa 22</button></div>
 					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="23"><i class="icofont icofont-restaurant-menu"></i> Mesa 23</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="24"><i class="icofont icofont-restaurant-menu"></i> Mesa 24</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="25"><i class="icofont icofont-restaurant-menu"></i> Mesa 25</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="26"><i class="icofont icofont-restaurant-menu"></i> Mesa 26</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="27"><i class="icofont icofont-restaurant-menu"></i> Mesa 27</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="28"><i class="icofont icofont-restaurant-menu"></i> Mesa 28</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="29"><i class="icofont icofont-restaurant-menu"></i> Mesa 29</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="30"><i class="icofont icofont-restaurant-menu"></i> Mesa 30</button></div>
+					
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="24"><i class="icofont icofont-restaurant-menu"></i> Delivery 1</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="25"><i class="icofont icofont-restaurant-menu"></i> Delivery 2</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="26"><i class="icofont icofont-restaurant-menu"></i> Delivery 3</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="27"><i class="icofont icofont-restaurant-menu"></i> Delivery 4</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="28"><i class="icofont icofont-restaurant-menu"></i> Delivery 5</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="29"><i class="icofont icofont-restaurant-menu"></i> Delivery 6</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="30"><i class="icofont icofont-restaurant-menu"></i> Delivery 7</button></div>
 
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="31"><i class="icofont icofont-restaurant-menu"></i> Mesa 31</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="32"><i class="icofont icofont-restaurant-menu"></i> Mesa 32</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="33"><i class="icofont icofont-restaurant-menu"></i> Mesa 33</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="34"><i class="icofont icofont-restaurant-menu"></i> Mesa 34</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="31"><i class="icofont icofont-restaurant-menu"></i> Delivery 8</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="32"><i class="icofont icofont-restaurant-menu"></i> Delivery 9</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="33"><i class="icofont icofont-restaurant-menu"></i> Delivery 10</button></div>
+					<!-- <div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="34"><i class="icofont icofont-restaurant-menu"></i> Mesa 34</button></div>
 					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="35"><i class="icofont icofont-restaurant-menu"></i> Mesa 35</button></div>
 					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="36"><i class="icofont icofont-restaurant-menu"></i> Mesa 36</button></div>
 					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="37"><i class="icofont icofont-restaurant-menu"></i> Mesa 37</button></div>
 					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="38"><i class="icofont icofont-restaurant-menu"></i> Mesa 38</button></div>
 					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="39"><i class="icofont icofont-restaurant-menu"></i> Mesa 39</button></div>
-					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="40"><i class="icofont icofont-restaurant-menu"></i> Mesa 40</button></div>
+					<div class="col-xs-6 col-sm-3"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa btnSinBorde" id="40"><i class="icofont icofont-restaurant-menu"></i> Mesa 40</button></div> -->
 				</div>
 
 		<div class="row DetalleMesa hidden">
@@ -315,7 +291,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 		</div>
 		<div class="modal-body">
 			<div class="row">
-				<div class="col-xs-6 col-xs-offset-3">
+				<div class="col-xs-8 col-xs-offset-2">
 					<p >¿Qué comprobante desea?</p>
 					<select class="form-control" id="sltComprobanteEfectivo" >
 						<option value="0">Venta interna</option>
@@ -323,9 +299,14 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 						<option value="1">Factura electrónica</option>
 					</select>
 				</div>
-				<div class="col-xs-6 col-xs-offset-3 hidden" id="divDetalleBoleta">
+				<div class="col-xs-8 col-xs-offset-2 hidden" id="divDetalleBoleta">
 					<p id="pRuc">RUC - DNI</p>
-					<input type="text" id="txtRUC" class="form-control input-lg text-center" autocomplete="off">
+					<div class="input-group">
+						<input type="text" id="txtRUC" class="form-control input-lg text-center" autocomplete="off">
+						<span class="input-group-btn">
+							<button class="btn btn-secondary btn-lg" onclick="buscarReniec()"><img src="images/reniec.png" width="20"> Reniec</button>
+						</span>
+					</div>
 					<p id="pRazon">Nombre o Razón social</p>
 					<input type="text" id="txtRazon" class="form-control input-lg text-center" autocomplete="off">
 					<p>Dirección</p>
@@ -558,22 +539,9 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 </div>
 </div>
 
-<?php include 'php/llamandoModals.php'; ?>
-
-	
-<!-- jQuery -->
-<script src="js/jquery-2.2.4.min.js"></script>
-
-<!-- Bootstrap Core JavaScript -->
-<script src="js/bootstrap.min.js"></script>
-<script src="js/moment.js"></script>
-<script src="js/inicializacion.js"></script>
-<script src="js/accionesGlobales.js?version=1.1"></script>
-<script src="js/bootstrap-select.js"></script>
-<script src="js/bootstrap-datepicker.min.js"></script>
-<script src="js/bootstrap-datepicker.es.min.js"></script>
-<script src="js/toastr.js"></script>
-<script src="js/axios.min.js"></script>
+<?php include 'php/llamandoModals.php';
+include "footers.php";
+?>
 
 <style>
 	
@@ -818,10 +786,10 @@ $('#btbSalvarVenta').click(function () {
 			});
 		}) */
 
-			$.ajax({url:'php/insertarVentaFinal.php', type: 'POST', data: {
-				mesa: $('#idMesaSpan').text(),cuantoCobra: $('#txtCuantoPagaCliente').val(), idUser: $.JsonUsuario.idUsuario, 
-				idCli : 1, //$('#spanTipoCliente').text(),
-				montoTotal: $('#idTotalSpan').text() }}).done(function (resp) { console.log(resp)
+		$.ajax({url:'php/insertarVentaFinal.php', type: 'POST', data: {
+			mesa: $('#idMesaSpan').text(),cuantoCobra: $('#txtCuantoPagaCliente').val(), idUser: $.JsonUsuario.idUsuario, 
+			idCli : 1, //$('#spanTipoCliente').text(),
+			montoTotal: $('#idTotalSpan').text() }}).done(function (resp) { console.log(resp)
 			if(parseInt(resp)==true){
 				abriCajon();
 				var vuelto= parseFloat($('#txtCuantoPagaCliente').val()-$('#idTotalSpan').text()).toFixed(2);
@@ -1158,17 +1126,17 @@ $('#sltComprobanteEfectivo').change(function() {
 });
 $('#txtRUC').keypress(function (e) { 
 	if(e.keyCode == 13){ 
-		buscarCliente();
+		buscarReniec();
 	}
 });
 $('#txtRUC').focusout(function() {
 	//buscarCliente();
 });
-function  buscarCliente(){
-	if( $('#txtRUC').val()!='' ){
+function  buscarReniec(){
+	if( $('#txtRUC').val().length==8 || $('#txtRUC').val().length==11 ){
 		let datos = new FormData();
 		datos.append('ruc', $('#txtRUC').val())
-		fetch('http://localhost/pluginSunat/php/dataSunat_interno.php',{
+		fetch('http://localhost/pluginSunat/php/dataSunat.php',{
 			method:'POST', body:datos
 		})
 		.then(resServ=> resServ.json())
@@ -1228,7 +1196,12 @@ function insertarAlFacturador(){
 		facturador: "<?= $_COOKIE['facturador'];?>",
 		sucursal: "001"
 	};
-	var cliente= {dni: '00000000', razon: 'Cliente simple', idCliente:1, tipo:'persona', direccion:''};
+	var cliente= {dni: '00000000', razon: 'Cliente simple', idCliente:1, tipo:'persona', direccion:'',
+		contado: 1, //1:contado, 2:credito
+		fechaCredito : moment().format('YYYY-MM-DD'),
+		adelanto: 0,
+		montoCredito: 0
+	};
 	var jsonProductos=[];
 	if( $('#txtRUC').val()!='' ){
 		cliente.dni = $('#txtRUC').val() ;

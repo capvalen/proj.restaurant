@@ -3,7 +3,7 @@ body{
 }
 .navbar{min-height: 70px;}
 .navbar-fixed-top{ transition: all 0.5s ease;}
-.encoger{left:250px; transition: all 0.5s ease;}
+.encoger{left:270px; transition: all 0.5s ease;}
 
 .ocultar-mostrar-menu:focus{outline: none;}
 @media only screen and (max-width: 1000px) {

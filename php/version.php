@@ -1,9 +1,6 @@
 <?php 
-echo "Ver. 1.33 Compilación 22.0905";
+echo "Ver. 1.4 Compilación 23.1122";
 /*Cambios
-1.33
-Agregado notas a imprimir
-agregado clave para abrir cajon
 
 1.32
 Mejoras para la polleria

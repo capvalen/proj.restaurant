@@ -65,7 +65,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 	if ($_SESSION['licencia']=='Ok'){ ?>
 		<!-- Contenido para licenciar -->
 		<div class="row" id="divMesas">
-		<div class="container-fluid  text-center" ><h2 style="color: #636363; display: inline-block;"><i class="icofont icofont-spoon-and-fork"></i> Doradito<small class="mayuscula smallMozo" id='smallAtiende'><br> Atiende: <?php echo $_SESSION['Atiende']; ?></small></h2>
+		<div class="container-fluid  text-center" ><h2 style="color: #636363; display: inline-block;"><i class="icofont icofont-spoon-and-fork"></i> Casa de Barro<small class="mayuscula smallMozo" id='smallAtiende'><br> Atiende: <?php echo $_SESSION['Atiende']; ?></small></h2>
 		</div>
 		<div class=" container-fluid ">
 			<button style="margin-top: 20px; margin-right: 10px;" class="btn btn-success btn-outline pull-left btn-lg btnSinBorde" id="btnActualizarMesas2"><i class="icofont icofont-refresh"></i> Actualizar mesas</button>
@@ -96,18 +96,18 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 		<div class="col-xs-6 col-sm-2"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="21"><i class="icofont icofont-fork-and-knife"></i> Mesa 21</button></div>
 		<div class="col-xs-6 col-sm-2"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="22"><i class="icofont icofont-fork-and-knife"></i> Mesa 22</button></div>
 		<div class="col-xs-6 col-sm-2"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="23"><i class="icofont icofont-fork-and-knife"></i> Mesa 23</button></div>
-		<div class="col-xs-6 col-sm-2"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="24"><i class="icofont icofont-fork-and-knife"></i> Extra 1</button></div>
-		<!-- <div class="col-xs-6 col-sm-2"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="25"><i class="icofont icofont-fork-and-knife"></i> Mesa 25</button></div>
-		<div class="col-xs-6 col-sm-2"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="26"><i class="icofont icofont-fork-and-knife"></i> Mesa 26</button></div>
-		<div class="col-xs-6 col-sm-2"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="27"><i class="icofont icofont-fork-and-knife"></i> Mesa 27</button></div>
-		<div class="col-xs-6 col-sm-2"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="28"><i class="icofont icofont-fork-and-knife"></i> Mesa 28</button></div>
-		<div class="col-xs-6 col-sm-2"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="29"><i class="icofont icofont-fork-and-knife"></i> Mesa 29</button></div>
-		<div class="col-xs-6 col-sm-2"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="30"><i class="icofont icofont-fork-and-knife"></i> Mesa 30</button></div>
+		<div class="col-xs-6 col-sm-2"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="24"><i class="icofont icofont-fork-and-knife"></i> Delivery 1</button></div>
+		<div class="col-xs-6 col-sm-2"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="25"><i class="icofont icofont-fork-and-knife"></i> Delivery 2</button></div>
+		<div class="col-xs-6 col-sm-2"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="26"><i class="icofont icofont-fork-and-knife"></i> Delivery 3</button></div>
+		<div class="col-xs-6 col-sm-2"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="27"><i class="icofont icofont-fork-and-knife"></i> Delivery 4</button></div>
+		<div class="col-xs-6 col-sm-2"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="28"><i class="icofont icofont-fork-and-knife"></i> Delivery 5</button></div>
+		<div class="col-xs-6 col-sm-2"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="29"><i class="icofont icofont-fork-and-knife"></i> Delivery 6</button></div>
+		<div class="col-xs-6 col-sm-2"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="30"><i class="icofont icofont-fork-and-knife"></i> Delivery 7</button></div>
 
-		<div class="col-xs-6 col-sm-2"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="31"><i class="icofont icofont-fork-and-knife"></i> Mesa 31</button></div>
-		<div class="col-xs-6 col-sm-2"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="32"><i class="icofont icofont-fork-and-knife"></i> Mesa 32</button></div>
-		<div class="col-xs-6 col-sm-2"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="33"><i class="icofont icofont-fork-and-knife"></i> Mesa 33</button></div>
-		<div class="col-xs-6 col-sm-2"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="34"><i class="icofont icofont-fork-and-knife"></i> Mesa 34</button></div>
+		<div class="col-xs-6 col-sm-2"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="31"><i class="icofont icofont-fork-and-knife"></i> Delivery 8</button></div>
+		<div class="col-xs-6 col-sm-2"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="32"><i class="icofont icofont-fork-and-knife"></i> Delivery 9</button></div>
+		<div class="col-xs-6 col-sm-2"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="33"><i class="icofont icofont-fork-and-knife"></i> Delivery 10</button></div>
+		<!-- <div class="col-xs-6 col-sm-2"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="34"><i class="icofont icofont-fork-and-knife"></i> Mesa 34</button></div>
 		<div class="col-xs-6 col-sm-2"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="35"><i class="icofont icofont-fork-and-knife"></i> Mesa 35</button></div>
 		<div class="col-xs-6 col-sm-2"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="36"><i class="icofont icofont-fork-and-knife"></i> Mesa 36</button></div>
 		<div class="col-xs-6 col-sm-2"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="37"><i class="icofont icofont-fork-and-knife"></i> Mesa 37</button></div>
@@ -189,7 +189,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 
 </div>
 <footer>
-		<p class="text-center"><strong>Doradito 2017 - <?= date('Y'); ?></strong><br> Desarrollado por: <a href="https://www.facebook.com/infocat.soluciones/">© Infocat Soluciones </a><br><span>Consultas: 977692108 - servidor@infocatsoluciones.com </span> </p>
+		<p class="text-center"><strong>Casa de barro 2017 - <?= date('Y'); ?></strong><br> Desarrollado por: <a href="https://www.facebook.com/infocat.soluciones/">© Infocat Soluciones </a><br><span>Consultas: 977692108 - servidor@infocatsoluciones.com </span> </p>
 </footer>
 
 

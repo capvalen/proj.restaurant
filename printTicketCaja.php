@@ -1,7 +1,8 @@
 <?php
 session_start();
 /* Change to the correct path if you copy this example! */
-require __DIR__ . '/vendor/mike42/escpos-php/autoload.php';
+#require __DIR__ . '/vendor/mike42/escpos-php/autoload.php';
+require __DIR__ . './vendor/autoload.php';
 use Mike42\Escpos\Printer;
 use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
 
@@ -15,7 +16,7 @@ use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
  */
 
  
-    $connector_caja = new WindowsPrintConnector("smb://127.0.0.1/TP300");
+    $connector_caja = new WindowsPrintConnector("smb://127.0.0.1/CAJA");
 try {
     
     // A FilePrintConnector will also work, but on non-Windows systems, writes

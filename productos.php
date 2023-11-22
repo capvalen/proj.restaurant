@@ -12,29 +12,8 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 <html lang="es">
 
 <head>
-
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, shrink-to-fit=no, initial-scale=1">
-		<meta name="description" content="">
-		<meta name="author" content="">
-
-		<title>Productos: Infocat Snack</title>
-
-		<!-- Bootstrap Core CSS -->
-		<link href="css/bootstrap.css" rel="stylesheet">
-
-		<!-- Custom CSS -->
-		<link rel="shortcut icon" href="images/peto.png?version=1.0" />
-		<link href="css/estilosElementosv2.css?version=1.0.8" rel="stylesheet">
-		<link href="css/sidebarDeslizable.css?version=1.0.5" rel="stylesheet">
-		<link rel="stylesheet" href="css/cssBarraTop.css?version=1.0.5">
-		<link rel="stylesheet" href="css/icofont.css">
-		<link rel="stylesheet" href="css/snack.css?version=1.0.6">
-		<link href="css/bootstrap-select.min.css" rel="stylesheet"> <!-- extraido de: https://silviomoreto.github.io/bootstrap-select/-->
-		<link rel="stylesheet" href="css/bootstrap-datepicker3.css"> <!-- extraído de: https://uxsolutions.github.io/bootstrap-datepicker/-->
-		<link rel="stylesheet" href="css/awesome-bootstrap-checkbox.css"> <!-- extraido de: http://flatlogic.github.io/awesome-bootstrap-checkbox/demo/-->
-
+	<title>Productos: Infocat Snack</title>
+	<?php include 'headers.php'; ?>
 </head>
 
 <body>
@@ -152,13 +131,8 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 						<!--Clase para las tablas-->
 						<div class="tab-pane fade in active container-fluid" id="tabAgregarLabo">
 						<!--Inicio de pestaña 01-->
-							<div class="row" style="padding-bottom: 15px">
-								<div class="col-xs-4">
-									<button class="btn btn-success btn-outline btn-lg" id="btnAddNewProduct"><i class="icofont icofont-chef"></i> Agregar nuevo producto</button>
-								</div>
-								<div class="col-xs-4"></div>
-								<div class="col-xs-4"></div>
-							</div>
+						<button class="btn btn-success btn-outline btn-lg" id="btnAddNewProduct"><i class="icofont icofont-chef"></i> Agregar nuevo producto</button>
+							
 							<?php include 'php/listarCabecerasCategorias.php'; ?>
 							<!-- <div class="row"><strong>
 								<div class="col-xs-2">Categoría</div>
@@ -486,21 +460,10 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 	</div>
 </div>
 </div>
-<?php include 'php/llamandoModals.php'; ?>
 
-	
-<!-- jQuery -->
-<script src="js/jquery-2.2.4.min.js"></script>
-
-<!-- Bootstrap Core JavaScript -->
-<script src="js/bootstrap.min.js"></script>
-<script src="js/moment.js"></script>
-<script src="js/inicializacion.js?version=1.1"></script>
-<script src="js/accionesGlobales.js?version=1.1"></script>
-<script src="js/bootstrap-select.js"></script>
-<script src="js/bootstrap-datepicker.min.js"></script>
-<script src="js/bootstrap-datepicker.es.min.js"></script>
-
+<?php include 'php/llamandoModals.php';
+include "footers.php";
+?>
 
 <script>
 $(document).ready(function(){
