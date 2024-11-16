@@ -6,8 +6,8 @@ $i=0; $color='';
 $sql = mysqli_query($conection,"SELECT tipDescripcion, tpNombreWeb, count(*) as totalItems
 from tipoproducto tp inner join producto p on p.idTipoProducto = tp.idTipoProducto
 where tpActivo=1 and tpDivBebidaCocina<>'divProdBebida' and tpDivBebidaCocina<>'divAlmacen' and prodActivo = 1
-group by tpdivbebidacocina
-order by tipDescripcion asc");
+group by tpDivBebidaCocina, tipDescripcion, tpNombreWeb
+order by tipDescripcion asc;");
 
 
 while($row = mysqli_fetch_array($sql, MYSQLI_ASSOC))
@@ -42,7 +42,7 @@ while($row = mysqli_fetch_array($sql, MYSQLI_ASSOC))
 
 mysqli_free_result($sql);
 
-/* $sqlBebida = mysqli_query($conection, "select  count(*) as totalItems
+$sqlBebida = mysqli_query($conection, "select  count(*) as totalItems
 from tipoproducto tp inner join producto p on p.idTipoProducto = tp.idTipoProducto
 where tpActivo=1  and tpDivBebidaCocina<>'divProdBebida' and prodActivo = 1
 order by tipDescripcion asc");
@@ -55,7 +55,7 @@ echo '<div class="noselect panel bs-callout bs-callout-success " style="margin-b
 				<div class="panel-body" style="padding-top: 20px!important;">
 				</div>
 			</div>
-		</div>'; */
+		</div>'; 
 mysqli_close($conection); //desconectamos la base de datos
 
 ?>

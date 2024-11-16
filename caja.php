@@ -1,7 +1,7 @@
 <?php
 session_start();
 require 'php/licence.php';
-if (@!$_SESSION['Atiende']){//sino existe enviar a index
+if (@!$_COOKIE['ckidUsuario']){//sino existe enviar a index
 	header("Location:index.php");
 }else{
 	if($_SESSION['Power']==3){header("Location:pedidos.php");}

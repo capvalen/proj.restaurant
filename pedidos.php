@@ -304,18 +304,18 @@ $('.btnMesa').click(function () {
 function listarProductos() {
 	$('.panelProductosColecc .panel-body').children().remove();
 	$.ajax({url:'php/listarProductos.php', type:'POST'}).done(function (resp) {
-		$.each(JSON.parse(resp), function (i, dato) { //console.log(dato)
+		$.each(JSON.parse(resp), function (i, dato) { console.log(dato)
 			if(dato.idProcedencia==2){ //tragos
 				if($('#RegTodosBebidas .tipTrago:contains("'+dato.tipDescripcion+'")').length==0){
-					$(`#RegTodosBebidas .panel-body`).append(`<p class="tipTrago mayuscula">${dato.tipDescripcion}</p>`);
+					$('#RegTodosBebidas .panel-body').append(`<p class="tipTrago mayuscula">${dato.tipDescripcion}</p>`);
 				}
 
-				$(`#RegTodosBebidas .panel-body`).append(`
+				$('#RegTodosBebidas .panel-body').append(`
 					<div class="row divUnSoloProductoDisponible"><div class="col-xs-7"><h4 class="h4NombreProducto mayuscula ${dato.tpDivBebidaCocina}" id="${dato.idProducto}">${dato.prodDescripcion}</h4> <span class="stockPlato">(<span class="stockFict">${dato.stockCantidad}</span>)</span></div><div class="col-xs-3"><h5 class="h4precioProducto">S/. <span class="valorProducto">${parseFloat(dato.prodPrecio).toFixed(2)}</span></h5></div><div class="col-xs-2"><button class="btn btn-warning btn-outline btn-block btnAgregarProducto"><i class="icofont icofont-check"></i></button></div></div>
 					`);
 			}
 			else{
-				$(`#${dato.tpNombreWeb} .panel-body`).append(`
+				$('#${dato.tpNombreWeb} .panel-body').append(`
 					<div class="row divUnSoloProductoDisponible"><div class="col-xs-7"><h4 class="h4NombreProducto mayuscula ${dato.tpDivBebidaCocina}" id="${dato.idProducto}">${dato.prodDescripcion}</h4> <span class="stockPlato">(<span class="stockFict">${dato.stockCantidad}</span>)</span></div><div class="col-xs-3"><h5 class="h4precioProducto">S/. <span class="valorProducto">${parseFloat(dato.prodPrecio).toFixed(2)}</span></h5></div><div class="col-xs-2"><button class="btn btn-warning btn-outline btn-block btnAgregarProducto"><i class="icofont icofont-check"></i></button></div></div>
 				`);
 			}
