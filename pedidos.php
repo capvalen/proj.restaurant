@@ -65,7 +65,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 	if ($_SESSION['licencia']=='Ok'){ ?>
 		<!-- Contenido para licenciar -->
 		<div class="row" id="divMesas">
-		<div class="container-fluid  text-center" ><h2 style="color: #636363; display: inline-block;"><i class="icofont icofont-spoon-and-fork"></i> Casa de Barro<small class="mayuscula smallMozo" id='smallAtiende'><br> Atiende: <?php echo $_SESSION['Atiende']; ?></small></h2>
+		<div class="container-fluid  text-center" ><h2 style="color: #636363; display: inline-block;"><i class="icofont icofont-spoon-and-fork"></i> Doradito<small class="mayuscula smallMozo" id='smallAtiende'><br> Atiende: <?php echo $_SESSION['Atiende']; ?></small></h2>
 		</div>
 		<div class=" container-fluid ">
 			<button style="margin-top: 20px; margin-right: 10px;" class="btn btn-success btn-outline pull-left btn-lg btnSinBorde" id="btnActualizarMesas2"><i class="icofont icofont-refresh"></i> Actualizar mesas</button>
@@ -189,7 +189,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 
 </div>
 <footer>
-		<p class="text-center"><strong>Casa de barro 2017 - <?= date('Y'); ?></strong><br> Desarrollado por: <a href="https://www.facebook.com/infocat.soluciones/">© Infocat Soluciones </a><br><span>Consultas: 977692108 - servidor@infocatsoluciones.com </span> </p>
+		<p class="text-center"><strong>Doradito 2017 - <?= date('Y'); ?></strong><br> Desarrollado por: <a href="https://www.facebook.com/infocat.soluciones/">© Infocat Soluciones </a><br><span>Consultas: 977692108 - servidor@infocatsoluciones.com </span> </p>
 </footer>
 
 
@@ -304,18 +304,18 @@ $('.btnMesa').click(function () {
 function listarProductos() {
 	$('.panelProductosColecc .panel-body').children().remove();
 	$.ajax({url:'php/listarProductos.php', type:'POST'}).done(function (resp) {
-		$.each(JSON.parse(resp), function (i, dato) { console.log(dato)
+		$.each(JSON.parse(resp), function (i, dato) { //console.log(dato)
 			if(dato.idProcedencia==2){ //tragos
 				if($('#RegTodosBebidas .tipTrago:contains("'+dato.tipDescripcion+'")').length==0){
-					$('#RegTodosBebidas .panel-body').append(`<p class="tipTrago mayuscula">${dato.tipDescripcion}</p>`);
+					$(`#RegTodosBebidas .panel-body`).append(`<p class="tipTrago mayuscula">${dato.tipDescripcion}</p>`);
 				}
 
-				$('#RegTodosBebidas .panel-body').append(`
+				$(`#RegTodosBebidas .panel-body`).append(`
 					<div class="row divUnSoloProductoDisponible"><div class="col-xs-7"><h4 class="h4NombreProducto mayuscula ${dato.tpDivBebidaCocina}" id="${dato.idProducto}">${dato.prodDescripcion}</h4> <span class="stockPlato">(<span class="stockFict">${dato.stockCantidad}</span>)</span></div><div class="col-xs-3"><h5 class="h4precioProducto">S/. <span class="valorProducto">${parseFloat(dato.prodPrecio).toFixed(2)}</span></h5></div><div class="col-xs-2"><button class="btn btn-warning btn-outline btn-block btnAgregarProducto"><i class="icofont icofont-check"></i></button></div></div>
 					`);
 			}
 			else{
-				$('#${dato.tpNombreWeb} .panel-body').append(`
+				$(`#${dato.tpNombreWeb} .panel-body`).append(`
 					<div class="row divUnSoloProductoDisponible"><div class="col-xs-7"><h4 class="h4NombreProducto mayuscula ${dato.tpDivBebidaCocina}" id="${dato.idProducto}">${dato.prodDescripcion}</h4> <span class="stockPlato">(<span class="stockFict">${dato.stockCantidad}</span>)</span></div><div class="col-xs-3"><h5 class="h4precioProducto">S/. <span class="valorProducto">${parseFloat(dato.prodPrecio).toFixed(2)}</span></h5></div><div class="col-xs-2"><button class="btn btn-warning btn-outline btn-block btnAgregarProducto"><i class="icofont icofont-check"></i></button></div></div>
 				`);
 			}
