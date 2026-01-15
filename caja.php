@@ -486,11 +486,18 @@ if (@!$_COOKIE['ckidUsuario']){//sino existe enviar a index
 		</div>
 		<div class='modal-body'>
 			<label for="">Descuento para «<span id="spanProdDscto"></span>»</label>
-			<label for="">Monto S/ <small><em>(Máximo 10% = S/. <span id="spanDsctoMaximo2"></span> )</em></small></label>
-			<input type="number" class="form-control input-lg text-center esMoneda" id="txtModalDescuento" autocomplete="off">
+			<label for="">Porcentaje (%)</label>
+			<input type="number" class="form-control input-lg text-center" id="txtInputPorcentaje" onkeyup="calcularDescuento()" value="10" autocomplete="off">
+			<label for="">Monto S/ <small><em>(Máximo <span id="miniPorcentajeSpan"></span>% = S/. <span id="spanDsctoMaximo2"></span> )</em></small></label>
+			<input type="number" class="form-control input-lg text-center " id="txtModalDescuento" autocomplete="off">
 			<label for="">Motivo de descuento:</label>
 			<input type="text" class="form-control input-lg text-center mayuscula" id="txtModalObsDscto" autocomplete="off">
 			<label class="text-danger text-center labelError hidden" for=""><i class="icofont icofont-animal-squirrel"></i> Lo siento! <span class=mensaje></span></label>
+			<div class="hidden" id="divClaveDscto">
+				<label for="">Clave de aprobación:</label>
+				<input type="password" class="form-control input-lg text-center" id="txtClaveDscto" autocomplete="off">
+			</div>
+
 		</div>
 		<div class='modal-footer'>
 			<button type='button' class='btn btn-default' data-dismiss='modal'>Cerrar</button>
@@ -593,12 +600,12 @@ $('.btnMesa').click(function () {
 		$.ajax({url:'php/listarPedidoMesaOcupada.php', type: 'POST', data: {mesa: iddeMesa}}).done(function (resp) { 
 			//console.log(resp);
 			$.pedido=JSON.parse(resp);
-			$.each(JSON.parse(resp), function (i, dato) { //console.log(dato)
+			$.each(JSON.parse(resp), function (i, dato) { console.log(dato)
 				if(dato.observacCocina==''){$('#pDetCocina').parent().addClass('hidden');}else{$('#pDetCocina').text(dato.observacCocina).parent().removeClass('hidden');}
 				if(dato.observacBar==''){$('#pDetBar').parent().addClass('hidden');}else{$('#pDetBar').text(dato.observacBar).parent().removeClass('hidden');}
 				$('#idPedidoMesa').text(dato.idPedido);
 				if(dato.prodPrecio>0){
-					$('.contanedorDivsProductos').append(`<div class="divUnSoloProducto row"><div class="col-xs-6"><button class="btn btn-danger btn-circle btn-NoLine btn-outline btnRemoverProducto" id="${dato.idProducto}"><i class="icofont icofont-close"></i></button> <h4 class="h4NombreProducto mayuscula" id="${dato.idProducto}">${dato.prodDescripcion}</h4> <span class="notaPed">${dato.pedNota}</span></div><div class="col-xs-3"><button class="btn btn-warning btn-circle btn-NoLine btnRestarProducto"><i class="icofont icofont-minus-circle"></i></button> <span class="cantidadProducto">${dato.pedCantidad}</span> <button class="btn btn-warning btn-circle btn-NoLine btnSumarProducto"><i class="icofont icofont-plus-circle"></i></button></div><div class="col-xs-2"><h5 class="h4precioProducto"><span class="valorUndProducto sr-only">${dato.prodPrecio}</span>S/. <span class="valorTotalProducto">${parseFloat(dato.subTotal).toFixed(2)}</span></h5></div> <div class="divPrint"><button class="btn btn-success btn-outline btn-sm btnSinBorde btnPrintHot" data-quees="${dato.tpDivBebidaCocina}" ><i class="icofont icofont-print"></i></button><button class="btn btn-danger btn-outline btn-sm btnSinBorde btnDsctoHot" ><i class="icofont icofont-swoosh-down"></i></button></div>
+					$('.contanedorDivsProductos').append(`<div class="divUnSoloProducto row"><div class="col-xs-6"><button class="btn btn-danger btn-circle btn-NoLine btn-outline btnRemoverProducto" id="${dato.idProducto}" data-id="${dato.id}"><i class="icofont icofont-close"></i></button> <h4 class="h4NombreProducto mayuscula" id="${dato.idProducto}">${dato.prodDescripcion}</h4> <span class="notaPed">${dato.pedNota}</span></div><div class="col-xs-3"><button class="btn btn-warning btn-circle btn-NoLine btnRestarProducto"><i class="icofont icofont-minus-circle"></i></button> <span class="cantidadProducto">${dato.pedCantidad}</span> <button class="btn btn-warning btn-circle btn-NoLine btnSumarProducto"><i class="icofont icofont-plus-circle"></i></button></div><div class="col-xs-2"><h5 class="h4precioProducto"><span class="valorUndProducto sr-only">${dato.prodPrecio}</span>S/. <span class="valorTotalProducto">${parseFloat(dato.subTotal).toFixed(2)}</span></h5></div> <div class="divPrint"><button class="btn btn-success btn-outline btn-sm btnSinBorde btnPrintHot" data-quees="${dato.tpDivBebidaCocina}" ><i class="icofont icofont-print"></i></button><button class="btn btn-danger btn-outline btn-sm btnSinBorde btnDsctoHot" ><i class="icofont icofont-swoosh-down"></i></button></div>
 						<div class="divSeleccionar hidden">
 							<div class="form-check">
 							  <input class="form-check-input chkPlato" data-id="${dato.id}" type="checkbox" value="" id="">
@@ -606,7 +613,7 @@ $('.btnMesa').click(function () {
 						</div>
 					</div>`);
 				}else{
-					$('.contanedorDivsProductos').append(`<div class="divUnSoloProducto divUnSoloDescuento row"><div class="col-xs-6"><button class="btn btn-danger btn-circle btn-NoLine btn-outline btnRemoverProducto" id="${dato.idProducto}"><i class="icofont icofont-close"></i></button> <span class="h4NombreProducto mayuscula " id="${dato.idProducto}">${dato.pedNota}:</span> <em class="mayuscula notaPed">${dato.prodDescripcion}</em></div><div class="col-xs-3"></div><div class="col-xs-2"><h5 class="h4precioProducto"><span class="valorUndProducto sr-only">${dato.prodPrecio}</span>S/. <span class="valorTotalProducto">${parseFloat(dato.subTotal).toFixed(2)}</span></h5></div> </div>`);
+					$('.contanedorDivsProductos').append(`<div class="divUnSoloProducto divUnSoloDescuento row"><div class="col-xs-6"><button class="btn btn-danger btn-circle btn-NoLine btn-outline btnRemoverProducto" id="${dato.idProducto}" data-id="${dato.id}"><i class="icofont icofont-close"></i></button> Descuento: <span class="h4NombreProducto mayuscula " id="${dato.idProducto}">${dato.pedNota}:</span> <em class="mayuscula notaPed">${dato.prodDescripcion}</em></div><div class="col-xs-3"></div><div class="col-xs-2"><h5 class="h4precioProducto"><span class="valorUndProducto sr-only">${dato.prodPrecio}</span>S/. <span class="valorTotalProducto">${parseFloat(dato.subTotal).toFixed(2)}</span></h5></div> </div>`);
 				}
 				
 				var promos= listarPromos(dato.idProducto, dato.pedCantidad);
@@ -661,6 +668,7 @@ $('#btnCancelarPedido').click(function () {
 $('body').on('click', '.btnRemoverProducto',function () {
 	var padre= $(this).parent().parent();
 	var idEliminar=$(this).attr('id');
+	var idNotaPedido=$(this).data('id');
 	//var contenedor=$(this).parent().parent();
 	var cantDivs=$('.contanedorDivsProductos .divUnSoloProducto ').length;
 	if (cantDivs==1){
@@ -668,7 +676,7 @@ $('body').on('click', '.btnRemoverProducto',function () {
 	}
 	else{
 		if( padre.hasClass('divUnSoloDescuento') ){
-			$.ajax({url:'php/eliminarDescuentoPedido.php', type:"POST", data:{idPed:$('#idPedidoMesa').text() , idProd:idEliminar, descto: padre.find('.valorUndProducto').text() }}).done(function (resp) {//console.log(resp)
+			$.ajax({url:'php/eliminarDescuentoPedido.php', type:"POST", data:{idPed:$('#idPedidoMesa').text() , idProd:idEliminar, descto: padre.find('.valorUndProducto').text(), id: idNotaPedido }}).done(function (resp) {//console.log(resp)
 				if(resp==true){
 					$('#idTotalSpan').text(parseFloat(parseFloat($('#idTotalSpan').text())-parseFloat(padre.find('.valorUndProducto').text())).toFixed(2));
 					padre.remove();
@@ -676,7 +684,7 @@ $('body').on('click', '.btnRemoverProducto',function () {
 			});
 		}
 		else{
-			$.ajax({url:'php/eliminarProductoPedido.php', type:"POST", data:{idProd:idEliminar , mesa:$('#idMesaSpan').text(), idUser:$.JsonUsuario.idUsuario }}).done(function (resp) { console.log(resp)
+			$.ajax({url:'php/eliminarProductoPedido.php', type:"POST", data:{idProd:idEliminar , mesa:$('#idMesaSpan').text(), idUser:$.JsonUsuario.idUsuario, id: idNotaPedido }}).done(function (resp) { console.log(resp)
 			if(parseInt(resp)>0){
 				var vTotalProd=parseFloat($(`.contanedorDivsProductos`).find(`#${idEliminar}`).parent().parent().find('.valorTotalProducto').text());
 				var vTotalPed=parseFloat($('#idTotalSpan').text());
@@ -721,7 +729,7 @@ $('#btnClienteSimple').click(function(){
 	$('.modal-finalizarPedidoAVenta').modal('show');
 
 });
-function imprimirCajaCuenta() { console.log('hola')
+function imprimirCajaCuenta() { //console.log('hola')
 	console.log($.ticket.length);
 	$.each($('.divUnSoloProducto'), function (i, dato) {
 		$.ticket.push({'id': $(dato).find('.h4NombreProducto').attr('id'), 'nomProducto': $(dato).find('.cantidadProducto').text() +' Und. '+ $(dato).find('.h4NombreProducto').text() , 'cant': $(dato).find('.cantidadProducto').text(), 'sub': $(dato).find('.valorTotalProducto').text() });
@@ -870,7 +878,7 @@ $.each($.ticket, function (i, elem) {
 
 	}
 	});
-// console.log(lineaImpr)
+ console.log(lineaImpr)
 return lineaImpr;
 }
 $('.modal-buscarProducto').on('shown.bs.modal', function() { /*$('#txtParaFiltrarProducto').focus();*/
@@ -1071,36 +1079,64 @@ function listarPromos(idProduc, cantidad) {
 
 	});
 }
+function calcularDescuento(){
+	const porcentaje = $('#txtInputPorcentaje').val()/100
+	$('#miniPorcentajeSpan').text( porcentaje*100 )
+	var maximo= parseFloat($('#idTotalSpan').text())*porcentaje;
+	$('#spanDsctoMaximo2').text( maximo.toFixed(2));
+	$('#txtModalDescuento').val( maximo.toFixed(2));
+	if(porcentaje*100 > 10)
+		$('#divClaveDscto').removeClass('hidden')
+	else 
+		$('#divClaveDscto').addClass('hidden')
+}
 $('.modalDescuentoEspecial').on('shown.bs.modal', function () {
 	$('#txtModalDescuento').val('').focus();
 	var maximo= parseFloat($('#idTotalSpan').text())*0.1;
 	$('#spanDsctoMaximo2').text( maximo.toFixed(2));
+	$('#txtModalDescuento').val( maximo.toFixed(2));
 });
 $('.contanedorDivsProductos').on('click', '.btnDsctoHot', function (e) {
+	$('#txtInputPorcentaje').val(10)
+	$('#miniPorcentajeSpan').text(10)
 	$('#spanProdDscto').text( $(this).parent().parent().find('.h4NombreProducto').text() );
 	$('#spanProdDscto').attr('data-idPro', $(this).parent().parent().find('.h4NombreProducto').attr('id') );
 	$('#spanProdDscto').attr('data-nomPro', $(this).parent().parent().find('.h4NombreProducto').text() );
+	$('#divClaveDscto').addClass('hidden')
 	$('.modalDescuentoEspecial').modal('show');
 });
 $('#btnAplicarDscto').click(function() {
-	var maximo= parseFloat($('#idTotalSpan').text())*0.1;
-	if( $('#txtModalDescuento').val()<= maximo ){
-		$.ajax({url: 'php/insertarPromocionEspecial.php', type: 'POST', data: {
-			pedid: $('#idPedidoMesa').text(),
-			idProd: $('#spanProdDscto').attr('data-idPro'),
-			montoDscto: $('#txtModalDescuento').val(),
-			obsDscto: $('#txtModalObsDscto').val()
-		 }}).done(function(resp) {
+	//var maximo= parseFloat($('#idTotalSpan').text())*0.1;
+	//if( $('#txtModalDescuento').val()<= maximo ){
+	$.ajax({url: 'php/insertarPromocionEspecial.php', type: 'POST', data: {
+		pedid: $('#idPedidoMesa').text(),
+		idProd: $('#spanProdDscto').attr('data-idPro'),
+		montoDscto: $('#txtModalDescuento').val(),
+		obsDscto: $('#txtModalObsDscto').val(),
+		clave: $('#txtClaveDscto').val(),
+		porcentaje: $('#txtInputPorcentaje').val(),
+		}}).done(function(resp) {
+			$('#txtClaveDscto').val('')
+			$('#txtModalObsDscto').val('')
+			$('.modalDescuentoEspecial .labelError').addClass('hidden')
+			if(resp == 'noClave'){
+				$('.modalDescuentoEspecial .labelError').removeClass('hidden').find('.mensaje').text('Clave incorrecta para insertar el porcentaje mayor');
+				return false;
+			}
+			if(resp == 'error'){
+				$('.modalDescuentoEspecial .labelError').removeClass('hidden').find('.mensaje').text('Hubo un error interno');
+				return false;
+			}
 			$('.modalDescuentoEspecial').modal('hide');
 
-			$('.contanedorDivsProductos').append(`<div class="divUnSoloProducto divUnSoloDescuento row"><div class="col-xs-6"><button class="btn btn-danger btn-circle btn-NoLine btn-outline btnRemoverProducto" id="${$('#spanProdDscto').attr('data-idPro')}"><i class="icofont icofont-close"></i></button> <span class="h4NombreProducto mayuscula " id="${$('#spanProdDscto').attr('data-idPro')}">${$('#txtModalObsDscto').val()}:</span> <em class="mayuscula notaPed">${$('#spanProdDscto').attr('data-nomPro')}</em></div><div class="col-xs-3"></div><div class="col-xs-2"><h5 class="h4precioProducto"><span class="valorUndProducto sr-only">-${$('#txtModalDescuento').val()}</span>S/. <span class="valorTotalProducto">-${$('#txtModalDescuento').val()}</span></h5></div> </div>`);
+			$('.contanedorDivsProductos').append(`<div class="divUnSoloProducto divUnSoloDescuento row"><div class="col-xs-6"><button class="btn btn-danger btn-circle btn-NoLine btn-outline btnRemoverProducto" id="${$('#spanProdDscto').attr('data-idPro')}" data-id="${resp}"><i class="icofont icofont-close"></i></button> Descuento: <span class="h4NombreProducto mayuscula " id="${$('#spanProdDscto').attr('data-idPro')}">${$('#txtModalObsDscto').val()}:</span> <em class="mayuscula notaPed">${$('#spanProdDscto').attr('data-nomPro')}</em></div><div class="col-xs-3"></div><div class="col-xs-2"><h5 class="h4precioProducto"><span class="valorUndProducto sr-only">-${$('#txtModalDescuento').val()}</span>S/. <span class="valorTotalProducto">-${$('#txtModalDescuento').val()}</span></h5></div> </div>`);
 			var total=parseFloat(parseFloat($('#idTotalSpan').text())-$('#txtModalDescuento').val());
 			$('#idTotalSpan').text(total.toFixed(2));
 
-		});
-	}else{
+	});
+	/* }else{
 		$('.modalDescuentoEspecial .labelError').removeClass('hidden').find('.mensaje').text('Valor máximo para descontar es de S/ ' + maximo.toFixed(2));
-	}
+	} */
 });
 $('#smallLibre').click(function() {
 	$('.divMesas').find('.mesaOcupado').parent().toggleClass('hidden');

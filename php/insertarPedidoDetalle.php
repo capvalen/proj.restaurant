@@ -12,7 +12,8 @@ $row=mysqli_fetch_array($sql, MYSQLI_ASSOC);
 
 $resultados[]= array('idProducto' => $_POST['idProd'],
 	'respuesta' => $row['resp'],
-	'stockActual' => $row['stockCantidad']);
+	'stockActual' => $row['stockCantidad']
+);
 // while($row=mysqli_fetch_array($sql, MYSQLI_ASSOC)){
 // 	echo $row['resp'];	
 // }
