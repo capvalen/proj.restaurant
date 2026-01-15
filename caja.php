@@ -701,7 +701,8 @@ $('#btnCobrarCliente').click(function () {
 	$('#queMesaEsSpan').text($('#idMesaSpan').text());
 	$('#queMesaEsSpan2').text($('#idMesaSpan').text());
 	$('#h3CuentaFinal').text($('#idTotalSpan').text());
-	$('#txtCuantoPagaCliente').val('0.00');
+	$('#txtCuantoPagaCliente').val( $('#h3CuentaFinal').text() )
+	//$('#txtCuantoPagaCliente').val('0.00');
 	$('#txtCuantPagaClienteTarjet').val('0.00');
 	$('#txtCuantPagaClienteEfect').val('0.00');
 	$('#txtRUC').val('');
