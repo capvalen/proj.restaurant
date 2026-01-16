@@ -5,7 +5,6 @@ if (@!$_COOKIE['ckidUsuario']){//sino existe enviar a index
 	header("Location:index.php");
 }else{
 	if($_SESSION['Power']==3){header("Location:pedidos.php");}
-
 }
 ?>
 <!DOCTYPE html>
@@ -1211,6 +1210,12 @@ $('#btnSiguientePaso').click(function() {
 	}
 });
 function insertarAlFacturador(){
+	/* Sumatoria de descuentos */
+	var sumaDescuentos = 0
+	$('.divUnSoloDescuento').each(function () {
+		sumaDescuentos+= Math.abs(parseFloat($(this).find('.valorUndProducto').text()))
+	})
+
 	var serie='';
 
 	switch( $('#sltComprobanteEfectivo').val() ){
@@ -1237,7 +1242,8 @@ function insertarAlFacturador(){
 		contado: 1, //1:contado, 2:credito
 		fechaCredito : moment().format('YYYY-MM-DD'),
 		adelanto: 0,
-		montoCredito: 0
+		montoCredito: 0,
+		descuentos: sumaDescuentos
 	};
 	var jsonProductos=[];
 	if( $('#txtRUC').val()!='' ){
@@ -1260,6 +1266,7 @@ function insertarAlFacturador(){
 			subTotal: data.subTotal
 		})
 	})
+	
 	
 
 	let cabecera = { tipo:$('#sltComprobanteEfectivo').val(), serie, fecha: moment().format('YYYY-MM-DD') }
@@ -1287,6 +1294,7 @@ function insertarAlFacturador(){
 			productos: jTicket[1],
 			direccion:jTicket[0].direccion,
 			exonerado: parseFloat(jTicket[0].exonerado).toFixed(2),
+			descuentos: sumaDescuentos
 			/* placa: jTicket[0].placa, */
 		}}).done(function(resp) {
 			console.log(resp)
