@@ -42,9 +42,6 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 						<a href="ventas.php"><i class="icofont icofont-calculator-alt-1"></i> Cuadrar caja</a>
 				</li>
 				<li>
-						<a href="#!" id="aCreditoNuevo"><i class="icofont icofont-truck-alt"></i> Crédito nuevo</a>
-				</li>
-				<li>
 						<a href="#!" id="aGastoExtra"><i class="icofont icofont-ui-rate-remove"></i> Gasto extra</a>
 				</li>
 				<li >
