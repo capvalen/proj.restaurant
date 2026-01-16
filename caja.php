@@ -378,6 +378,7 @@ if (@!$_COOKIE['ckidUsuario']){//sino existe enviar a index
 		</div>
 		<div class="modal-body">
 			<p><strong>Venta guardada</strong>. Cuenta S/. <span id="spanVueltoEx"></span></p>
+			<p class="text-center">El vuelto para el cliente:</p>
 			<div class="text-center"><h3 style="display: inline-block; margin-top: 0px; margin-bottom: 0px;">S/. </h3> <h3 id="h3VueltoFinal" style="display: inline-block;margin-top: 0px; margin-bottom: 0px;">0</h3></div>
 		<div class="modal-footer">
 			<button class="btn btn-success btn-outline" data-dismiss="modal" ><i class="icofont icofont-social-meetme"></i> Aceptar</button>
