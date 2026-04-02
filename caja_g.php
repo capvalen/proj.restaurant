@@ -19,7 +19,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 <body>
 	
 	<div class="container divPrincipal" >
-		<div class="text-center" > <button style="margin-top: 20px; margin-left: 10px;" class="btn btn-default btn-outline pull-left"><i class="icofont icofont-database"></i> Cuadrar caja</button><h1 style="color: #442e9e; display: inline-block;"><i class="icofont icofont-fast-food"></i> Caja - Casa de Barro</h1> <button style="margin-top: 20px; margin-right: 10px;" class="btn btn-success btn-outline pull-right" id="btnCerrarSesion"><i class="icofont icofont-external-link"></i> Cerrar sesión</button></div>
+		<div class="text-center" > <button style="margin-top: 20px; margin-left: 10px;" class="btn btn-default btn-outline pull-left"><i class="icofont icofont-database"></i> Cuadrar caja</button><h1 style="color: #442e9e; display: inline-block;"><i class="icofont icofont-fast-food"></i> Caja - Yopo's Pollos y Parrillas</h1> <button style="margin-top: 20px; margin-right: 10px;" class="btn btn-success btn-outline pull-right" id="btnCerrarSesion"><i class="icofont icofont-external-link"></i> Cerrar sesión</button></div>
 		<div class="row divMesas hidden">
 			<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="1"><i class="icofont icofont-food-cart"></i> Mesa 1</button></div>
 			<div class="col-xs-6 col-sm-3"><button class="btn btn-morado btn-lg btn-block btn-outline btnMesa" id="2"><i class="icofont icofont-food-cart"></i> Mesa 2</button></div>

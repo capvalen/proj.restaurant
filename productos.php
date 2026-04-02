@@ -34,7 +34,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 		<ul class="sidebar-nav">
 				
 				<div class="logoEmpresa ocultar-mostrar-menu">
-					<img class="img-responsive" src="images/empresa.png?version=1.0.png" alt="">
+					<img class="img-responsive" src="images/empresa.png?version=1.1.png" alt="">
 				</div>
 				<li>
 						<a href="principal.php"><i class="icofont icofont-space-shuttle"></i> Inicio</a>

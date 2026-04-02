@@ -32,7 +32,7 @@ $objPHPExcel = new PHPExcel();
 
 // Agrega las propiedades al documento
 $objPHPExcel->getProperties()->setCreator("Infocat Soluciones SAC")
-							 ->setLastModifiedBy("Casa de barro")
+							 ->setLastModifiedBy("Yopo's Pollos y Parrillas")
 							 ->setTitle("Resumen de ventas")
 							 ->setDescription("Generado por Info-Snack");
 

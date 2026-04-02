@@ -28,7 +28,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 	
 
 	<div class="row" id="divMesas">
-		<div class="container-fluid  text-center" ><h2 style="color: #442e9e; display: inline-block;"><i class="icofont icofont-fast-food"></i> Pedidos en Casa de Barro <small class="mayuscula">- <?php echo $_SESSION['Atiende']; ?></small></h2>
+		<div class="container-fluid  text-center" ><h2 style="color: #442e9e; display: inline-block;"><i class="icofont icofont-fast-food"></i> Pedidos en Yopo's Pollos y Parrillas <small class="mayuscula">- <?php echo $_SESSION['Atiende']; ?></small></h2>
 		</div>
 		<div class=" container-fluid ">
 			<button style="margin-top: 20px; margin-right: 10px;" class="btn btn-success btn-outline pull-left" id="btnActualizarMesas2"><i class="icofont icofont-refresh"></i> Actualizar mesas</button>
@@ -193,7 +193,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 		</div>
 	</div>
 	<hr>
-		<p><?php include 'php/version.php' ?>. Desarrollado por: <a href="https://www.facebook.com/infocat.soluciones/"> Infocat Soluciones SAC</a> para <strong>Casa de barro</strong></p>
+		<p><?php include 'php/version.php' ?>. Desarrollado por: <a href="https://www.facebook.com/infocat.soluciones/"> Infocat Soluciones SAC</a> para <strong>Yopo's Pollos y Parrillas</strong></p>
 
 
 </div>

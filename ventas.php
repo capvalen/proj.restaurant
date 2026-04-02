@@ -29,7 +29,7 @@ ondragstart="return false" onMouseOver="window.status='..mensaje personal .. '; 
 		<ul class="sidebar-nav">
 				
 				<div class="logoEmpresa ocultar-mostrar-menu">
-					<img class="img-responsive" src="images/empresa.png?version=1.0.png" alt="">
+					<img class="img-responsive" src="images/empresa.png?version=1.1.png" alt="">
 				</div>
 				<li>
 						<a href="principal.php"><i class="icofont icofont-space-shuttle"></i> Inicio</a>
@@ -111,7 +111,7 @@ ondragstart="return false" onMouseOver="window.status='..mensaje personal .. '; 
 			<div class="row">
 				<div class="col-lg-12 contenedorDeslizable">
 				<!-- Empieza a meter contenido principal dentro de estas etiquetas -->
-				<h2 class="purple-text text-lighten-1" style=" display: inline-block;"><i class="icofont icofont-lens"></i> Cuadre de caja - Casa de Barro </h2>
+				<h2 class="purple-text text-lighten-1" style=" display: inline-block;"><i class="icofont icofont-lens"></i> Cuadre de caja - Yopo's Pollos y Parrillas </h2>
 
 				<div class="container-fluid ">
 					<div class="row">

@@ -27,7 +27,7 @@ try {
     /* Print a "Hello world" receipt" */
     $tux = EscposImage::load("temp.png", false);
     $printer = new Printer($connector_caja);
-    $printer -> text("            La Casa de Barro \n");
+    $printer -> text("            La Yopo's Pollos y Parrillas \n");
     $printer -> text("   Nota de Pedido « Caja ». Mesa # \n");
     $printer -> text("Estamos hechos de fuego y de papel, y ocultar que. \n");
     $printer -> bitImage($tux);

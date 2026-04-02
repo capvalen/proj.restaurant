@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit84989a5fd2465456465a9e5bbc866680
+class ComposerStaticInitba281fc5a6570c45cb285a6b175bc9d7
 {
     public static $files = array (
         '2cffec82183ee1cea088009cef9a6fc3' => __DIR__ . '/..' . '/ezyang/htmlpurifier/library/HTMLPurifier.composer.php',
@@ -18,8 +18,6 @@ class ComposerStaticInit84989a5fd2465456465a9e5bbc866680
         'P' => 
         array (
             'Psr\\SimpleCache\\' => 16,
-            'Psr\\Http\\Message\\' => 17,
-            'Psr\\Http\\Client\\' => 16,
             'PhpOffice\\PhpSpreadsheet\\' => 25,
         ),
         'M' => 
@@ -27,9 +25,22 @@ class ComposerStaticInit84989a5fd2465456465a9e5bbc866680
             'Mike42\\' => 7,
             'Matrix\\' => 7,
         ),
+        'E' => 
+        array (
+            'Endroid\\QrCode\\' => 15,
+        ),
+        'D' => 
+        array (
+            'DASPRiD\\Enum\\' => 13,
+        ),
         'C' => 
         array (
+            'Composer\\Pcre\\' => 14,
             'Complex\\' => 8,
+        ),
+        'B' => 
+        array (
+            'BaconQrCode\\' => 12,
         ),
     );
 
@@ -41,15 +52,6 @@ class ComposerStaticInit84989a5fd2465456465a9e5bbc866680
         'Psr\\SimpleCache\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/simple-cache/src',
-        ),
-        'Psr\\Http\\Message\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/psr/http-message/src',
-            1 => __DIR__ . '/..' . '/psr/http-factory/src',
-        ),
-        'Psr\\Http\\Client\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/psr/http-client/src',
         ),
         'PhpOffice\\PhpSpreadsheet\\' => 
         array (
@@ -64,9 +66,25 @@ class ComposerStaticInit84989a5fd2465456465a9e5bbc866680
         array (
             0 => __DIR__ . '/..' . '/markbaker/matrix/classes/src',
         ),
+        'Endroid\\QrCode\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/endroid/qr-code/src',
+        ),
+        'DASPRiD\\Enum\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/dasprid/enum/src',
+        ),
+        'Composer\\Pcre\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/composer/pcre/src',
+        ),
         'Complex\\' => 
         array (
             0 => __DIR__ . '/..' . '/markbaker/complex/classes/src',
+        ),
+        'BaconQrCode\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/bacon/bacon-qr-code/src',
         ),
     );
 
@@ -87,10 +105,10 @@ class ComposerStaticInit84989a5fd2465456465a9e5bbc866680
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit84989a5fd2465456465a9e5bbc866680::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit84989a5fd2465456465a9e5bbc866680::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit84989a5fd2465456465a9e5bbc866680::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit84989a5fd2465456465a9e5bbc866680::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitba281fc5a6570c45cb285a6b175bc9d7::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitba281fc5a6570c45cb285a6b175bc9d7::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInitba281fc5a6570c45cb285a6b175bc9d7::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInitba281fc5a6570c45cb285a6b175bc9d7::$classMap;
 
         }, null, ClassLoader::class);
     }

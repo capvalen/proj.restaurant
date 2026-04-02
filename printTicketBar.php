@@ -24,7 +24,7 @@ try {
 
     /* Print a "Hello world" receipt" */
     $printer = new Printer($connector_bar);
-    $printer -> text("            La Casa de Barro \n");
+    $printer -> text("            La Yopo's Pollos y Parrillas \n");
     $printer -> text("       Pedido « Bar ». Mesa # ".$_POST['numMesa']."\n");
     $printer -> text("    -----------------------------\n");
 		$printer -> text("        ".$_POST['hora']."\n\n");

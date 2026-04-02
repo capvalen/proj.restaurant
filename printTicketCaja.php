@@ -27,7 +27,7 @@ try {
     $printer = new Printer($connector_caja);
 		$printer -> setEmphasis(true);
     $printer -> setJustification(Printer::JUSTIFY_CENTER);
-    $printer -> text("Casa de Barro \n");
+    $printer -> text("Yopo's Pollos y Parrillas \n");
 		$printer -> setEmphasis(false);
     $printer -> text("Nota de Pedido - Mesa N°".$_POST['numMesa']."\n");
     $printer -> text("------------------------\n");

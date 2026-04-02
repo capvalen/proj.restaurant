@@ -49,7 +49,7 @@
 
 </div>
 <footer>
-		<p class="text-center"><strong>Casa de barro 2017 - <?= date('Y'); ?></strong><br> Desarrollado por: <a href="https://www.facebook.com/infocat.soluciones/">© Infocat Soluciones </a><br><span>Consultas: 977692108 - servidor@infocatsoluciones.com </span> </p>
+		<p class="text-center"><strong>Yopo's Pollos y Parrillas 2017 - <?= date('Y'); ?></strong><br> Desarrollado por: <a href="https://www.facebook.com/infocat.soluciones/">© Infocat Soluciones </a><br><span>Consultas: 977692108 - servidor@infocatsoluciones.com </span> </p>
 </footer>
 
 

@@ -65,7 +65,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 	if ($_SESSION['licencia']=='Ok'){ ?>
 		<!-- Contenido para licenciar -->
 		<div class="row" id="divMesas">
-		<div class="container-fluid  text-center" ><h2 style="color: #636363; display: inline-block;"><i class="icofont icofont-spoon-and-fork"></i> Doradito<small class="mayuscula smallMozo" id='smallAtiende'><br> Atiende: <?php echo $_SESSION['Atiende']; ?></small></h2>
+		<div class="container-fluid  text-center" ><h2 style="color: #636363; display: inline-block;"><i class="icofont icofont-spoon-and-fork"></i> Yopo's Pollos y Parrillas<small class="mayuscula smallMozo" id='smallAtiende'><br> Atiende: <?php echo $_SESSION['Atiende']; ?></small></h2>
 		</div>
 		<div class=" container-fluid ">
 			<button style="margin-top: 20px; margin-right: 10px;" class="btn btn-success btn-outline pull-left btn-lg btnSinBorde" id="btnActualizarMesas2"><i class="icofont icofont-refresh"></i> Actualizar mesas</button>
@@ -82,21 +82,18 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 		<div class="col-xs-6 col-sm-2"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="9"><i class="icofont icofont-fork-and-knife"></i> Mesa 9</button></div>
 		<div class="col-xs-6 col-sm-2"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="10"><i class="icofont icofont-fork-and-knife"></i> Mesa 10</button></div>
 		
-		<div class="col-xs-6 col-sm-2"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="11"><i class="icofont icofont-fork-and-knife"></i> Mesa 11</button></div>
-		<div class="col-xs-6 col-sm-2"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="12"><i class="icofont icofont-fork-and-knife"></i> Mesa 12</button></div>
-		<div class="col-xs-6 col-sm-2"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="13"><i class="icofont icofont-fork-and-knife"></i> Mesa 13</button></div>
-		<div class="col-xs-6 col-sm-2"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="14"><i class="icofont icofont-fork-and-knife"></i> Mesa 14</button></div>
-		<div class="col-xs-6 col-sm-2"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="15"><i class="icofont icofont-fork-and-knife"></i> Mesa 15</button></div>
-		<div class="col-xs-6 col-sm-2"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="16"><i class="icofont icofont-fork-and-knife"></i> Mesa 16</button></div>
-		<div class="col-xs-6 col-sm-2"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="17"><i class="icofont icofont-fork-and-knife"></i> Mesa 17</button></div>
-		<div class="col-xs-6 col-sm-2"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="18"><i class="icofont icofont-fork-and-knife"></i> Mesa 18</button></div>
-		<div class="col-xs-6 col-sm-2"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="19"><i class="icofont icofont-fork-and-knife"></i> Mesa 19</button></div>
-		<div class="col-xs-6 col-sm-2"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="20"><i class="icofont icofont-fork-and-knife"></i> Mesa 20</button></div>
+		<div class="col-xs-6 col-sm-2"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="11"><i class="icofont icofont-fork-and-knife"></i> Delivery 1</button></div>
+		<div class="col-xs-6 col-sm-2"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="12"><i class="icofont icofont-fork-and-knife"></i> Delivery 2</button></div>
+		<div class="col-xs-6 col-sm-2"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="13"><i class="icofont icofont-fork-and-knife"></i> Delivery 3</button></div>
+		<div class="col-xs-6 col-sm-2"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="14"><i class="icofont icofont-fork-and-knife"></i> Delivery 4</button></div>
+		<div class="col-xs-6 col-sm-2"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="15"><i class="icofont icofont-fork-and-knife"></i> Delivery 5</button></div>
+		<div class="col-xs-6 col-sm-2"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="16"><i class="icofont icofont-fork-and-knife"></i> Delivery 6</button></div>
+		<div class="col-xs-6 col-sm-2"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="17"><i class="icofont icofont-fork-and-knife"></i> Delivery 7</button></div>
+		<div class="col-xs-6 col-sm-2"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="18"><i class="icofont icofont-fork-and-knife"></i> Delivery 8</button></div>
+		<div class="col-xs-6 col-sm-2"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="19"><i class="icofont icofont-fork-and-knife"></i> Delivery 9</button></div>
+		<div class="col-xs-6 col-sm-2"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="20"><i class="icofont icofont-fork-and-knife"></i> Delivery 10</button></div>
 
-		<div class="col-xs-6 col-sm-2"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="21"><i class="icofont icofont-fork-and-knife"></i> Mesa 21</button></div>
-		<div class="col-xs-6 col-sm-2"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="22"><i class="icofont icofont-fork-and-knife"></i> Mesa 22</button></div>
-		<div class="col-xs-6 col-sm-2"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="23"><i class="icofont icofont-fork-and-knife"></i> Mesa 23</button></div>
-		<div class="col-xs-6 col-sm-2"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="24"><i class="icofont icofont-fork-and-knife"></i> Delivery 1</button></div>
+		<!-- <div class="col-xs-6 col-sm-2"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="24"><i class="icofont icofont-fork-and-knife"></i> Delivery 1</button></div>
 		<div class="col-xs-6 col-sm-2"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="25"><i class="icofont icofont-fork-and-knife"></i> Delivery 2</button></div>
 		<div class="col-xs-6 col-sm-2"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="26"><i class="icofont icofont-fork-and-knife"></i> Delivery 3</button></div>
 		<div class="col-xs-6 col-sm-2"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="27"><i class="icofont icofont-fork-and-knife"></i> Delivery 4</button></div>
@@ -106,7 +103,7 @@ if (@!$_SESSION['Atiende']){//sino existe enviar a index
 
 		<div class="col-xs-6 col-sm-2"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="31"><i class="icofont icofont-fork-and-knife"></i> Delivery 8</button></div>
 		<div class="col-xs-6 col-sm-2"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="32"><i class="icofont icofont-fork-and-knife"></i> Delivery 9</button></div>
-		<div class="col-xs-6 col-sm-2"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="33"><i class="icofont icofont-fork-and-knife"></i> Delivery 10</button></div>
+		<div class="col-xs-6 col-sm-2"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="33"><i class="icofont icofont-fork-and-knife"></i> Delivery 10</button></div> -->
 		<!-- <div class="col-xs-6 col-sm-2"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="34"><i class="icofont icofont-fork-and-knife"></i> Mesa 34</button></div>
 		<div class="col-xs-6 col-sm-2"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="35"><i class="icofont icofont-fork-and-knife"></i> Mesa 35</button></div>
 		<div class="col-xs-6 col-sm-2"><button class="btn btn-azul btn-lg btn-block btn-outline btnMesa" id="36"><i class="icofont icofont-fork-and-knife"></i> Mesa 36</button></div>

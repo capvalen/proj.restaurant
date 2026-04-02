@@ -53,7 +53,7 @@ margin-left: -25px; opacity: 0.5}
 		<div class="col-md-12">
 			<div class="wello login-box" style="margin-top:10rem;color:#7956C1" >
 				<div class="row">
-					<div class="col-xs-12"><img src="images/empresa.png" class="img-responsive" alt=""></div>
+					<div class="col-xs-12"><img src="images/empresa.png?version=1.1" class="img-responsive" alt=""></div>
 					<div class="col-xs-4" style=""><img src="images/VirtualCorto.png" class="img-responsive" alt=""></div>
 					<div class="col-xs-8">
 						
